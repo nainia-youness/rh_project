@@ -10,10 +10,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-
-    "electron-start":"electron .",
+    "electron-start": "electron .",
     "electron-build": "ng build --prod --base-href ./ && electron .",
-    
     "electron-package": "electron-packager . --platform=win32",
     "build-mac": "ng build --prod --base-href ./ && electron-packager . --overwrite --ignore=(\"e2e|node_modules|src|.browserslistrc|.editorconfig|.gitignore|angular.json|karma.conf.js|package-lock.json|README.md|tsconfig.app.json|tsconfig.json|tsconfig.spec.json|tslint.json\") --platform=darwin --arch=x64  --prune=true --out=./dist/electron-build",
     "build-win": "ng build --prod --base-href ./ && electron-packager . demo-app --overwrite --ignore=(\"e2e|node_modules|src|.browserslistrc|.editorconfig|.gitignore|angular.json|karma.conf.js|package-lock.json|README.md|tsconfig.app.json|tsconfig.json|tsconfig.spec.json|tslint.json\") --asar --platform=win32 --arch=ia32  --prune=true --out=./dist/electron-build --version-string.CompanyName=SciTechEnthusiast --version-string.FileDescription=SciTechEnthusiast --version-string.ProductName=\"Demo Angular Electron app\"",
@@ -22,14 +20,18 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.2.0",
+    "@angular/animations": "^13.2.5",
+    "@angular/cdk": "^13.2.5",
     "@angular/common": "~13.2.0",
     "@angular/compiler": "~13.2.0",
     "@angular/core": "~13.2.0",
+    "@angular/flex-layout": "^13.0.0-beta.38",
     "@angular/forms": "~13.2.0",
+    "@angular/material": "^13.2.5",
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@ngrx/store": "^13.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

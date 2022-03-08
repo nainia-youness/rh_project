@@ -1,0 +1,23 @@
+-python manage.py startapp employé
+-tree
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-

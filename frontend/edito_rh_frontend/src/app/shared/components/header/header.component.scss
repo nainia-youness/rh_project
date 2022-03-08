@@ -1,0 +1,21 @@
+@import "../../../../styles/variables.scss";
+
+.header {
+  background-color: $base_color !important;
+  color: white !important ;
+  text-align: center !important;
+  box-shadow: 5px 10px white !important;
+}
+
+button {
+  background-color: $base_color !important;
+  color: white !important ;
+  font-size: 12px;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  border-radius: 20px;
+}
+
+#login {
+  background-color: #0f9015 !important;
+}
