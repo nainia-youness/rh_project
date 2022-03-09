@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { screenSizeChange } from './state/app.actions';
 import { AppState } from './store/app.state';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit,OnDestroy{
 
   mediaSub!: Subscription
   screenSize!: string
+  opened:boolean=false
   //this.channelName$=this.store.select(getChannelName)
   constructor(public mediaObserver:MediaObserver,private store: Store<{screenSize:AppState}>){}
 

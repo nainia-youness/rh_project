@@ -1,0 +1,17 @@
+.container {
+  height: 96vh;
+}
+
+#sidenav {
+  background-color: #467061;
+}
+
+.nav-item {
+  color: white;
+  font-size: 12px;
+  text-align: center;
+}
+
+.mat-sidenav-content::-webkit-scrollbar {
+  display: none;
+}

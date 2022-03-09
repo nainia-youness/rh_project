@@ -1,0 +1,64 @@
+
+  <div class="header" fxLayout="column" style="height:100%">
+    <mat-toolbar-row fxLayoutAlign="start center" fxFlexFill >
+            <div fxShow.xs="false" style="width: 10px;"></div>
+            <mat-icon>more_vert</mat-icon>
+            <span fxFlex.xs="20">
+                  My App
+            </span>
+            <div fxShow.xs="false" style="width: 40px;"></div>
+            <div fxLayout="row" fxFlex="80" fxShow.xs="false" fxLayoutAlign="start center">
+  
+              <div   fxShow.xs="false" >
+  
+                    <button mat-flat-button>Traitement</button>
+  
+              </div>
+              <div   fxShow.xs="false">
+  
+                <button mat-flat-button>Gestion</button>
+  
+              </div>
+              <div  fxShow.xs="false">
+  
+                <button mat-flat-button>Administration</button>
+  
+              </div>
+            </div>
+  
+          <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center">
+            
+            <button mat-flat-button style="width:20px" id="login">Login</button>
+            <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()"><mat-icon>menu</mat-icon></button>
+  
+        </div>
+    </mat-toolbar-row>
+  
+    <mat-toolbar-row  fxShow.xs="true" fxShow.gt-xs="false" *ngIf="showMenu" fxLayoutAlign="center center" fxFlexFill>
+        <div fxLayout="column" fxFlex="100" >
+  
+        <div >
+  
+            <button mat-flat-button>Traitement</button>
+  
+        </div>
+        <div  >
+  
+        <button mat-flat-button>Gestion</button>
+  
+        </div>
+        <div >
+  
+        <button mat-flat-button>Administration</button>
+  
+        </div>
+        </div>
+  
+    </mat-toolbar-row>
+  </div>
+
+
+   
+
+
+
