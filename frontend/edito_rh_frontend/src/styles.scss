@@ -5,3 +5,12 @@
   margin: 0 !important;
   padding: 0 !important;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+body {
+  -ms-overflow-style: none;
+}

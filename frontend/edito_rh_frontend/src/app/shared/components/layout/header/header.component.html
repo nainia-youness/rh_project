@@ -2,7 +2,11 @@
   <div class="header" fxLayout="column" style="height:100%">
     <mat-toolbar-row fxLayoutAlign="start center" fxFlexFill >
             <div fxShow.xs="false" style="width: 10px;"></div>
-            <mat-icon>more_vert</mat-icon>
+          
+              <button mat-icon-button color="warn" (click)="openSideNav()" aria-label="Example icon button with a heart icon">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              
             <span fxFlex.xs="20">
                   My App
             </span>

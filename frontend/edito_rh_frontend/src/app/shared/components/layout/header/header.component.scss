@@ -18,7 +18,11 @@ button {
   margin-right: 5px !important;
 }
 
+button:hover {
+  background-color: #3d6457 !important;
+}
+
 #login {
-  background-color: #0f9015 !important;
+  background-color: #3d6457 !important;
   border-radius: 20px;
 }

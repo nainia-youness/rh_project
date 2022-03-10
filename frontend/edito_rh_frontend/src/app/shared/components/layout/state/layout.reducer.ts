@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store"
-import { sideNavItemsChange } from "./layout.actions"
+import { showSideNavChange, sideNavItemsChange } from "./layout.actions"
 
 import { initialState } from "./layout.state"
 
@@ -10,7 +10,13 @@ const _layoutReducer= createReducer(
     on(sideNavItemsChange,(state:any,action)=>{
         return {
             ...state,
-            sideNavItems:action.screenSize
+            sideNavItems:action.sideNavItems
+        }
+    }),
+    on(showSideNavChange,(state:any,action)=>{
+        return {
+            ...state,
+            sideNavItems:action.showSideNav
         }
     }),
 )
