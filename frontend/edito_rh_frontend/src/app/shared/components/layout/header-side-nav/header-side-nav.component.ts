@@ -10,7 +10,7 @@ export class HeaderSideNavComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+
   }
 
 }

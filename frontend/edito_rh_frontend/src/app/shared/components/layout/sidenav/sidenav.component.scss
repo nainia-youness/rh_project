@@ -1,9 +1,11 @@
+@import "../../../../../styles/variables.scss";
+
 .container {
   height: 100vh;
 }
 
 #sidenav {
-  background-color: #467061;
+  background-color: $base_color;
 }
 
 .nav-item {

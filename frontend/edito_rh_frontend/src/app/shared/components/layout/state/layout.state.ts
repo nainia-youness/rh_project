@@ -1,12 +1,16 @@
-export interface LayoutState {
-    sideNavItems:string [],
-    showSideNav:boolean
-}
+import { LayoutState } from "./layout.interface";
+
 
 
 export const initialState: LayoutState={
-    sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
-    showSideNav:false
+    sideNavItems:[''],
+    showSideNav:false,
+    showFooter:false,
+    history:{
+        userName:'',
+        changeDate:new Date(),
+        changeOperation:''
+    }
 } 
 
 

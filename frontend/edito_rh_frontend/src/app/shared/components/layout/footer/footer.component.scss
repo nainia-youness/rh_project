@@ -1,0 +1,11 @@
+@import "../../../../../styles/variables.scss";
+
+.footer {
+  background-color: $base_color !important;
+  color: white !important ;
+  text-align: center !important;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}

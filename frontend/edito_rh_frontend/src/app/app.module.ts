@@ -12,20 +12,31 @@ import { appReducer } from './store/app.state';
 import { HeaderSideNavComponent } from './shared/components/layout/header-side-nav/header-side-nav.component';
 import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.component';
 import { HeaderComponent } from './shared/components/layout/header/header.component';
+import { AuthModule } from './modules/auth/auth.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { FooterComponent } from './shared/components/layout/footer/footer.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
-    HeaderSideNavComponent
+    HeaderSideNavComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     StoreModule.forRoot(appReducer),
-    MaterialModule
+    MaterialModule,
+    AuthModule,
+    StoreDevtoolsModule.instrument({
+      maxAge:25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

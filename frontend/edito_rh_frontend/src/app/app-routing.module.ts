@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+    {//lazy load
+      path:'',
+      loadChildren:()=>import('./modules/auth/auth.module')
+        .then(mod=>mod.AuthModule)
   
+    },
 ];
 
 @NgModule({

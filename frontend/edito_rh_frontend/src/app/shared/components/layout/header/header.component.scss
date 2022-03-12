@@ -19,10 +19,10 @@ button {
 }
 
 button:hover {
-  background-color: #3d6457 !important;
+  background-color: $darker_color !important;
 }
 
 #login {
-  background-color: #3d6457 !important;
+  background-color: $darker_color !important;
   border-radius: 20px;
 }

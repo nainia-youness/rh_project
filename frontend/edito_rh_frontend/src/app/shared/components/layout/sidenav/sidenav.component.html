@@ -10,7 +10,8 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-      <!--router-->
-      body
+      <router-outlet></router-outlet>
+      <div ngStyle.gt-xs="height:20px" ngStyle.xs="height:50px"></div>
+      <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

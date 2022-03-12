@@ -1,12 +1,12 @@
 
-  <div class="header" fxLayout="column" style="height:100%">
+  <div class="header" fxLayout="column">
     <mat-toolbar-row fxLayoutAlign="start center" fxFlexFill >
             <div fxShow.xs="false" style="width: 10px;"></div>
-          
-              <button mat-icon-button color="warn" (click)="openSideNav()" aria-label="Example icon button with a heart icon">
+  
+              <button mat-icon-button color="warn" *ngIf="showSideNav$ | async" (click)="openSideNav()">
                 <mat-icon>more_vert</mat-icon>
               </button>
-              
+
             <span fxFlex.xs="20">
                   My App
             </span>
@@ -32,7 +32,7 @@
   
           <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center">
             
-            <button mat-flat-button style="width:20px" id="login">Login</button>
+            <button mat-flat-button style="width:20px" id="login" (click)="goToLogin()">Login</button>
             <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()"><mat-icon>menu</mat-icon></button>
   
         </div>
