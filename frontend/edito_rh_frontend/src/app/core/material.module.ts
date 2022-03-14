@@ -39,7 +39,6 @@ import {MatDividerModule} from '@angular/material/divider';
 @NgModule( {
     imports: [
         CommonModule,
-        BrowserAnimationsModule,
         MatCheckboxModule,
         MatCheckboxModule,
         MatButtonModule,
@@ -90,7 +89,8 @@ import {MatDividerModule} from '@angular/material/divider';
         MatChipsModule,
         MatTooltipModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatCardModule
     ],
     providers: [
         MatDatepickerModule,

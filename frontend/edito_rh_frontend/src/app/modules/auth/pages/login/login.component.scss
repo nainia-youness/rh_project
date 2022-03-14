@@ -1,0 +1,56 @@
+@import "../../../../../styles/variables.scss";
+
+.card {
+  width: 300px;
+  text-align: center !important;
+}
+
+.login {
+  height: 90vh;
+}
+
+.header {
+  //background-color: $lighter_color;
+  color: $lighter_color;
+  text-align: center;
+  font-size: 30px;
+  width: 100%;
+}
+
+.login button {
+  background-color: $base_color !important;
+  color: white;
+}
+
+.login button:disabled {
+  background-color: $lighter_color !important;
+  pointer-events: none !important;
+  opacity: 0.8;
+}
+
+.login button:hover {
+  background-color: $darker_color !important;
+}
+
+.login input {
+  width: 100%;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $base_color !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: $lighter_color !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: $lighter_color !important;
+}
+
+mat-form-field {
+  width: 100% !important;
+}

@@ -1,113 +1,52 @@
-<p>login works!</p>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-sssssssssss
-<br>
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-<br>
+
+
+
+<div fxLayout="column" fxLayoutAlign="center center" class="login">
+    <div fxFlex="5" ></div>
+
+    <mat-card fxFlex="80" fxLayout="column" class="card"  fxLayoutAlign="start center" fxLayoutGap="20px">
+        
+        <mat-card-header fxFlex="10" fxLayout="column" fxLayoutAlign="center center">
+            <mat-card-title  class="header">Login</mat-card-title>
+        </mat-card-header>
+
+        <div fxFlex="5"><mat-divider class="divider"></mat-divider></div>
+
+        <mat-card-content fxFlex="85" fxLayout="column" fxLayoutAlign="start center">
+          <div fxFlex="5" ></div>
+          <form fxFlex="95" fxLayout="column"  [formGroup]="loginForm" (ngSubmit)="onLogin()" fxLayoutGap="20px">
+
+              <mat-form-field appearance="fill" fxFlex="30">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput  formControlName="email" placeholder="email">
+                
+                <mat-error>
+                    {{showEmailErrors()}}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" fxFlex="30">
+                <mat-label>Mot de passe</mat-label>
+                <input type="password" matInput  formControlName="password" placeholder="mot de passe" >
+                
+                <mat-error>
+                    {{showPasswordErrors()}}
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="column" fxFlex="40">
+                  <div fxFlex="20"></div>        
+                  <mat-card-actions fxFlex="80" >
+                    <button mat-raised-button class="login-btn" [disabled]="!loginForm.valid">Login</button>
+                  </mat-card-actions>
+              </div>
+          </form>
+        </mat-card-content>
+    </mat-card>
+
+    <div fxFlex="15"></div>
+</div>
+
+<!--
+
+-->

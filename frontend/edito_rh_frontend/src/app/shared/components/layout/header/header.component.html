@@ -13,17 +13,17 @@
             <div fxShow.xs="false" style="width: 40px;"></div>
             <div fxLayout="row" fxFlex="80" fxShow.xs="false" fxLayoutAlign="start center">
   
-              <div   fxShow.xs="false" >
+              <div   fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
   
                     <button mat-flat-button>Traitement</button>
   
               </div>
-              <div   fxShow.xs="false">
+              <div   fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
   
                 <button mat-flat-button>Gestion</button>
   
               </div>
-              <div  fxShow.xs="false">
+              <div  fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
   
                 <button mat-flat-button>Administration</button>
   
@@ -33,7 +33,7 @@
           <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center">
             
             <button mat-flat-button style="width:20px" id="login" (click)="goToLogin()">Login</button>
-            <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()"><mat-icon>menu</mat-icon></button>
+            <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()" *ngIf="showHeaderMenu$ | async"><mat-icon>menu</mat-icon></button>
   
         </div>
     </mat-toolbar-row>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { getScreenSize } from 'src/app/state/app.selector';
 import { AppState } from 'src/app/store/app.state';
 import { SidenavService } from '../services/side-nav.service';
-import { getShowSideNav } from '../state/layout.selector';
+import { getShowHeaderMenu, getShowSideNav } from '../state/layout.selector';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked {
 
   showMenu:boolean=false
   showSideNav$!:Observable<boolean>
+  showHeaderMenu$!:Observable<boolean>
 
   constructor(private store:Store<AppState>,
     private sidenav: SidenavService,
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked {
 
   ngOnInit(): void {
     this.showSideNav$= this.store.select(getShowSideNav)
+    this.showHeaderMenu$= this.store.select(getShowHeaderMenu)
   }
 
   openMenu=()=>{

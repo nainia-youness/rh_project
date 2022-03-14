@@ -9,5 +9,6 @@ export interface LayoutState {
     sideNavItems:string [],
     showSideNav:boolean,
     showFooter:boolean,
-    history:History
+    showHeaderMenu:boolean,
+    history:History,
 }

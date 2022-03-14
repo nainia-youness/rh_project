@@ -16,7 +16,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { FooterComponent } from './shared/components/layout/footer/footer.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { FooterComponent } from './shared/components/layout/footer/footer.compon
       maxAge:25,
       logOnly: environment.production,
     }),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

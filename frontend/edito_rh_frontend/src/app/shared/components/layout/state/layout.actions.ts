@@ -8,3 +8,5 @@ export const showSideNavChange=createAction('showSideNavChange',props<{showSideN
 export const showFooterChange=createAction('showFooterChange',props<{showFooter:boolean}>())
 
 export const historyChange=createAction('historyChange',props<{history:History}>())
+
+export const showHeaderMenuChange=createAction('showHeaderMenuChange',props<{showHeaderMenu:boolean}>())
