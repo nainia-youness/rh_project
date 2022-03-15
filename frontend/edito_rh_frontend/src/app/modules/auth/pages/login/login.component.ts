@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { Store } from '@ngrx/store';
-import { historyChange, showFooterChange, showHeaderMenuChange, showSideNavChange, sideNavItemsChange } from 'src/app/shared/components/layout/state/layout.actions';
+import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
+import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
 import { loginChange } from '../../state/auth.actions';
 import { Login } from '../../state/auth.interface';
-
 
 
 
@@ -20,21 +19,24 @@ export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
 
 
-  constructor(private store:Store<AppState>) { }
+  constructor(private store:Store<AppState>,private Layout:LayoutService) { }
 
   emailPattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
 
   ngOnInit(): void {
-    this.store.dispatch(showSideNavChange({showSideNav:false}))
-    this.store.dispatch(sideNavItemsChange({sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité']}))
-    this.store.dispatch(showFooterChange({showFooter:false}))
-    this.store.dispatch(historyChange({history:{
-      userName:"userName",
-      changeDate:new Date("11/24/2021"),
-      changeOperation:'update'
-    }}))
-    this.store.dispatch(showHeaderMenuChange({showHeaderMenu:false}))
 
+    const layoutConfig:LayoutState={
+      sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
+      showSideNav:false,
+      showFooter:false,
+      showHeaderMenu:false,
+      history:{
+        userName:"userName",
+        changeDate:new Date("11/24/2021"),
+        changeOperation:'update'
+      }
+    }
+    this.Layout.initializeLayout(layoutConfig)
     
     this.loginForm=new FormGroup({
       email: new FormControl('',[
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
   showEmailErrors(){
     let emailError =''
     const emailForm=this.loginForm.controls['email']
-    if(emailForm.value === '')
+    if(emailForm.value === '' || emailForm.value ===null)
       emailError="le champ email est requis"
     else if(emailForm.touched && emailForm.invalid){
       emailError='le champ email est invalide'
@@ -64,7 +66,7 @@ export class LoginComponent implements OnInit {
   showPasswordErrors(){
     let passwordError =''
     const passwordForm=this.loginForm.controls['password']
-    if(passwordForm.value === '')
+    if(passwordForm.value === '' || passwordForm.value ===null)
       passwordError='le champ mot de passe est requis'
     else if(passwordForm.touched && passwordForm.invalid){
       passwordError='le champ mot de passe est invalide'
