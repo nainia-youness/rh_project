@@ -36,11 +36,25 @@
               </mat-form-field>
 
               <div fxLayout="column" fxFlex="40">
-                  <div fxFlex="20"></div>        
-                  <mat-card-actions fxFlex="80" >
+                         
+                  <mat-form-field appearance="fill">
+                    <mat-label>Entité</mat-label>
+                    <mat-select  formControlName="entite" >
+                      <mat-option value="SAPRESS">SAPRESS</mat-option>
+                      <mat-option value="SOCHEPRESS">SOCHEPRESS</mat-option>
+                      <mat-option value="SOTADEC">SOTADEC</mat-option>
+                      <mat-option value="WARAKTRADING">WARAKTRADING</mat-option>
+                    </mat-select>
+                    <mat-error>
+                      {{showEntiteErrors()}}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-card-actions fxFlex="40" >
                     <button mat-raised-button class="login-btn" [disabled]="!loginForm.valid">Login</button>
                   </mat-card-actions>
               </div>
+              
           </form>
         </mat-card-content>
     </mat-card>

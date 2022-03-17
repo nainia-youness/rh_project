@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GestionFonctionsComponent } from './pages/gestion-fonctions/gestion-fonctions.component';
 
 const routes: Routes = [
-  {path:"gestionFonctions",component:GestionFonctionsComponent}
+  {path:"fonctions",component:GestionFonctionsComponent}
 ];
 
 @NgModule({

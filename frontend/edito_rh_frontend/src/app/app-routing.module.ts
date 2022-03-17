@@ -10,7 +10,7 @@ const routes: Routes = [
       canActivate:[AuthGuard]
     },
     {
-      path:'',
+      path:'gestion',
         loadChildren:()=>import('./modules/gestions/gestions.module')
           .then(mod=>mod.GestionsModule),
       canActivate:[AuthGuard]

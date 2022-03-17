@@ -26,7 +26,6 @@ export class GestionFonctionsComponent implements OnInit {
   
   ngOnInit(): void {
     
-
     this.Layout.initializeLayout(this.layoutConfig)
   }
 }

@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
   createLoginForm=()=>{
     this.loginForm=this.fb.group({
       email:['',[Validators.required,Validators.email,Validators.minLength(5),Validators.pattern(this.emailPattern)]],
-      password:['',[Validators.required,Validators.minLength(5)]]
+      password:['',[Validators.required,Validators.minLength(5)]],
+      entite:['',[Validators.required]],
     })
   }
 
@@ -90,11 +91,23 @@ export class LoginComponent implements OnInit {
     return passwordError
   }
 
+  showEntiteErrors(){
+    let entiteError =''
+    const entiteForm=this.loginForm.controls['entite']
+    if(entiteForm.value === '')
+      entiteError='le champ entité est requis'
+    else if(entiteForm.touched && entiteForm.invalid){
+        entiteError='le champ entité est invalide'
+      }
+    return entiteError
+  }
+
   onLogin=()=>{
     const login:Login={
       email:this.loginForm.controls['email'].value,
       password:this.loginForm.controls['password'].value
     }
+    const entite=this.loginForm.controls['entite'].value
     //send this data to the api (service http)
     //decode it with JWT service
     //receive this
@@ -107,8 +120,8 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(loginChange({login:login}))
 
     this.storageService.setItem('user',user)
-
-    this.router.navigate(['gestionFonctions']);
+    this.storageService.setItem('entite',entite)
+    this.router.navigate(['gestion/fonctions']);
     //change the header state to login
     //create guard so that he can t come back to login page
   }
