@@ -1,3 +1,4 @@
+import { authReducer } from "../modules/auth/state/auth.reducer";
 import { authState } from "../modules/auth/state/auth.state";
 import { LayoutState } from "../shared/components/layout/state/layout.interface";
 import { layoutReducer } from "../shared/components/layout/state/layout.reducer";
@@ -13,5 +14,6 @@ export interface AppState {
 
 export const appReducer={
     screenSize:screenSizeReducer,
-    layout:layoutReducer
+    layout:layoutReducer,
+    auth:authReducer
 }

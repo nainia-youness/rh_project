@@ -11,21 +11,22 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class GestionFonctionsComponent implements OnInit {
 
-  constructor(private store:Store<AppState>,private Layout:LayoutService) { }
-
-  ngOnInit(): void {
-    const layoutConfig:LayoutState={
-      sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
-      showSideNav:true,
-      showFooter:true,
-      showHeaderMenu:true,
-      history:{
-        userName:"userName",
-        changeDate:new Date("11/24/2021"),
-        changeOperation:'update'
-      }
+  constructor(private Layout:LayoutService) { }
+  
+  layoutConfig:LayoutState={
+    sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
+    showSideNav:true,
+    showFooter:true,
+    history:{
+      userName:"userName",
+      changeDate:new Date("11/24/2021"),
+      changeOperation:'update'
     }
-    this.Layout.initializeLayout(layoutConfig)
   }
+  
+  ngOnInit(): void {
+    
 
+    this.Layout.initializeLayout(this.layoutConfig)
+  }
 }

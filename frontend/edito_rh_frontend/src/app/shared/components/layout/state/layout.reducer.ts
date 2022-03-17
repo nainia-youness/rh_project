@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store"
-import { historyChange, showFooterChange, showHeaderMenuChange, showSideNavChange, sideNavItemsChange } from "./layout.actions"
+import { historyChange,showFooterChange, showSideNavChange, sideNavItemsChange } from "./layout.actions"
 
 import { initialState } from "./layout.state"
 
@@ -29,12 +29,6 @@ const _layoutReducer= createReducer(
         return {
             ...state,
             history:action.history
-        }
-    }),
-    on(showHeaderMenuChange,(state:any,action)=>{
-        return {
-            ...state,
-            showHeaderMenu:action.showHeaderMenu
         }
     }),
 )

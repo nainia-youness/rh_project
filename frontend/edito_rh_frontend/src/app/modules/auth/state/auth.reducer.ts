@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store"
-import { loginChange } from "./auth.actions"
+import {loginChange } from "./auth.actions"
 import { initialState } from "./auth.state"
 
 

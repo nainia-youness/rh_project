@@ -13,27 +13,36 @@
             <div fxShow.xs="false" style="width: 40px;"></div>
             <div fxLayout="row" fxFlex="80" fxShow.xs="false" fxLayoutAlign="start center">
   
-              <div   fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
+              <div   fxShow.xs="false" *ngIf="isLoggedIn">
   
                     <button mat-flat-button>Traitement</button>
   
               </div>
-              <div   fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
+              <div   fxShow.xs="false" *ngIf="isLoggedIn">
   
                 <button mat-flat-button>Gestion</button>
   
               </div>
-              <div  fxShow.xs="false" *ngIf="showHeaderMenu$ | async">
+              <div  fxShow.xs="false" *ngIf="isLoggedIn">
   
                 <button mat-flat-button>Administration</button>
   
               </div>
             </div>
   
-          <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center">
+          <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center" >
+            <div *ngIf="isLoggedIn">
+              <button mat-button [matMenuTriggerFor]="belowMenu">youness@gmail.com</button>
+              <mat-menu mat-menu #belowMenu="matMenu" yPosition="below" style="background-color: red;">
+                <button mat-menu-item class="user_nav_but" (click)="onLogout()">Se déconnecter</button>
+                <button mat-menu-item class="user_nav_but">Changer de fonction</button>
+              </mat-menu>
+            </div>
             
-            <button mat-flat-button style="width:20px" id="login" (click)="goToLogin()">Login</button>
-            <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()" *ngIf="showHeaderMenu$ | async"><mat-icon>menu</mat-icon></button>
+            <button *ngIf="!(isLoggedIn)" mat-flat-button style="width:20px" id="login" (click)="goToLogin()">Login</button>
+            
+            
+            <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()" *ngIf="isLoggedIn"><mat-icon>menu</mat-icon></button>
   
         </div>
     </mat-toolbar-row>

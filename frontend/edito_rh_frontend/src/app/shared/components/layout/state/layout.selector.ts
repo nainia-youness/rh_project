@@ -22,6 +22,4 @@ export const getHistory=createSelector(getLayoutState,state=>{
     return state.history
 })
 
-export const getShowHeaderMenu=createSelector(getLayoutState,state=>{
-    return state.showHeaderMenu
-})
+
