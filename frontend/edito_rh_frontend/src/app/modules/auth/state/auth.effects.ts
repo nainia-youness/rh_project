@@ -19,11 +19,11 @@ export class AuthEffects{
                     (action)=> this.authService.login(action.email,action.password)//when the action is lunched, execute service
                     .pipe(
                         map((authResponse):any=>loginSuccess({authResponse})),//if successful
-                        catchError((error):any=>{
+                        catchError((error):any=>{//if failure
                             const errorMessage = this.errorHandler.getAuthErrorMessage(error)
                             return of(loginFailure({error:errorMessage}))
                         }
-                        ) //if failure
+                        ) 
                     )
                 ),
             )

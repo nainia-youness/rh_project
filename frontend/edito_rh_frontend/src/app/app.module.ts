@@ -21,6 +21,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { ChooseEntiteDialogComponent } from './shared/components/layout/choose-entite-dialog/choose-entite-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ChooseEntiteDialogComponent } from './shared/components/layout/choose-e
       logOnly: environment.production,
     }),
     BrowserAnimationsModule,
+    FormsModule,
     EffectsModule.forRoot(appEffects)
   ],
   providers: [AuthGuard],

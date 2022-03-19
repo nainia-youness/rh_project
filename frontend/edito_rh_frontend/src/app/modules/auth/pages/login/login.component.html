@@ -42,12 +42,9 @@
                          
                   <mat-form-field appearance="fill">
                     <mat-label>Entité</mat-label>
-                    <mat-select  formControlName="entite" >
-                      <mat-option value="SAPRESS">SAPRESS</mat-option>
-                      <mat-option value="SOCHEPRESS">SOCHEPRESS</mat-option>
-                      <mat-option value="SOTADEC">SOTADEC</mat-option>
-                      <mat-option value="WARAKTRADING">WARAKTRADING</mat-option>
-                    </mat-select>
+                    <mat-select  formControlName="entite" [(ngModel)]="entite">
+                      <mat-option value={{ent}} *ngFor="let ent of entites">{{ent}}</mat-option>
+                    </mat-select> 
                     <mat-error>
                       {{showEntiteErrors()}}
                     </mat-error>

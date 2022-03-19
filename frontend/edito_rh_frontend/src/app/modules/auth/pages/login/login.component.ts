@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
   authResponse$!:Observable<AuthResponse>
   error$!:Observable<string | undefined>
-
+  entite:string=""
+  entites: string[] = ['SAPRESS', 'SOCHEPRESS', 'SOTADEC', 'WARAKTRADING'];
   
   layoutConfig:LayoutState={
     sideNavItems:[],
@@ -113,9 +114,6 @@ export class LoginComponent implements OnInit {
     const email=this.loginForm.controls['email'].value
     const password=this.loginForm.controls['password'].value
     const entite=this.loginForm.controls['entite'].value
-    //send this data to the api (service http)
-    //decode it with JWT service
-    //receive this
  
     this.store.dispatch(loginStart({password,email}))
     
@@ -135,10 +133,7 @@ export class LoginComponent implements OnInit {
       select(getLoginFailure),
       filter( val=> val !== undefined)
     )
-   
-
-    //change the header state to login
-    //create guard so that he can t come back to login page
+  
   }
 
 

@@ -1,1 +1,10 @@
-<p>choose-entite-dialog works!</p>
+<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+<mat-radio-group fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px" [(ngModel)]="entite">
+    <div>Choisissez une Entité</div>
+    <mat-radio-button value={{ent}} *ngFor="let ent of entites">{{ent}}</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-card-actions  >
+    <button mat-raised-button class="login-btn" (click)="updateEntite()">Confirmer</button>
+  </mat-card-actions>
+</div>
