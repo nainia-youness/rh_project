@@ -7,14 +7,12 @@ import { GestionTemplateComponent } from './components/gestion-template/gestion-
 import { MaterialModule } from 'src/app/core/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChooseEntiteComponent } from './components/dialogs/choose-entite/choose-entite.component';
 
 
 @NgModule({
   declarations: [
     GestionFonctionsComponent,
     GestionTemplateComponent,
-    ChooseEntiteComponent,
   ],
   imports: [
     CommonModule,

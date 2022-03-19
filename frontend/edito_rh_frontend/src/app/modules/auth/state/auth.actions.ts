@@ -1,7 +1,7 @@
 import { createAction,props} from "@ngrx/store";
 import { AuthResponse } from "src/app/core/services/http/auth.interface";
 
-export enum ActionTypes {
+enum ActionTypes {
     LOGIN = '[Login Page] Login',
     LOGIN_START = '[Login Page] Login Start',
     LOGIN_SUCCESS= '[Login Page] Login Success',

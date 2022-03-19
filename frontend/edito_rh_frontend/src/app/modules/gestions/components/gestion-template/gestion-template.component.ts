@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ChooseEntiteComponent } from '../dialogs/choose-entite/choose-entite.component';
 
 
 @Component({
@@ -10,16 +8,10 @@ import { ChooseEntiteComponent } from '../dialogs/choose-entite/choose-entite.co
 })
 export class GestionTemplateComponent implements OnInit {
 
-  constructor(private matDialog:MatDialog) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.openDialog()
   }
 
-  openDialog(): void {
-    this.matDialog.open(ChooseEntiteComponent,{
-      
-    })
-  }
 
 }

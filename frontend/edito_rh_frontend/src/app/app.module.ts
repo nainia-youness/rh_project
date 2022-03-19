@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './core/guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
+import { ChooseEntiteDialogComponent } from './shared/components/layout/choose-entite-dialog/choose-entite-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EffectsModule } from '@ngrx/effects';
     SidenavComponent,
     HeaderSideNavComponent,
     FooterComponent,
+    ChooseEntiteDialogComponent,
   ],
   imports: [
     HttpClientModule,

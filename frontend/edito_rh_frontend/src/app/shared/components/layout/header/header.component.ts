@@ -7,6 +7,8 @@ import { getShowSideNav } from '../state/layout.selector';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { User } from 'src/app/shared/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ChooseEntiteDialogComponent } from '../choose-entite-dialog/choose-entite-dialog.component';
 
 
 
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
     private cdRef : ChangeDetectorRef,
     private router :Router,
     private storageService:StorageService,
+    private matDialog:MatDialog
     ){ }
 
 
@@ -43,6 +46,10 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
     this.isLoggedIn=this.storageService.isLoggedIn()
   }
 
+  openDialog(): void {
+    this.matDialog.open(ChooseEntiteDialogComponent,{})
+  }
+  
   openMenu=()=>{
     this.showMenu=!this.showMenu
   }

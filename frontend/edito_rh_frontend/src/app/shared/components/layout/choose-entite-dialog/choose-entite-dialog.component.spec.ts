@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChooseEntiteComponent } from './choose-entite.component';
+import { ChooseEntiteDialogComponent } from './choose-entite-dialog.component';
 
-describe('ChooseEntiteComponent', () => {
-  let component: ChooseEntiteComponent;
-  let fixture: ComponentFixture<ChooseEntiteComponent>;
+describe('ChooseEntiteDialogComponent', () => {
+  let component: ChooseEntiteDialogComponent;
+  let fixture: ComponentFixture<ChooseEntiteDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChooseEntiteComponent ]
+      declarations: [ ChooseEntiteDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChooseEntiteComponent);
+    fixture = TestBed.createComponent(ChooseEntiteDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

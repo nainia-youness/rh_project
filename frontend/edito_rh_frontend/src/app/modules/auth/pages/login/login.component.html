@@ -1,8 +1,11 @@
 
 
-
 <div fxLayout="column" fxLayoutAlign="center center" class="login">
-    <div fxFlex="5" ></div>
+   
+    <div fxFlex="5">&nbsp;</div>
+    <mat-card fxFlex="5" class="error" *ngIf="error$ | async as error">
+      <div>{{error}}</div>
+    </mat-card>
 
     <mat-card fxFlex="80" fxLayout="column" class="card"  fxLayoutAlign="start center" fxLayoutGap="20px">
         
@@ -50,6 +53,7 @@
                     </mat-error>
                   </mat-form-field>
 
+
                   <mat-card-actions fxFlex="40" >
                     <button mat-raised-button class="login-btn" [disabled]="!loginForm.valid">Login</button>
                   </mat-card-actions>
@@ -61,7 +65,3 @@
 
     <div fxFlex="15"></div>
 </div>
-
-<!--
-
--->

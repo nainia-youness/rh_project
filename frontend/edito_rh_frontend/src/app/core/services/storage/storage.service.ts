@@ -27,14 +27,14 @@ export class StorageService {
       value
     });
   }
- 
+
   getItem(key:string){
     const data=<string>localStorage.getItem(key)
     const parsedData=JSON.parse(data)
     if(parsedData && key==='user') return this.userBuilder.fromParsedData(parsedData)
     return parsedData
   }
-  
+
   removeItem(key:string) {
       localStorage.removeItem(key)
       this.storageSub.next({

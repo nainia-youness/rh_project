@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, pipe } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter,map } from 'rxjs/operators';
 import { AuthResponse } from 'src/app/core/services/http/auth.interface';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
@@ -11,7 +11,7 @@ import { User, UserModel } from 'src/app/shared/models/user.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
 import {loginStart} from '../../state/auth.actions';
-import {getLoginSuccess } from '../../state/auth.selector';
+import {getLoginFailure, getLoginSuccess } from '../../state/auth.selector';
 import { select } from '@ngrx/store';
 import { UserBuilderService } from 'src/app/core/services/utils/user-builder.service';
 
@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit {
 
   loginForm!:FormGroup;
   authResponse$!:Observable<AuthResponse>
+  error$!:Observable<string | undefined>
 
+  
   layoutConfig:LayoutState={
     sideNavItems:[],
     showSideNav:false,
@@ -51,8 +53,6 @@ export class LoginComponent implements OnInit {
 
     this.initializeLayout()
     this.createLoginForm()
-
-  
   }
 
 
@@ -120,17 +120,26 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(loginStart({password,email}))
     
 
-    this.store.select(getLoginSuccess)
-    .subscribe((authResponse)=>{
-      const user=this.userBuilder.fromAuthResponse(authResponse)
-      this.storageService.setItem('user',user)
-      this.storageService.setItem('entite',entite)
-      this.router.navigate(['gestion/fonctions'])
-    })
+    this.store.pipe(
+      select(getLoginSuccess),
+      filter( val=> val !== undefined),
+      map((authResponse)=>{
+          const user=this.userBuilder.fromAuthResponse(authResponse!)
+          this.storageService.setItem('user',user)
+          this.storageService.setItem('entite',entite)
+          this.router.navigate(['gestion/fonctions'])
+      })
+    ).subscribe().unsubscribe()  
 
+    this.error$=this.store.pipe(
+      select(getLoginFailure),
+      filter( val=> val !== undefined)
+    )
+   
 
     //change the header state to login
     //create guard so that he can t come back to login page
   }
-  
+
+
 }
