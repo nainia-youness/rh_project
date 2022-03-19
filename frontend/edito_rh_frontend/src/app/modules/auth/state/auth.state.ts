@@ -1,12 +1,16 @@
-import { Login } from "./auth.interface"
+
+import { AuthResponse } from "src/app/core/services/http/auth.interface"
 
 export interface authState {
-    login:Login,
+    authResponse:AuthResponse,
+    error:string
 }
 
 export const initialState: authState={
-    login:{
-        email:'',
-        password:''
+    authResponse: {
+        firstName:'',
+        lastName:'',
+        email:''
     },
+    error:''
 }

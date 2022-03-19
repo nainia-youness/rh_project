@@ -5,6 +5,12 @@ import { authState } from "./auth.state";
 
 const getAuthState= createFeatureSelector<authState>('auth')
 
-export const getScreenSize =createSelector(getAuthState,state=>{
-    return state.login
+
+export const getLoginSuccess =createSelector(getAuthState,state=>{
+    return state.authResponse
+})
+
+
+export const getLoginFailure =createSelector(getAuthState,state=>{
+    return state.error
 })

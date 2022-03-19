@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
+import { UserBuilderService } from '../utils/user-builder.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class StorageService {
 
   
-  constructor(private store:Store) { }
+  constructor(private store:Store,private userBuilder:UserBuilderService) { }
 
 
   private storageSub= new Subject<any>();
@@ -28,8 +29,10 @@ export class StorageService {
   }
  
   getItem(key:string){
-    const date=<string>localStorage.getItem(key)
-    return JSON.parse(date)
+    const data=<string>localStorage.getItem(key)
+    const parsedData=JSON.parse(data)
+    if(parsedData && key==='user') return this.userBuilder.fromParsedData(parsedData)
+    return parsedData
   }
   
   removeItem(key:string) {

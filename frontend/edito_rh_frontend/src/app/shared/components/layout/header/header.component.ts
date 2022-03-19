@@ -6,6 +6,7 @@ import { SidenavService } from '../services/side-nav.service';
 import { getShowSideNav } from '../state/layout.selector';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
+import { User } from 'src/app/shared/models/user.model';
 
 
 
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
   showMenu:boolean=false
   showSideNav$!:Observable<boolean>
   isLoggedIn:boolean=this.storageService.isLoggedIn()
-
+  user=this.storageService.getItem('user')
 
   constructor(private store:Store<AppState>,
     private sidenav: SidenavService,
@@ -31,9 +32,12 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
 
 
   ngOnInit(): void {
+
     this.storageService.watchStorage().subscribe((data:any) => {
-      if(data.key==='user')
+      if(data.key==='user'){
         this.isLoggedIn=this.storageService.isLoggedIn()
+        this.user=this.storageService.getItem('user')
+      }
     })
     this.showSideNav$= this.store.select(getShowSideNav)
     this.isLoggedIn=this.storageService.isLoggedIn()

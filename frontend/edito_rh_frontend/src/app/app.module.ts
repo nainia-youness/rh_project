@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './core/material.module';
 
-import { appReducer } from './store/app.state';
+import { appEffects, appReducers } from './store/app.state';
 
 import { HeaderSideNavComponent } from './shared/components/layout/header-side-nav/header-side-nav.component';
 import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.component';
@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
 import { FooterComponent } from './shared/components/layout/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './core/guards/auth.guard';
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -28,10 +30,11 @@ import { AuthGuard } from './core/guards/auth.guard';
     FooterComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    StoreModule.forRoot(appReducer),
+    StoreModule.forRoot(appReducers),
     MaterialModule,
     AuthModule,
     StoreDevtoolsModule.instrument({
@@ -39,6 +42,7 @@ import { AuthGuard } from './core/guards/auth.guard';
       logOnly: environment.production,
     }),
     BrowserAnimationsModule,
+    EffectsModule.forRoot(appEffects)
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

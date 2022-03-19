@@ -1,4 +1,19 @@
 import { createAction,props} from "@ngrx/store";
-import { Login } from "./auth.interface";
+import { AuthResponse } from "src/app/core/services/http/auth.interface";
 
-export const loginChange=createAction('loginChange',props<{login:Login}>())
+export enum ActionTypes {
+    LOGIN = '[Login Page] Login',
+    LOGIN_START = '[Login Page] Login Start',
+    LOGIN_SUCCESS= '[Login Page] Login Success',
+    LOGIN_FAILURE= '[Login Page] Login Failure'
+}
+
+
+export const loginStart=createAction(ActionTypes.LOGIN_START,props<{password:string,email:string}>())
+
+
+export const loginSuccess=createAction(ActionTypes.LOGIN_SUCCESS,props<{authResponse:AuthResponse}>())
+
+
+export const loginFailure=createAction(ActionTypes.LOGIN_FAILURE,props<{error:string}>())
+

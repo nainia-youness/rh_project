@@ -2,14 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable, pipe } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { AuthResponse } from 'src/app/core/services/http/auth.interface';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
-import { User } from 'src/app/shared/models/user.model';
+import { User, UserModel } from 'src/app/shared/models/user.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import {loginChange } from '../../state/auth.actions';
-import { Login } from '../../state/auth.interface';
-
+import {loginStart} from '../../state/auth.actions';
+import {getLoginSuccess } from '../../state/auth.selector';
+import { select } from '@ngrx/store';
+import { UserBuilderService } from 'src/app/core/services/utils/user-builder.service';
 
 
 @Component({
@@ -20,6 +24,7 @@ import { Login } from '../../state/auth.interface';
 export class LoginComponent implements OnInit {
 
   loginForm!:FormGroup;
+  authResponse$!:Observable<AuthResponse>
 
   layoutConfig:LayoutState={
     sideNavItems:[],
@@ -36,7 +41,8 @@ export class LoginComponent implements OnInit {
     private Layout:LayoutService,
     private fb:FormBuilder,
     private storageService:StorageService,
-    private router:Router
+    private router:Router,
+    private userBuilder:UserBuilderService
     ) { }
 
   emailPattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
@@ -103,25 +109,26 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin=()=>{
-    const login:Login={
-      email:this.loginForm.controls['email'].value,
-      password:this.loginForm.controls['password'].value
-    }
+
+    const email=this.loginForm.controls['email'].value
+    const password=this.loginForm.controls['password'].value
     const entite=this.loginForm.controls['entite'].value
     //send this data to the api (service http)
     //decode it with JWT service
     //receive this
-    const user:User={
-      email:this.loginForm.controls['email'].value,
-      firstName:"youness",
-      familyName:"nainia"
-      //all user permissions
-    }
-    this.store.dispatch(loginChange({login:login}))
+ 
+    this.store.dispatch(loginStart({password,email}))
+    
 
-    this.storageService.setItem('user',user)
-    this.storageService.setItem('entite',entite)
-    this.router.navigate(['gestion/fonctions']);
+    this.store.select(getLoginSuccess)
+    .subscribe((authResponse)=>{
+      const user=this.userBuilder.fromAuthResponse(authResponse)
+      this.storageService.setItem('user',user)
+      this.storageService.setItem('entite',entite)
+      this.router.navigate(['gestion/fonctions'])
+    })
+
+
     //change the header state to login
     //create guard so that he can t come back to login page
   }

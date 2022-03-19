@@ -32,7 +32,7 @@
   
           <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center" >
             <div *ngIf="isLoggedIn">
-              <button mat-button [matMenuTriggerFor]="belowMenu">youness@gmail.com</button>
+              <button mat-button [matMenuTriggerFor]="belowMenu">sss{{user.email}}</button>
               <mat-menu mat-menu #belowMenu="matMenu" yPosition="below" style="background-color: red;">
                 <button mat-menu-item class="user_nav_but" (click)="onLogout()">Se déconnecter</button>
                 <button mat-menu-item class="user_nav_but">Changer de fonction</button>

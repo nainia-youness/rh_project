@@ -19,6 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
-  ]
+  ],
 })
 export class AuthModule { }

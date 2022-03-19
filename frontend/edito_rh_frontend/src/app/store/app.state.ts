@@ -1,3 +1,4 @@
+import { AuthEffects } from "../modules/auth/state/auth.effects";
 import { authReducer } from "../modules/auth/state/auth.reducer";
 import { authState } from "../modules/auth/state/auth.state";
 import { LayoutState } from "../shared/components/layout/state/layout.interface";
@@ -12,8 +13,12 @@ export interface AppState {
     auth:authState
 }
 
-export const appReducer={
+export const appReducers={
     screenSize:screenSizeReducer,
     layout:layoutReducer,
     auth:authReducer
 }
+
+export const appEffects=[
+    AuthEffects
+]
