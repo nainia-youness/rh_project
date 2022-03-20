@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, pipe } from 'rxjs';
@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
   emailPattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
 
   ngOnInit(): void {
-
     this.initializeLayout()
     this.createLoginForm()
   }
@@ -114,10 +113,8 @@ export class LoginComponent implements OnInit {
     const email=this.loginForm.controls['email'].value
     const password=this.loginForm.controls['password'].value
     const entite=this.loginForm.controls['entite'].value
- 
     this.store.dispatch(loginStart({password,email}))
     
-
     this.store.pipe(
       select(getLoginSuccess),
       filter( val=> val !== undefined),
@@ -127,7 +124,7 @@ export class LoginComponent implements OnInit {
           this.storageService.setItem('entite',entite)
           this.router.navigate(['gestion/fonctions'])
       })
-    ).subscribe().unsubscribe()  
+    ).subscribe()
 
     this.error$=this.store.pipe(
       select(getLoginFailure),
