@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { UserBuilderService } from '../utils/user-builder.service';
+import { UserBuilderService } from '../utils/builders/user_builder/user-builder.service';
+
 
 @Injectable({
   providedIn: 'root'

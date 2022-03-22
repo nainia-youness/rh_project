@@ -1,6 +1,8 @@
 import { createReducer,on } from "@ngrx/store"
+
 import {loginFailure, loginSuccess } from "./auth.actions"
 import { initialState } from "./auth.state"
+
 
 
 const _authReducer= createReducer(
@@ -8,7 +10,7 @@ const _authReducer= createReducer(
     on(loginSuccess,(state:any,action:any)=>{
         return {
             ...state,
-            authResponse:action.authResponse
+            authResponse: action.authResponse
         }
     }),
     on(loginFailure,(state:any,action:any)=>{

@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, Observable,concatMap,switchMap, of } from "rxjs";
-import { AuthService } from "src/app/core/services/http/auth.service";
+
 import { loginFailure, loginStart, loginSuccess } from "./auth.actions";
 import {catchError} from 'rxjs/operators'; 
 import { ErrorHandlerService } from "src/app/core/services/error/error-handler.service";
+import { AuthService } from "src/app/core/services/http/auth/auth.service";
+import { UserBuilderService } from "src/app/core/services/utils/builders/user_builder/user-builder.service";
 
 
 
@@ -18,7 +20,12 @@ export class AuthEffects{
                 concatMap(
                     (action)=> this.authService.login(action.email,action.password)//when the action is lunched, execute service
                     .pipe(
-                        map((authResponse):any=>loginSuccess({authResponse})),//if successful
+                        map((authResponse):any=>{//if successful
+                            const user=this.userBuilder.fromAuthResponse(authResponse!)
+
+                            return loginSuccess({authResponse:user})
+                        
+                        }),
                         catchError((error):any=>{//if failure
                             const errorMessage = this.errorHandler.getAuthErrorMessage(error)
                             return of(loginFailure({error:errorMessage}))
@@ -29,5 +36,10 @@ export class AuthEffects{
             )
     )
 
-    constructor(private actions$: Actions,private authService: AuthService,private errorHandler:ErrorHandlerService){}
+    constructor(
+        private actions$: Actions,
+        private authService: AuthService,
+        private errorHandler:ErrorHandlerService,
+        private userBuilder:UserBuilderService
+        ){}
 }

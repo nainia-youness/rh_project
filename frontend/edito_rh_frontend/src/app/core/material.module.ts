@@ -74,6 +74,7 @@ import {MatDividerModule} from '@angular/material/divider';
         MatDividerModule
     ],
     exports: [
+        MatExpansionModule,
         MatFormFieldModule,
         MatMenuModule,
         MatButtonModule,

@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+
 import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
+import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
+import { gestionPageChange, getFonctionsStart} from '../../state/gestion.actions';
+import { getFonctionsSuccessSelector } from '../../state/gestion.selectors';
 
 @Component({
   selector: 'app-gestion-fonctions',
@@ -10,8 +14,6 @@ import { AppState } from 'src/app/store/app.state';
   styleUrls: ['./gestion-fonctions.component.scss']
 })
 export class GestionFonctionsComponent implements OnInit {
-
-  constructor(private Layout:LayoutService) { }
   
   layoutConfig:LayoutState={
     sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
@@ -25,7 +27,14 @@ export class GestionFonctionsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.store.dispatch(getFonctionsStart())
+    this.store.dispatch(gestionPageChange({gestionPage:"Fonctions"}))
     
     this.Layout.initializeLayout(this.layoutConfig)
+
   }
+
+  constructor(
+    private Layout:LayoutService,
+    private store:Store<AppState>) { }
 }

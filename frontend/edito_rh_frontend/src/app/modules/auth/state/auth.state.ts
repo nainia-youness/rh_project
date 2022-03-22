@@ -1,5 +1,6 @@
+import { AuthResponse } from "src/app/core/services/http/auth/auth.interface"
 
-import { AuthResponse } from "src/app/core/services/http/auth.interface"
+
 
 export interface authState {
     authResponse?:AuthResponse,

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserModel } from 'src/app/shared/models/user.model';
-import { AuthResponse } from '../http/auth.interface';
+import { AuthResponse } from '../../../http/auth/auth.interface';
+
+
 
 @Injectable({
   providedIn: 'root'

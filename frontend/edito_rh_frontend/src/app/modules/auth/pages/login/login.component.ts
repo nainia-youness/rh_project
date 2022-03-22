@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, pipe } from 'rxjs';
 import { filter,map } from 'rxjs/operators';
-import { AuthResponse } from 'src/app/core/services/http/auth.interface';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
 import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
 import { User, UserModel } from 'src/app/shared/models/user.model';
@@ -13,7 +12,7 @@ import { AppState } from 'src/app/store/app.state';
 import {loginStart} from '../../state/auth.actions';
 import {getLoginFailure, getLoginSuccess } from '../../state/auth.selector';
 import { select } from '@ngrx/store';
-import { UserBuilderService } from 'src/app/core/services/utils/user-builder.service';
+import { AuthResponse } from 'src/app/core/services/http/auth/auth.interface';
 
 
 @Component({
@@ -39,14 +38,6 @@ export class LoginComponent implements OnInit {
       changeOperation:''
     }
   }
-
-  constructor(private store:Store<AppState>,
-    private Layout:LayoutService,
-    private fb:FormBuilder,
-    private storageService:StorageService,
-    private router:Router,
-    private userBuilder:UserBuilderService
-    ) { }
 
   emailPattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
 
@@ -119,8 +110,7 @@ export class LoginComponent implements OnInit {
       select(getLoginSuccess),
       filter( val=> val !== undefined),
       map((authResponse)=>{
-          const user=this.userBuilder.fromAuthResponse(authResponse!)
-          this.storageService.setItem('user',user)
+          this.storageService.setItem('user',authResponse)
           this.storageService.setItem('entite',entite)
           this.router.navigate(['gestion/fonctions'])
       })
@@ -133,5 +123,11 @@ export class LoginComponent implements OnInit {
   
   }
 
-
+  constructor(
+    private store:Store<AppState>,
+    private Layout:LayoutService,
+    private fb:FormBuilder,
+    private storageService:StorageService,
+    private router:Router,
+    ) { }
 }
