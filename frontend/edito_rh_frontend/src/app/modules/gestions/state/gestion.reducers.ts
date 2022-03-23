@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { gestionPageChange, getFonctionsFailure, getFonctionsSuccess } from "./gestion.actions"
+import { gestionPageChange, getFonctionsFailure, getFonctionsSuccess, getMetadata } from "./gestion.actions"
 import { initialState } from "./gestion.state"
 
 
@@ -23,6 +23,12 @@ const _gestionReducer= createReducer(
             ...state,
             error:action.error,
             entitiesError:action.error
+        }
+    }),
+    on(getMetadata,(state:any,action:any)=>{
+        return {
+            ...state,
+            metadata:action.metadata
         }
     }),
 )

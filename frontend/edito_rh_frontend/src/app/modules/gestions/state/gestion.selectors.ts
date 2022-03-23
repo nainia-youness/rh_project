@@ -9,7 +9,6 @@ export const getEntitiesSuccessSelector =createSelector(getGestionState,state=>{
     return state.entities
 })
 
-
 export const getEntitiesFailureSelector =createSelector(getGestionState,state=>{
     return state.entitiesError
 })
@@ -23,7 +22,10 @@ export const getFonctionsFailureSelector =createSelector(getGestionState,state=>
     return state.fonctionsError
 })
 
-
 export const gestionPageSelector =createSelector(getGestionState,state=>{
     return state.gestionPage
+})
+
+export const getMetadataSelector =createSelector(getGestionState,state=>{
+    return state.metadata
 })

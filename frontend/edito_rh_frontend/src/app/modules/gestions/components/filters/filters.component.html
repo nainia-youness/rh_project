@@ -1,0 +1,59 @@
+<mat-card class="filtre"  *ngIf="(metadata$ | async) as metadata" style.xs="height: 150px;" ngStyle.gt-xs="60px">
+    <form [formGroup]="filtersForm" (ngSubmit)="confirm()"  fxLayout="column" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+        <mat-form-field  fxFlex="20"  >
+            <mat-label>Filtre</mat-label>
+            <mat-select formControlName="chooseField" (ngModelChange)="updateChosenField()">
+              <div *ngFor="let fieldMetadata of metadata.fields" >
+                <mat-option [value]="fieldMetadata.name">{{fieldMetadata.name}}</mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+
+        <ng-template #filters>
+            <!--string with choices-->
+            <mat-form-field fxFlex="20" *ngIf="chosenField.field_type==='string' && isFieldEnum()" >
+                <mat-label>{{chosenField.name}}</mat-label>
+                <mat-select formControlName="enumStringField">
+                  <mat-option *ngFor="let value of chosenField.values" [value]="value">{{value}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!--string without enum-->
+            <mat-form-field  fxFlex="20" *ngIf="chosenField.field_type==='string' && !isFieldEnum()">
+              <mat-label >{{chosenField.name}}</mat-label>
+              <input matInput formControlName="stringField">
+            </mat-form-field>
+
+            <!--integer-->
+            <mat-form-field  fxFlex="20" *ngIf="chosenField.field_type==='integer'">
+              <mat-label>
+                {{chosenField.name}}
+                <span *ngIf="isAdvancedIntegerFilter">(min)</span>
+              </mat-label>
+              <input matInput formControlName="integerField">
+            </mat-form-field>            
+
+            <mat-form-field  fxFlex="20" *ngIf="chosenField.field_type==='integer' && isAdvancedIntegerFilter">
+              <mat-label>{{chosenField.name}}(max)</mat-label>
+              <input matInput formControlName="integerField2">
+            </mat-form-field>   
+
+            <mat-checkbox *ngIf="chosenField.field_type==='integer'" style="color:red !important"
+            [checked]="isAdvancedIntegerFilter"
+            (change)="updateIsAdvancedIntegerFilter()"></mat-checkbox>
+
+
+
+              <div fxFlex="20"></div>
+
+
+              <div  fxFlex="40" style="text-align: right;">
+                <button  mat-stroked-button class="confirm">Confirmer</button>
+              </div>
+        </ng-template>
+
+        <div *ngIf="filtersForm.controls['chooseField'].value; then filters"></div>
+    </form>
+
+    
+  </mat-card>

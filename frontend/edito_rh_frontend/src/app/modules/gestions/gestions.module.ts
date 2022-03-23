@@ -7,12 +7,16 @@ import { GestionTemplateComponent } from './components/gestion-template/gestion-
 import { MaterialModule } from 'src/app/core/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FiltersComponent } from './components/filters/filters.component';
+import { TableComponent } from './components/table/table.component';
 
 
 @NgModule({
   declarations: [
     GestionFonctionsComponent,
     GestionTemplateComponent,
+    FiltersComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,

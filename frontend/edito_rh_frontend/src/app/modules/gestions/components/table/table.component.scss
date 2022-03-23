@@ -1,0 +1,51 @@
+@import "../../../../../styles/variables.scss";
+
+.table .header {
+  background-color: #fffdfa;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.table {
+  width: 1200px !important;
+  padding: 10px 20px 50px 20px !important; //top right bottom left
+}
+
+//add scrollbar
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+.mat-row,
+.mat-header-row {
+  min-width: 2800px !important;
+  width: 100% !important;
+}
+
+mat-header-cell,
+mat-cell {
+  /* 
+      flex-shrink: 0;
+      flex-basis: 35%;
+      */
+  flex: 0 0 35% !important;
+}
+
+//table
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: $light_green !important;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: $base_color !important;
+}
+
+//firstColumn
+
+.firstColumn:hover {
+  background: white !important;
+}
+
+.firstColumn:active {
+  background: white !important;
+}

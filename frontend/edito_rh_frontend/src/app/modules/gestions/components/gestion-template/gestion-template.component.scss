@@ -1,7 +1,7 @@
 @import "../../../../../styles/variables.scss";
 
 .header {
-  background-color: #8fbc8f;
+  background-color: $light_green;
   box-shadow: $lighter_color !important;
 }
 
@@ -14,10 +14,6 @@
   text-align: right !important;
 }
 
-.filter {
-  background-color: whitesmoke !important;
-}
-
 .create {
   background-color: $lighter_color !important;
   color: white;
@@ -25,64 +21,4 @@
 
 .export_all {
   color: $darker_color;
-}
-
-.table .header {
-  background-color: #fffdfa;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.table {
-  padding: 10px 20px 50px 20px !important; //top right bottom left
-}
-
-//add scrollbar
-.overflow-x-auto {
-  overflow-x: auto !important;
-}
-.mat-row,
-.mat-header-row {
-  min-width: 2800px !important;
-  width: 100% !important;
-}
-
-mat-header-cell,
-mat-cell {
-  /* 
-    flex-shrink: 0;
-    flex-basis: 35%;
-    */
-  flex: 0 0 35% !important;
-}
-
-//forms and cards
-.mat-card:not([class*="mat-elevation-z"]) {
-  box-shadow: 0 2px 1px -1px $light_green, 0 1px 1px 0 $light_green,
-    0 1px 3px 0 $light_green;
-}
-
-::ng-deep .mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: $base_color !important;
-}
-
-::ng-deep.mat-form-field-underline {
-  /*change color of underline*/
-  background-color: $lighter_color !important;
-}
-
-::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: $lighter_color !important;
-}
-
-//table
-
-tr.example-element-row:not(.example-expanded-row):hover {
-  background: $light_green !important;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-  background: $base_color !important;
 }
