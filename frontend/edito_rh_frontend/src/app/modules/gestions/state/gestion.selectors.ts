@@ -34,6 +34,6 @@ export const filtersSelector =createSelector(getGestionState,state=>{
     return state.filters
 })
 
-export const CurrentPageSelector =createSelector(getGestionState,state=>{
-    return state.currentPage
+export const pageSelector =createSelector(getGestionState,state=>{
+    return state.page
 })

@@ -3,11 +3,15 @@ import { Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, of } from "rxjs";
 import {catchError} from 'rxjs/operators'; 
 import { ErrorHandlerService } from "src/app/core/services/error/error-handler.service";
-import { getFonctionsFailure, getFonctionsStart, getFonctionsSuccess, getMetadata } from "./gestion.actions";
+import { getFonctionsFailure, getFonctionsStart, getFonctionsSuccess, getMetadata, pageChange } from "./gestion.actions";
 import { FonctionService } from "src/app/core/services/http/fonctions/fonction.service";
 import { FonctionBuilderService } from "src/app/core/services/utils/builders/fonction_builder/fonction-builder.service";
-import { Store } from "@ngrx/store";
+import { Store,select } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
+import { ChangeDetectionStrategy } from "@angular/compiler";
+import { pageSelector } from "./gestion.selectors";
+import { Page } from "./gestion.state";
+import { GridRowStyleBuilder } from "@angular/flex-layout";
 
 
 
@@ -25,6 +29,8 @@ export class GestionsEffects{
                             
                             this.store.dispatch(getMetadata({metadata:res.metaData}))
 
+                            this.changePage(res)
+
                             return getFonctionsSuccess({fonctions:fonctionsModels})
                         }),
                         catchError((error):any=>{
@@ -38,6 +44,35 @@ export class GestionsEffects{
                 ),
             )
     )
+/*
+          if(dataSource!.length<page.rowsPerPage){
+
+              const deepCopy=JSON.parse(JSON.stringify(page))
+              deepCopy.rowsPerPage=dataSource!.length
+              this.store.dispatch(pageChange({page:deepCopy}))
+            }
+*/
+    private changePage(res:any){
+        let result!:Page
+        let rowsPerPage!:number
+        this.store.pipe(
+            select(pageSelector),
+            map((page:Page)=> {
+              result=page
+              if(page.rowsPerPage && res.data){
+                if(res.data.length<page.rowsPerPage){
+                    rowsPerPage=res.data.length
+                }
+              }
+              return page
+            })
+        ).subscribe()
+        const deepCopy=JSON.parse(JSON.stringify(result))
+        //change te rowsPerPage if the number of rows is < to what it s supposed to be
+        if(rowsPerPage) deepCopy.rowsPerPage=rowsPerPage
+        deepCopy.maxPages=res.maxPages
+        this.store.dispatch(pageChange({page:deepCopy}))
+    }
 
     constructor(
         private actions$: Actions,

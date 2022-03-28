@@ -29,9 +29,15 @@ export interface Filter {
     lte?:number
   }
 
+export interface Page {
+    currentPage?:number,
+    rowsPerPage?:number,
+    maxPages?:number,
+}
+
 export interface gestionState {
     filters:Filter[],
-    currentPage:number,
+    page:Page,
     gestionPage:GestionPage,
     entities?:FonctionModel[],
     entitiesError?:string,
@@ -43,7 +49,7 @@ export interface gestionState {
 
 export const initialState: gestionState={
     filters:[],
-    currentPage:1,
+    page:{currentPage:1,rowsPerPage:100},
     metadata:undefined,
     gestionPage:GestionPage.NO_PAGE,
     entities:undefined,

@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageSelector, getEntitiesSuccessSelector, getFonctionsSuccessSelector, getMetadataSelector } from '../../state/gestion.selectors';
+import { gestionPageSelector, getEntitiesSuccessSelector, getFonctionsSuccessSelector, getMetadataSelector, pageSelector } from '../../state/gestion.selectors';
 import { Observable } from 'rxjs';
 import { GestionService } from '../../services/gestion.service';
 import { gestionPageChange } from '../../state/gestion.actions';
-import { GestionPage } from '../../state/gestion.state';
+import { GestionPage, Page } from '../../state/gestion.state';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -17,18 +18,15 @@ import { GestionPage } from '../../state/gestion.state';
   styleUrls: ['./gestion-template.component.scss']
 })
 export class GestionTemplateComponent implements OnInit {
-
+  
+  @Input()
   dataSource$?:Observable<FonctionModel[] | undefined>;
   metadata$!:Observable<any>
+  page$!:Observable<Page>
   gestionPage$!:Observable<string>
   columns:any[]=[]
   displayedColumns:any
   selectedFilter:string=""
-
-  numberRowsPerPage:number=100
-  numberRowsPerPageChoices:number[]=[5, 10, 25, 100]
-  numberOfPages:number=50
-
 
   ngOnInit(): void {
 
@@ -37,8 +35,16 @@ export class GestionTemplateComponent implements OnInit {
       map((gestionPage)=> {
         this.columns=this.gestionService.getColumns(gestionPage)
         this.displayedColumns = this.columns.map(c => c.columnDef);
-        this.getDataSource(gestionPage)
         return gestionPage
+      })
+    )
+
+    
+    this.page$=this.store.pipe(
+      select(pageSelector),
+      filter( val=> val !== undefined),
+      map((page)=> {
+        return page
       })
     )
 
@@ -51,21 +57,7 @@ export class GestionTemplateComponent implements OnInit {
     )
   }
 
-
   @Input() filterApiCall!: () => void;
-
-  getDataSource=(gestionPage:string)=>{
-    this.getFonctions(gestionPage)
-  }
-
-  getFonctions=(gestionPage:string)=>{
-    this.dataSource$=this.store.pipe(
-      filter( ()=> gestionPage===GestionPage.FONCTIONS),
-      select(getEntitiesSuccessSelector),
-      filter( val=> val !== undefined),
-      map((fonctions)=> fonctions)
-    )
-  }
 
   create=()=>{
     console.log("create")

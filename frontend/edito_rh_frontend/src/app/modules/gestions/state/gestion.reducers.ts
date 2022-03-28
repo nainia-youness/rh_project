@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { currentPageChange, filtersChange, gestionPageChange, getFonctionsFailure, getFonctionsSuccess, getMetadata } from "./gestion.actions"
+import {  filtersChange, gestionPageChange, getFonctionsFailure, getFonctionsSuccess, getMetadata, pageChange } from "./gestion.actions"
 import { initialState } from "./gestion.state"
 
 
@@ -37,10 +37,10 @@ const _gestionReducer= createReducer(
             filters:action.filters
         }
     }),
-    on(currentPageChange,(state:any,action:any)=>{
+    on(pageChange,(state:any,action:any)=>{
         return {
             ...state,
-            currentPage:action.currentPage
+            page:action.page
         }
     }),
 )

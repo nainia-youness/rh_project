@@ -5,8 +5,8 @@ import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.state';
 import {select, Store } from '@ngrx/store';
-import { filtersSelector } from 'src/app/modules/gestions/state/gestion.selectors';
-import { Filter } from 'src/app/modules/gestions/state/gestion.state';
+import { filtersSelector, pageSelector } from 'src/app/modules/gestions/state/gestion.selectors';
+import { Filter, Page } from 'src/app/modules/gestions/state/gestion.state';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +21,25 @@ export class FonctionService {
     
     let params = new HttpParams();
 
-    this.store.pipe(
-      select(filtersSelector),
-      filter( val => val.length!==0),
-      map((filters)=> {
-        params=this.addFilterParams(params,filters)
-        return filters
-      })
-    ).subscribe()
-    
+    params=this.addFilterParams(params)
+    params=this.addPageParams(params)
     return this.http.get<any>(this.fonctions_url,{params})
   }
 
   
-  private addFilterParams(params:HttpParams,filters:Filter[]):HttpParams{
+  private addFilterParams(params:HttpParams):HttpParams{
+    this.store.pipe(
+      select(filtersSelector),
+      filter( val => val.length!==0),
+      map((filters)=> {
+        params=this.filterParams(params,filters)
+        return filters
+      })
+    ).subscribe()
+    return params
+  }
+
+  private filterParams(params:HttpParams,filters:Filter[]):HttpParams{
 
       filters.forEach((filter:Filter)=>{
         if(filter.value){//equal
@@ -48,20 +53,25 @@ export class FonctionService {
       return params
   }
 
-  /*private filtersForSameField(filters:Filter[]){
-    let result:Array<Array<Filter>>=[]
-    filters.forEach((filter1:Filter)=>{
-      let filterForOneField:Filter[]=[]
-      filters.forEach((filter2:Filter)=>{
-        if(filter1.field===filter2.field){
-          filterForOneField.push(filter1)
-        }
-      });
-      if(filterForOneField.length!==1) result.push(filterForOneField)
-    });
-    return result
-  }*/
+  private addPageParams(params:HttpParams):HttpParams{
+    this.store.pipe(
+      select(pageSelector),
+      map((page:Page)=> {
+        params=this.pageParams(params,page)
+        return page
+      })
+    ).subscribe()
+    return params
+}
+private pageParams(params:HttpParams,page:Page):HttpParams{
+  const limit=page.rowsPerPage
+  let offset=0
+  if(limit && page.currentPage) offset=limit*(page.currentPage-1)
+  params=params.append(`offset`,`${offset}`)
+  params=params.append(`limit`,`${limit}`)
 
+  return params
+}
 
 
   constructor(private http:HttpClient,private store:Store<AppState>){}

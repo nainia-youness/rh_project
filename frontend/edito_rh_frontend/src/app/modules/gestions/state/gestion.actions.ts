@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store"
 import { FonctionModel } from "src/app/shared/models/fonction.model"
-import { Filter, Metadata } from "./gestion.state"
+import { Filter, Metadata, Page } from "./gestion.state"
 
 
 enum ActionTypes {
@@ -28,4 +28,4 @@ export const getMetadata=createAction(ActionTypes.GET_METADATA,props<{metadata:M
 
 export const filtersChange=createAction(ActionTypes.FILTERS_CHANGE,props<{filters:Filter[]}>())
 
-export const currentPageChange=createAction(ActionTypes.CURRENT_PAGE_CHANGE,props<{currentPage:number}>())
+export const pageChange=createAction(ActionTypes.CURRENT_PAGE_CHANGE,props<{page:Page}>())
