@@ -16,13 +16,13 @@
           <mat-icon>download</mat-icon>
         </button>
       </div>
-      
     </div>
   </mat-card>
 
-  <app-filters [metadata$]="metadata$"></app-filters>
-  <mat-paginator fxFlex="10" [length]="100"
-              [pageSize]="10"
+  <app-filters [filterApiCall]="filterApiCall" [metadata$]="metadata$"></app-filters>
+  <mat-paginator *ngIf="(dataSource$ | async)" fxFlex="10" 
+              [length]=numberOfPages.toString()
+              [pageSize]=numberRowsPerPage.toString()
               [pageSizeOptions]="[5, 10, 25, 100]"
               aria-label="Select page">
 </mat-paginator>

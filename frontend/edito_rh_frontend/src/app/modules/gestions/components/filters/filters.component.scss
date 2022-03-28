@@ -10,6 +10,13 @@
   color: white;
 }
 
+.confirm:disabled {
+  background-color: $lighter_color !important;
+  pointer-events: none !important;
+  opacity: 0.8;
+  color: white;
+}
+
 //forms and cards
 .mat-card:not([class*="mat-elevation-z"]) {
   box-shadow: 0 2px 1px -1px $light_green, 0 1px 1px 0 $light_green,

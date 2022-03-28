@@ -1,7 +1,6 @@
 import { FonctionModel } from "src/app/shared/models/fonction.model"
 
 
-
 export enum GestionPage {
     NO_PAGE="",
     FONCTIONS = "Fonctions",
@@ -23,10 +22,16 @@ export interface Field{
 export interface Metadata {
     fields:Field[]
 }
-
-
+export interface Filter {
+    field:string,
+    value?:number,
+    gte?:number,
+    lte?:number
+  }
 
 export interface gestionState {
+    filters:Filter[],
+    currentPage:number,
     gestionPage:GestionPage,
     entities?:FonctionModel[],
     entitiesError?:string,
@@ -37,6 +42,8 @@ export interface gestionState {
 
 
 export const initialState: gestionState={
+    filters:[],
+    currentPage:1,
     metadata:undefined,
     gestionPage:GestionPage.NO_PAGE,
     entities:undefined,

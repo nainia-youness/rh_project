@@ -1,6 +1,27 @@
-<mat-card class="filtre"  *ngIf="(metadata$ | async) as metadata" style.xs="height: 150px;" ngStyle.gt-xs="60px">
-    <form [formGroup]="filtersForm" (ngSubmit)="confirm()"  fxLayout="column" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
-        <mat-form-field  fxFlex="20"  >
+<mat-card class="filtre"  *ngIf="(metadata$ | async) as metadata" style.xs="height: 150px;" ngStyle.gt-xs="60px" fxLayout="column">
+    <div FxFlex="20" *ngIf="(filters$ | async) as filters">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let filter of filters">
+            <span *ngIf="filter.gte" >
+              {{filter.gte}}<
+            </span>
+            {{filter.field}}
+            <span *ngIf="filter.value" >
+              ={{filter.value}}
+            </span>
+            <span *ngIf="filter.lte" >
+              <{{filter.lte}}
+            </span>
+            <button matChipRemove>
+              <mat-icon (click)="removeFilter(filter)">cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+    </div>
+    <form FxFlex="80" [formGroup]="filtersForm" (ngSubmit)="confirm()"  fxLayout="column" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">  
+      
+  
+      <mat-form-field  fxFlex="20">
             <mat-label>Filtre</mat-label>
             <mat-select formControlName="chooseField" (ngModelChange)="updateChosenField()">
               <div *ngFor="let fieldMetadata of metadata.fields" >
@@ -42,13 +63,10 @@
             [checked]="isAdvancedIntegerFilter"
             (change)="updateIsAdvancedIntegerFilter()"></mat-checkbox>
 
-
-
               <div fxFlex="20"></div>
 
-
-              <div  fxFlex="40" style="text-align: right;">
-                <button  mat-stroked-button class="confirm">Confirmer</button>
+              <div  fxFlex="40" style="text-align: right;" *ngIf="isFieldsEmpty()">
+                <button  mat-stroked-button class="confirm" [disabled]="!filtersForm.valid">Confirmer</button>
               </div>
         </ng-template>
 

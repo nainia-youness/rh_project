@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
@@ -18,13 +18,17 @@ import { GestionPage } from '../../state/gestion.state';
 })
 export class GestionTemplateComponent implements OnInit {
 
-
   dataSource$?:Observable<FonctionModel[] | undefined>;
   metadata$!:Observable<any>
   gestionPage$!:Observable<string>
   columns:any[]=[]
   displayedColumns:any
   selectedFilter:string=""
+
+  numberRowsPerPage:number=100
+  numberRowsPerPageChoices:number[]=[5, 10, 25, 100]
+  numberOfPages:number=50
+
 
   ngOnInit(): void {
 
@@ -47,10 +51,12 @@ export class GestionTemplateComponent implements OnInit {
     )
   }
 
+
+  @Input() filterApiCall!: () => void;
+
   getDataSource=(gestionPage:string)=>{
     this.getFonctions(gestionPage)
   }
-
 
   getFonctions=(gestionPage:string)=>{
     this.dataSource$=this.store.pipe(

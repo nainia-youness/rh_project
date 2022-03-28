@@ -29,3 +29,11 @@ export const gestionPageSelector =createSelector(getGestionState,state=>{
 export const getMetadataSelector =createSelector(getGestionState,state=>{
     return state.metadata
 })
+
+export const filtersSelector =createSelector(getGestionState,state=>{
+    return state.filters
+})
+
+export const CurrentPageSelector =createSelector(getGestionState,state=>{
+    return state.currentPage
+})

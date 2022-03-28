@@ -27,12 +27,18 @@ export class GestionFonctionsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+
     this.store.dispatch(getFonctionsStart())
     this.store.dispatch(gestionPageChange({gestionPage:"Fonctions"}))
     
     this.Layout.initializeLayout(this.layoutConfig)
 
   }
+
+  filterApiCall():void{
+    this.store.dispatch(getFonctionsStart())
+  }
+
 
   constructor(
     private Layout:LayoutService,
