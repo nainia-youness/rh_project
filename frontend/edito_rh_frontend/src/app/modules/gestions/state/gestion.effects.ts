@@ -34,7 +34,7 @@ export class GestionsEffects{
                             return getFonctionsSuccess({fonctions:fonctionsModels})
                         }),
                         catchError((error):any=>{
-                            const errorMessage = this.errorHandler.getAuthErrorMessage(error)
+                            const errorMessage = this.errorHandler.handleError(error)
                             console.log(error)
                             //error.error.message
                             return of(getFonctionsFailure({error:errorMessage}))
@@ -44,14 +44,7 @@ export class GestionsEffects{
                 ),
             )
     )
-/*
-          if(dataSource!.length<page.rowsPerPage){
-
-              const deepCopy=JSON.parse(JSON.stringify(page))
-              deepCopy.rowsPerPage=dataSource!.length
-              this.store.dispatch(pageChange({page:deepCopy}))
-            }
-*/
+    
     private changePage(res:any){
         let result!:Page
         let rowsPerPage!:number

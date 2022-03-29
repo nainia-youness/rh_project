@@ -9,7 +9,7 @@ enum ActionTypes {
     GET_FONCTIONS_SUCCESS = '[Gestion Fonction Page] Get Fonctions Success',
     GET_FONCTIONS_FAILURE = '[Gestion Fonction Page] Get Fonctions Failure',
     FILTERS_CHANGE = '[Gestion Page] Filters change',
-    CURRENT_PAGE_CHANGE = '[Gestion Page] Current Page change',
+    PAGE_CHANGE = '[Gestion Page] Page change',
     GET_METADATA = '[Gestion Pages] Get Metadata',
 }
 
@@ -28,4 +28,4 @@ export const getMetadata=createAction(ActionTypes.GET_METADATA,props<{metadata:M
 
 export const filtersChange=createAction(ActionTypes.FILTERS_CHANGE,props<{filters:Filter[]}>())
 
-export const pageChange=createAction(ActionTypes.CURRENT_PAGE_CHANGE,props<{page:Page}>())
+export const pageChange=createAction(ActionTypes.PAGE_CHANGE,props<{page:Page}>())

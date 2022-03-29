@@ -27,7 +27,7 @@ export class AuthEffects{
                         
                         }),
                         catchError((error):any=>{//if failure
-                            const errorMessage = this.errorHandler.getAuthErrorMessage(error)
+                            const errorMessage = this.errorHandler.handleError(error)
                             return of(loginFailure({error:errorMessage}))
                         }
                         ) 

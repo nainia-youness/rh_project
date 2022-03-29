@@ -6,11 +6,10 @@ export const initialState: LayoutState={
     sideNavItems:[''],
     showSideNav:false,
     showFooter:false,
-    history:{
-        userName:'',
-        changeDate:new Date(),
-        changeOperation:''
-    }
+    entitiesLogs:{},
+    entitiesLogsError:"",
+    fonctionsLogs:{},
+    fonctionsLogsError:""
 } 
 
 

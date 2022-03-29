@@ -10,6 +10,7 @@ import { getEntitiesSuccessSelector, getFonctionsSuccessSelector } from '../../s
 import { GestionPage } from '../../state/gestion.state';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
+import { getFonctionsLogsStart } from 'src/app/shared/components/layout/state/layout.actions';
 
 @Component({
   selector: 'app-gestion-fonctions',
@@ -18,19 +19,14 @@ import { select, Store } from '@ngrx/store';
 })
 export class GestionFonctionsComponent implements OnInit {
   
-  layoutConfig:LayoutState={
+  layoutConfig={
     sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
     showSideNav:true,
     showFooter:true,
-    history:{
-      userName:"userName",
-      changeDate:new Date("11/24/2021"),
-      changeOperation:'update'
-    }
   }
   dataSource$?:Observable<FonctionModel[] | undefined>;
   ngOnInit(): void {
-
+    this.store.dispatch(getFonctionsLogsStart())
     this.store.dispatch(getFonctionsStart())
     this.store.dispatch(gestionPageChange({gestionPage:"Fonctions"}))
     

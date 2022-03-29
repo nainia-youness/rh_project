@@ -7,7 +7,7 @@ export class ErrorHandlerService {
 
   constructor() { }
   
-  getAuthErrorMessage(error:any) {
+  handleError(error:any) {
     switch (error.statusText) {
       case 'Unknown Error':
         return 'Erreur inconnu';

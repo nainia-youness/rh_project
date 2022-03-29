@@ -7,6 +7,7 @@ import { AppState } from 'src/app/store/app.state';
 import {select, Store } from '@ngrx/store';
 import { filtersSelector, pageSelector } from 'src/app/modules/gestions/state/gestion.selectors';
 import { Filter, Page } from 'src/app/modules/gestions/state/gestion.state';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,22 @@ import { Filter, Page } from 'src/app/modules/gestions/state/gestion.state';
 export class FonctionService {
 
 
-  fonctions_url='http://localhost:3000/fonctions'
+  fonctions_url=`${environment.apiUrl}/fonctions`
 
 
   getFonctions():Observable<any>{
     
     let params = new HttpParams();
-
     params=this.addFilterParams(params)
     params=this.addPageParams(params)
     return this.http.get<any>(this.fonctions_url,{params})
   }
 
+  getFonctionsLogs():Observable<any>{
+    const fonctionsLogsUrl=`${this.fonctions_url}/logs`
+    
+    return this.http.get<any>(fonctionsLogsUrl)
+  }
   
   private addFilterParams(params:HttpParams):HttpParams{
     this.store.pipe(

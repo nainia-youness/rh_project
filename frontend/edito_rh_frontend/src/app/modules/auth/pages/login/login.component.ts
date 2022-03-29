@@ -28,15 +28,10 @@ export class LoginComponent implements OnInit {
   entite:string=""
   entites: string[] = ['SAPRESS', 'SOCHEPRESS', 'SOTADEC', 'WARAKTRADING'];
   
-  layoutConfig:LayoutState={
+  layoutConfig={
     sideNavItems:[],
     showSideNav:false,
     showFooter:false,
-    history:{
-      userName:"",
-      changeDate:new Date(),
-      changeOperation:''
-    }
   }
 
   emailPattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'

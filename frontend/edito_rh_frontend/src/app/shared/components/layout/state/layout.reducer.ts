@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store"
-import { historyChange,showFooterChange, showSideNavChange, sideNavItemsChange } from "./layout.actions"
+import { GetFonctionsLogsFailure, getFonctionsLogsSuccess,showFooterChange, showSideNavChange, sideNavItemsChange } from "./layout.actions"
 
 import { initialState } from "./layout.state"
 
@@ -25,10 +25,18 @@ const _layoutReducer= createReducer(
             showFooter:action.showFooter
         }
     }),
-    on(historyChange,(state:any,action)=>{
+    on(getFonctionsLogsSuccess,(state:any,action:any)=>{
         return {
             ...state,
-            history:action.history
+            fonctionsLogs:action.fonctionsLogs,
+            entitiesLogs:action.fonctionsLogs,
+        }
+    }),
+    on(GetFonctionsLogsFailure,(state:any,action:any)=>{
+        return {
+            ...state,
+            fonctionsLogsError:action.fonctionsLogsError,
+            entitiesLogsError:action.entitiesLogsError
         }
     }),
 )
