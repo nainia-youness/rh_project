@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
 
     # project apps
-    'fonctions'
+    'apps.fonctions'
 ]
 
 MIDDLEWARE = [

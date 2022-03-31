@@ -4,3 +4,4 @@ from .models import Fonction
 
 
 admin.site.register(Fonction)
+
