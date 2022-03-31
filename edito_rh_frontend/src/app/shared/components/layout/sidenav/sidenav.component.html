@@ -1,3 +1,15 @@
+<!--<div fxLayout="row">
+  <div  #sidenav mode="push"  id="sidenav">ssssssssssss</div>
+  <router-outlet></router-outlet>
+
+</div>
+<div ngStyle.gt-xs="height:20px" ngStyle.xs="height:50px"></div>
+<app-footer></app-footer>
+-->
+
+
+
+
 
 <mat-sidenav-container class="container">
   <mat-sidenav  fixedInViewport="true" #sidenav [opened]="false" mode="push"  id="sidenav" >
@@ -9,9 +21,6 @@
         </a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-      <router-outlet></router-outlet>
-      <div ngStyle.gt-xs="height:20px" ngStyle.xs="height:50px"></div>
-      <app-footer></app-footer>
-  </mat-sidenav-content>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
 </mat-sidenav-container>

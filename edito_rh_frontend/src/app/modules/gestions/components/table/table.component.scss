@@ -1,0 +1,64 @@
+@import "../../../../../styles/variables.scss";
+
+.table .header {
+  background-color: #fffdfa;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.table {
+  width: 1200px !important;
+  //width: 100% !important;
+  padding: 10px 20px 50px 20px !important; //top right bottom left
+  overflow-x: scroll !important;
+}
+
+//make table scrollable
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  .mat-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+  }
+  .mat-row,
+  .mat-header-row {
+    display: table-row;
+  }
+  .mat-cell,
+  .mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+}
+
+//table
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: $light_green !important;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: $base_color !important;
+}
+
+//firstColumn
+
+.firstColumn:hover {
+  background: white !important;
+}
+
+.firstColumn:active {
+  background: white !important;
+}

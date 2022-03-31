@@ -33,7 +33,7 @@ export class GestionService {
       },*/
       {
         columnDef: 'id',
-        header: '',
+        header: 'id',
         cell: (element: FonctionModel) => `${element.id}`,
       },
       {

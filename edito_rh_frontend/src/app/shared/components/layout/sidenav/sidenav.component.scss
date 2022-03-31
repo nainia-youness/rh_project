@@ -1,0 +1,23 @@
+@import "../../../../../styles/variables.scss";
+
+.container {
+  height: 100vh;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-x: hidden !important;
+}
+
+#sidenav {
+  background-color: $base_color;
+}
+
+.nav-item {
+  color: white;
+  font-size: 12px;
+  text-align: center;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+  overflow-x: hidden;
+}

@@ -1,10 +1,7 @@
-<table  *ngIf="(dataSource$ | async) as dataSource" style="overflow-x: auto !important;" mat-table [dataSource]="dataSource" class="mat-elevation-z8 overflow-x-auto" class="table">
+<div class="table-responsive">
+  <table  *ngIf="(dataSource$ | async) as dataSource"  mat-table [dataSource]="dataSource" class="table">
     <div *ngFor="let column of columns ;   let i = index" [attr.data-index]="i"  [matColumnDef]="column.columnDef">
 
-
-
-      
- 
         <th mat-header-cell *matHeaderCellDef class="header">
           {{column.header}}
         </th>
@@ -14,10 +11,9 @@
           {{column.cell(row)}}
         </td>
 
-
-
     </div>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="example-element-row" (click)="goToEntity()" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+</table>
+</div>

@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test\r test commit\r dddd\r aaaaa",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nainia-youness/testRepo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nainia-youness/testRepo/issues"
+  },
+  "homepage": "https://github.com/nainia-youness/testRepo#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-oauth2-bearer": "^0.4.1",
+    "express-oauth2-jwt-bearer": "^1.0.1",
+    "keycloak-verify": "^0.4.0"
+  }
+}

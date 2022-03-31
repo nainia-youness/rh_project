@@ -48,6 +48,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     EffectsModule.forRoot(appEffects)
   ],
+  exports:[
+    FooterComponent
+  ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })

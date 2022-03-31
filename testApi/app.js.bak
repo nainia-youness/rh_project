@@ -1,0 +1,97 @@
+const express = require('express')
+const app = express()
+const port = 3000
+const request = require('request');
+const cors = require('cors')
+
+const keycloakHost = 'localhost';
+const keycloakPort = '8080';
+const realmName = 'myrealm';
+const bodyParser = require('body-parser');
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json('application/json'));
+/*
+// check each request for a valid bearer token
+app.use((req, res, next) => {
+  // assumes bearer token is passed as an authorization header
+  if (req.headers.authorization) {
+    // configure the request to your keycloak server
+    const options = {
+      method: 'GET',
+      url: `http://${keycloakHost}:${keycloakPort}/auth/realms/${realmName}/protocol/openid-connect/userinfo`,
+      headers: {
+        // add the token you received to the userinfo request, sent to keycloak
+        Authorization: req.headers.authorization,
+      },
+    };
+
+    // send a request to the userinfo endpoint on keycloak
+    request(options, (error, response, body) => {
+      if (error) throw new Error(error);
+
+      // if the request status isn't "OK", the token is invalid
+      if (response.statusCode !== 200) {
+        return res.status(401).json({
+          error: `unauthorized`,
+        });
+      }
+      // the token is valid pass request onto your next function
+      else {
+        console.log(response.body)
+        req.user = response.body;
+        next();
+      }
+    });
+  } else {
+    // there is no token, don't process request further
+    return res.status(401).json({
+    error: `unauthorized`,
+  });
+}
+})
+*/
+let data=[
+  {firstName:"peter",email:"dqsdqs546",password:"123",age:15,lastName:"dsds"},
+  {firstName:"Sam",email:"dqsdqscxcx546",password:"123",age:18,lastName:"dsds"},
+  {firstName:"Jonas",email:"dqqsqsdqs54qsdqsd6",password:"123",age:15,lastName:"dsds"},
+  {firstName:"Josag",email:"dqsdccccqs546",password:"123",age:15,lastName:"dsds"},
+]
+
+/*
+app.get('/users',(req, res) => {
+  res.send(data)
+})
+
+*/
+
+app.post('/users',(req, res) => {
+  //postData={email:req.body.name,"email":req.body.email,"age":req.body.age}
+  //data.push(postData)
+
+  res.send({firstName:"peter",lastName:"dsds",email:"dqsdqs546"})
+})
+
+/*
+let users=[]
+app.post('/auth',(req, res) => {
+  postData={"email":req.body.email,"password":req.body.password}
+  users.push(postData)
+
+  res.send(postData)
+})
+*/
+/*
+
+app.get('/hello/hi', (req, res) => {
+    //throw Error('error')
+    res.status(200).send('hello hi')
+    /*setTimeout(function() {
+      res.status(200).send('hello')
+    }, 3000);*/
+    //res.status(200).send('hello')
+  //})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})

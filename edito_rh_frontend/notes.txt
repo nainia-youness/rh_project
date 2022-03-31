@@ -1,0 +1,99 @@
+-------------------grid list-------------------------
+-
+https://www.concretepage.com/angular-material/angular-material-grid-list
+https://material.angularjs.org/1.1.1/demo/gridList
+https://material.angular.io/components/grid-list/overview
+https://www.tutorialspoint.com/angular_material7/angular_material7_grid_list.htm
+-
+mat-grid-list cols="4" rowHeight="100px"  gutterSize="15px"
+guttersize space btw elements
+-
+<mat-grid-tile rowspan="2" colspan="2">1111</mat-grid-tile>
+
+rowspan: how many rows the column will take
+colspan: number of columns teh item will take
+-
+-forms
+https://angular.io/api/forms/AbstractControl#value
+-create a guard
+ng g guard auth
+-
+!!x (if x exist return true, otherwise return false)
+-
+--------------------effects-------------------------
+-https://www.youtube.com/watch?v=uyW48EQge-8&t=492s
+-
+creating of updating something : use concatMap
+GET/ use exhaustMap
+deleting: mergeMap 
+don t need the previous record:switchMap
+-
+flatMap/mergeMap - creates an Observable immediately for any source item, all previous Observables are kept alive. Note flatMap is an alias for mergeMap and flatMap will be removed in RxJS 8.
+concatMap - waits for the previous Observable to complete before creating the next one
+switchMap - for any source item, completes the previous Observable and immediately creates the next one
+exhaustMap - source items are ignored while the previous Observable is not completed
+-
+-----------------------------------------------------
+-confirmer =>send request api=> page 1, each time 
+
+
+-api url
+http://example.com/articles?color=red&date=value1?sort=+author,-datepublished?offset=10&limit=5
+
+(created by dale or elaine or jules)
+createdBy=dale|elaine|jules  
+
+BETTER WAY:
+Filtering with the filter query parameter
+
+?filter=and(eq(createdBy,'dale'),eq(name,'Production%20Report'))
+ lt(a,b,c,d) is equivalent to and(lt(a,b),lt(b,c),lt(c,d)) (that is, a < b && b < c && c < d.)
+and(le(minInclusive,x),lt(x,maxExclusive)).    (minInclusive ≤ x < maxExclusive)
+
+eq($tertiary, a, b,...) (equal)
+ne($tertiary, a, b) (not equal)
+lt($tertiary, a, b,...) (less than)
+le($tertiary, a, b,...) (less than or equal)
+gt($tertiary, a, b,...) (greater than)
+ge($tertiary, a, b,...) (greater than or equal)
+in($tertiary, e, v0, v1 [,..., vn])
+contains($tertiary, e, substring)
+startsWith($tertiary, e, prefix)
+endsWith($tertiary, e, suffix)
+https://developer.sas.com/reference/filtering/
+
+
+(specify the columns needed)
+?fields=items.id,items.displayName 
+
+https://developer.sas.com/reference/filtering/
+
+url encoded
+
+error messsage format=
+{
+  "errors": [
+   {
+    "userMessage": "Sorry, the requested resource does not exist",
+    "internalMessage": "No car found in the database",
+    "code": 34,
+    "more info": "http://dev.mwaysolutions.com/blog/api/v1/errors/12345"
+   }
+  ]
+}
+
+rest api best practices
+https://medium.com/@mwaysolutions/10-best-practices-for-better-restful-api-33a25a4e92c1
+
+https://restfulapi.net/resource-naming/
+
+LHS BracketsPermalink
+and => ,
+or =>;
+no need 
+https://stackoverflow.com/questions/40618327/how-to-design-generic-filtering-operators-in-the-query-string-of-an-api
+------------------------------------------------
+
+    //page 1   limit=100    offset=0
+    //page 2   limit=100    offset=100
+------------------------------------------------

@@ -1,0 +1,59 @@
+-create virtual env : virtualenv -p python3 venv
+-then activate it with: venv\Scripts\activate
+-pip list
+
+-genrate requirement: pip freeze > requirements.txt
+-create venv from requirement: 
+virtualenv -p python3 venv
+venv\Scripts\activate
+pip install -r requirements.txt
+----------------------------------
+-django-admin startproject edito_rh_frontend
+-python manage.py runserver
+--------------settings-----------------
+-Secret key: every django project have a secret key
+-installed apps
+---------------apps-----------------
+-python manage.py startapp fonctions
+-in your app add urls.py
+-django can be server side rendering , templates
+----------------------------------
+-Django can do either, but it is designed to render on the server side in its default 
+configuration, not the client side. To use server side rendering, use Django as intended 
+and according to the many tutorials out there. To use client side rendering with something 
+like React or Vue, use the Django Rest Framework.
+----------------------------------
+-pip install djangorestframework
+in installed_apps add
+"rest_framework",
+
+-django https://www.youtube.com/watch?v=OTmQOjsl0eg
+-django rest framework 
+----------------serializers-------------------
+-before sending data to client we serialize it to json
+-python manage.py migrate
+sync the django project with the db 
+-python manage.py createsuperuser
+superuser
+username:edito
+password:groupe_edito@2022
+------------connect database to django------------
+-mysql 
+pip install pymysql
+
+
+
+- python manage.py inspectdb > models.py
+-python manage.py makemigrations
+-python manage.py migrate
+-
+----------------------------------------
+from rest_framework.views import APIView
+
+generic views and mixins
+----------------------------------------
+-create folder apps
+-cd apps
+-django-admin startapp fonctions
+add this in installed apps setting
+'apps.app_1'

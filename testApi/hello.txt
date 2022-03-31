@@ -1,0 +1,69 @@
+-----------------1 ere point scanne-----------------------
+-OT est affecte au chauffeur, le chauffeur doit scanner le colis lui meme
+-transporteur externe (le chauffeur n'a pas de compte quand ce n est ni ramassage ni livraison)
+dans le transport primaire , on a que les transporteur externe
+-quand il scanne le colis, un nouveau colis est cree et ca prend bcp de temps +5min/colis
+-Ahmed
+-creer vehicule sans conducteur
+-OTL OTR livreur conducteur 
+-dans le meme OT on a livreur et conducteur
+-il y a aussi des cas ou le conducteur externe meme dans otl et otr
+-transport dedie , le compte externe est fait avec le compte de l agence ou compte platforme
+------------------1 ere point scanne-----------------------
+-pas de retour deocumentataire
+-le bouton livrer est tjrs visible
+-les colis livre ne s'affiche pas dans la gestion de caisse
+-prb demande de passage: src et dest ne sont pas visible. le canvas exporter vers tms est different
+-dans cnss, meme code a barre pour 5 colis
+-lorceque qu on scanne 2 fois, il ne trouve pas le code a barre. donc il cree un nouveau colis
+prb car le scanne est plus rapide
+il les archives pour l'instant
+automatise larchivage des colis doublants
+-
+-exporter TMS 6 ou 7 colonnes qui sont differents
+ils peuvent pas planifier les demandes de passages a cause de ca
+meme dans les demandes , expediteurs sont faut
+-
+-demande de passage on a warak cnss
+-
+-
+-
+-
+-------------------ants-----------------------
+-export de odoo
+-fait des changement
+-import de antsroute
+-
+-
+-phase cible (cahier de charge)
+-abderahmane ajoute un caractere au numero de colis quand on a un repport
+-prise en charge 
+---------
+-on a activer acceptation aut pour cnss apres l avoir essayer chez inwi
+-acceptation automatique: demande sans verification: accepter automatiquement, sinon humain
+-si le champs est vide , ca passe quand meme
+---------
+-affect
+-si on a 2 jihane
+-dans le bl il prend le dernier nom
+-
+-select id_colis from colis where otl=X 
+-dans otl on a id_livreur
+-select id_colis from colis where otl.id_livreur
+-
+
+
+
+
+-dans la cnss
+-il y a des colis ou on les as phisiquement avec code a barre mais il ne sont pas dans le 
+systeme
+-il y'a des colis avec le code a barre double
+-
+-
+-
+-
+-
+-
+-
+-
