@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import pymysql
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# db
+pymysql.install_as_MySQLdb()
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party apps
+    "rest_framework",
+
+    # project apps
+    'fonctions'
 ]
 
 MIDDLEWARE = [
@@ -75,8 +85,12 @@ WSGI_APPLICATION = 'edito_rh_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "bd_rh",
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
