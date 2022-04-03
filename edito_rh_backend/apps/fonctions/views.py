@@ -1,18 +1,25 @@
-import datetime
+
+
 from django.http import HttpResponse, JsonResponse
-
-from .serializer import FonctionSerializer
-from .models import Fonction
-
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework import generics
+import sys
 from rest_framework import mixins
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+from .models import Fonction
+from .serializer import FonctionSerializer
+import datetime
+
+
+from commonn.filter_parser import get_filter
+
+
+sys.path.insert(1, '../../commonn')
 
 
 class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
@@ -20,6 +27,43 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     serializer_class = FonctionSerializer
     queryset = Fonction.objects.all()
     lookup_field = 'id'
+    region_separator = ","
+
+    def get_queryset(self, id=None):
+
+        filter = self.request.query_params.get('filter')
+        # field param
+        fields_params = self.request.query_params.get('fields', None)
+        fields = fields_params.split(',')
+        # sort param
+        sort_params = self.request.query_params.get('sort', None)
+        sort = sort_params.split(',')
+        # limit and offset params
+        limit = self.request.query_params.get('limit', None)
+        offset = self.request.query_params.get('offset', None)
+        # distinct param
+        distinct_field = self.request.query_params.get('distinct', None)
+
+        # apply params
+        q = Fonction.objects.all()
+        if(filter is not None):
+            q = q.filter(get_filter(filter))
+
+        if id == None:
+            if(len(sort) != 0):
+                q = q.order_by(*sort)
+            # if(distinct_field is not None):
+            #    q = q.distinct()
+            if(limit is not None and offset is not None):
+                q = q[int(offset):int(limit)]
+
+        # if(len(fields) != 0):
+        #    print("hhhhh")
+        #    print(fields)
+
+        #q = q.values('description')
+
+        return q
 
     def get(self, request, id=None):
         if id:

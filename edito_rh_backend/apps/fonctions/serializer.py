@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 
 class FonctionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Fonction
         fields = '__all__'
