@@ -46,7 +46,13 @@ INSTALLED_APPS = [
     "rest_framework",
 
     # project apps
-    'apps.fonctions'
+    'apps.fonctions',
+    'apps.entites',
+    'apps.centres_cout',
+    'apps.directions',
+    'apps.villes',
+    'apps.contrats',
+    'apps.affectations',
 ]
 
 MIDDLEWARE = [

@@ -16,10 +16,10 @@ from .serializer import FonctionSerializer
 import datetime
 
 
-from commonn.filter_parser import get_filter
+from common.filter_parser import get_filter
 
 
-sys.path.insert(1, '../../commonn')
+sys.path.insert(1, '../../common')
 
 
 class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
@@ -27,7 +27,6 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     serializer_class = FonctionSerializer
     queryset = Fonction.objects.all()
     lookup_field = 'id'
-    region_separator = ","
 
     def get_queryset(self, id=None):
 
