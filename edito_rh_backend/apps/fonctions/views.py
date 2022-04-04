@@ -28,42 +28,6 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     queryset = Fonction.objects.all()
     lookup_field = 'id'
 
-    def get_queryset(self, id=None):
-
-        filter = self.request.query_params.get('filter')
-        # field param
-        fields_params = self.request.query_params.get('fields', None)
-        fields = fields_params.split(',')
-        # sort param
-        sort_params = self.request.query_params.get('sort', None)
-        sort = sort_params.split(',')
-        # limit and offset params
-        limit = self.request.query_params.get('limit', None)
-        offset = self.request.query_params.get('offset', None)
-        # distinct param
-        distinct_field = self.request.query_params.get('distinct', None)
-
-        # apply params
-        q = Fonction.objects.all()
-        if(filter is not None):
-            q = q.filter(get_filter(filter))
-
-        if id == None:
-            if(len(sort) != 0):
-                q = q.order_by(*sort)
-            # if(distinct_field is not None):
-            #    q = q.distinct()
-            if(limit is not None and offset is not None):
-                q = q[int(offset):int(limit)]
-
-        # if(len(fields) != 0):
-        #    print("hhhhh")
-        #    print(fields)
-
-        #q = q.values('description')
-
-        return q
-
     def get(self, request, id=None):
         if id:
             return self.retrieve(request)
@@ -78,13 +42,81 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     def delete(self, request, id=None):
         return self.destroy(request, id)
 
+    def get_queryset(self, id=None):
+
+        filter = self.request.query_params.get('filter')
+        # field param
+        fields_params = self.request.query_params.get('fields', None)
+
+        # sort param
+        sort_params = self.request.query_params.get('sort', None)
+
+        # limit and offset params
+        limit = self.request.query_params.get('limit', None)
+        offset = self.request.query_params.get('offset', None)
+        # distinct param
+        distinct_field = self.request.query_params.get('distinct', None)
+
+        # apply params
+        q = Fonction.objects.all()
+        if(filter is not None):
+            q = q.filter(get_filter(filter))
+
+        if id == None:
+            if(sort_params is not None):
+                sort = sort_params.split(',')
+                q = q.order_by(*sort)
+            # if(distinct_field is not None):
+            #fields = fields_params.split(',')
+            #    q = q.distinct()
+            if(limit is not None and offset is not None):
+                q = q[int(offset):int(limit)]
+
+        # if(len(fields) != 0):
+        #    print("hhhhh")
+        #    print(fields)
+
+        #q = q.values('description')
+
+        return q
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        metadata = {
+            'fields': [
+                {
+                    'name': "id",
+                    'field_type': "integer"
+                },
+                {
+                    'name': "designation",
+                    'field_type': "string"
+                },
+                {
+                    'name': "description",
+                    'field_type': "string"
+                },
+            ]
+        }
+        response = {
+            'data': serializer.data,
+            'metadata': metadata
+        }
+        return Response(data=response, status=status.HTTP_200_OK)
+
 
 class FonctionAPIView(APIView):
 
     def get(self, request):
         fonctions = Fonction.objects.all()
         serializer = FonctionSerializer(fonctions, many=True)
-        return Response(serializer.data)
+
+        response = {
+            'data': serializer.data,
+            'metadata': 'hello'
+        }
+        return Response(data=response, status=status.HTTP_201_CREATED)
 
     def post(self, request):
         serializer = FonctionSerializer(data=request.data)

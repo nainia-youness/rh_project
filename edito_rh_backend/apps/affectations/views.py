@@ -3,7 +3,8 @@ from .serializer import AffectationSerializer
 from .models import Affectation
 from rest_framework import mixins
 from rest_framework import generics
-
+from rest_framework import status
+from rest_framework.response import Response
 from common.filter_parser import get_filter
 
 
@@ -15,6 +16,20 @@ class AffectationsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Cr
     serializer_class = AffectationSerializer
     queryset = Affectation.objects.all()
     lookup_field = 'id'
+
+    def get(self, request, id=None):
+        if id:
+            return self.retrieve(request)
+        return self.list(request)
+
+    def post(self, request):
+        return self.create(request)
+
+    def put(self, request, id=None):
+        return self.update(request, id)
+
+    def delete(self, request, id=None):
+        return self.destroy(request, id)
 
     def get_queryset(self, id=None):
 
@@ -45,16 +60,27 @@ class AffectationsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Cr
 
         return q
 
-    def get(self, request, id=None):
-        if id:
-            return self.retrieve(request)
-        return self.list(request)
-
-    def post(self, request):
-        return self.create(request)
-
-    def put(self, request, id=None):
-        return self.update(request, id)
-
-    def delete(self, request, id=None):
-        return self.destroy(request, id)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        metadata = {
+            'fields': [
+                {
+                    'name': "id",
+                    'field_type': "integer"
+                },
+                {
+                    'name': "designation",
+                    'field_type': "string"
+                },
+                {
+                    'name': "description",
+                    'field_type': "string"
+                },
+            ]
+        }
+        response = {
+            'data': serializer.data,
+            'metadata': metadata
+        }
+        return Response(data=response, status=status.HTTP_200_OK)

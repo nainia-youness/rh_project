@@ -4,6 +4,8 @@ from .serializer import EntiteSerializer
 from .models import Entite
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import status
+from rest_framework.response import Response
 
 from common.filter_parser import get_filter
 
@@ -59,3 +61,28 @@ class EntitesView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateM
 
     def delete(self, request, id=None):
         return self.destroy(request, id)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        metadata = {
+            'fields': [
+                {
+                    'name': "id",
+                    'field_type': "integer"
+                },
+                {
+                    'name': "designation",
+                    'field_type': "string"
+                },
+                {
+                    'name': "description",
+                    'field_type': "string"
+                },
+            ]
+        }
+        response = {
+            'data': serializer.data,
+            'metadata': metadata
+        }
+        return Response(data=response, status=status.HTTP_200_OK)
