@@ -17,7 +17,7 @@ import datetime
 
 
 from common.filter_parser import get_filter
-
+from common.api_metadata import APIMetadata
 
 sys.path.insert(1, '../../common')
 
@@ -83,22 +83,11 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
+        metadata_generator = APIMetadata()
         metadata = {
-            'fields': [
-                {
-                    'name': "id",
-                    'field_type': "integer"
-                },
-                {
-                    'name': "designation",
-                    'field_type': "string"
-                },
-                {
-                    'name': "description",
-                    'field_type': "string"
-                },
-            ]
+            'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
+
         response = {
             'data': serializer.data,
             'metadata': metadata
