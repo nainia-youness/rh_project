@@ -6,7 +6,7 @@ from django.db import models
 class Ville(models.Model):
     nom = models.CharField(max_length=255)
     derniere_operation = models.TextField()
-    date_derniere_operation = models.DateTimeField(blank=True, null=True)
+    date_derniere_operation = models.DateTimeField(auto_now=True)
     user_id = models.IntegerField()
 
     class Meta:

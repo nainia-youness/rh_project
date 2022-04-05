@@ -1,74 +1,23 @@
 import sys
-from django.shortcuts import render
 from .serializer import CentreCoutSerializer
 from .models import CentreCout
-from rest_framework import mixins
-from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
-from common.filter_parser import get_filter
 from common.api_metadata import APIMetadata
 from ..users.authentication import is_authenticated
+from common.filter_parser import get_queryset
+from rest_framework.views import APIView
 
 sys.path.insert(1, '../../common')
 
 
-class CentresCoutView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
-                      mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
-    serializer_class = CentreCoutSerializer
-    queryset = CentreCout.objects.all()
-    lookup_field = 'id'
+class CentreCoutsAPIView(APIView):
 
-    def get(self, request, id=None):
+    def get(self, request):
         user_id = is_authenticated(self.request)
-        if id:
-            return self.retrieve(request)
-        return self.list(request)
-
-    def post(self, request):
-        user_id = is_authenticated(self.request)
-        return self.create(request)
-
-    def put(self, request, id=None):
-        user_id = is_authenticated(self.request)
-        return self.update(request, id)
-
-    def delete(self, request, id=None):
-        user_id = is_authenticated(self.request)
-        return self.destroy(request, id)
-
-    def get_queryset(self, id=None):
-
-        filter = self.request.query_params.get('filter')
-        # field param
-        fields_params = self.request.query_params.get('fields', None)
-        #fields = fields_params.split(',')
-        # sort param
-        sort_params = self.request.query_params.get('sort', None)
-        # limit and offset params
-        limit = self.request.query_params.get('limit', None)
-        offset = self.request.query_params.get('offset', None)
-        # distinct param
-        distinct_field = self.request.query_params.get('distinct', None)
-
-        # apply params
-
-        q = CentreCout.objects.all()
-        if(filter is not None):
-            q = q.filter(get_filter(filter))
-
-        if id == None:
-            if(sort_params is not None):
-                sort = sort_params.split(',')
-                q = q.order_by(*sort)
-            if(limit is not None and offset is not None):
-                q = q[int(offset):int(limit)]
-
-        return q
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(queryset, many=True)
+        centreCouts = CentreCout.objects.all()
+        centreCouts = get_queryset(request, centreCouts)
+        serializer = CentreCoutSerializer(centreCouts, many=True)
         metadata_generator = APIMetadata()
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
@@ -79,5 +28,45 @@ class CentresCoutView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Cre
         }
         return Response(data=response, status=status.HTTP_200_OK)
 
+    def post(self, request):
+        user_id = is_authenticated(self.request)
+        request.data['user_id'] = user_id
+        request.data['derniere_operation'] = 'Ajouter'
+        serializer = CentreCoutSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# Create your views here.
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CentreCoutAPIView(APIView):
+
+    def get_object(self, id):
+        try:
+            return CentreCout.objects.get(id=id)
+        except CentreCout.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, id):
+        user_id = is_authenticated(self.request)
+        centreCout = self.get_object(id)
+        serializer = CentreCoutSerializer(centreCout)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, id):
+        user_id = is_authenticated(self.request)
+        request.data['user_id'] = user_id
+        request.data['derniere_operation'] = 'Modifier'
+        centreCout = self.get_object(id)
+        serializer = CentreCoutSerializer(centreCout, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        user_id = is_authenticated(self.request)
+        centreCout = self.get_object(id)
+        centreCout.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

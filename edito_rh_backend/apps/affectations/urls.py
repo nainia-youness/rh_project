@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import AffectationsView
+from .views import AffectationsAPIView, AffectationAPIView
 
 urlpatterns = [
-    path('affectations/<int:id>/', AffectationsView.as_view()),
-    path('affectations/', AffectationsView.as_view())
+    path('affectations/<int:id>/', AffectationAPIView.as_view()),
+    path('affectations/', AffectationsAPIView.as_view())
 ]

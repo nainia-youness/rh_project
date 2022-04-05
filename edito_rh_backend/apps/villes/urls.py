@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import VillesView
+from .views import VilleAPIView, VillesAPIView
 
 urlpatterns = [
-    path('villes/<int:id>/', VillesView.as_view()),
-    path('villes/', VillesView.as_view())
+    path('villes/<int:id>/', VilleAPIView.as_view()),
+    path('villes/', VillesAPIView.as_view())
 ]

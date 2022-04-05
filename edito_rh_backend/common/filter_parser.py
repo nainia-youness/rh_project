@@ -115,3 +115,39 @@ def simple_filter(exp):
     parameters_dict[left] = exp['right']
 
     return Q(**parameters_dict)
+
+
+def get_queryset(request, query):
+    filter = request.query_params.get('filter', None)
+    # field param
+    fields_params = request.query_params.get('fields', None)
+
+    # sort param
+    sort_params = request.query_params.get('sort', None)
+
+    # limit and offset params
+    limit = request.query_params.get('limit', None)
+    offset = request.query_params.get('offset', None)
+    # distinct param
+    distinct_field = request.query_params.get('distinct', None)
+
+    if(filter is not None):
+        query = query.filter(get_filter(filter))
+
+    if id == None:
+        if(sort_params is not None):
+            sort = sort_params.split(',')
+            query = query.order_by(*sort)
+        # if(distinct_field is not None):
+        #fields = fields_params.split(',')
+        #    query = query.distinct()
+        if(limit is not None and offset is not None):
+            query = query[int(offset):int(limit)]
+
+    # if(len(fields) != 0):
+    #    print("hhhhh")
+    #    print(fields)
+
+    #query = query.values('description')
+
+    return query

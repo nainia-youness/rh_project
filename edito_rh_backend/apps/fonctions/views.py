@@ -18,10 +18,70 @@ from .serializer import FonctionSerializer
 import datetime
 
 
-from common.filter_parser import get_filter
+from common.filter_parser import get_filter, get_queryset
 from common.api_metadata import APIMetadata
 
 sys.path.insert(1, '../../common')
+
+
+class FonctionsAPIView(APIView):
+
+    def get(self, request):
+        user_id = is_authenticated(self.request)
+        fonctions = Fonction.objects.all()
+        fonctions = get_queryset(request, fonctions)
+        serializer = FonctionSerializer(fonctions, many=True)
+        metadata_generator = APIMetadata()
+        metadata = {
+            'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
+        }
+        response = {
+            'data': serializer.data,
+            'metadata': metadata
+        }
+        return Response(data=response, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        user_id = is_authenticated(self.request)
+        request.data['user_id'] = user_id
+        request.data['derniere_operation'] = 'Ajouter'
+        serializer = FonctionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FonctionAPIView(APIView):
+
+    def get_object(self, id):
+        try:
+            return Fonction.objects.get(id=id)
+        except Fonction.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, id):
+        user_id = is_authenticated(self.request)
+        fonction = self.get_object(id)
+        serializer = FonctionSerializer(fonction)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, id):
+        user_id = is_authenticated(self.request)
+        request.data['user_id'] = user_id
+        request.data['derniere_operation'] = 'Modifier'
+        fonction = self.get_object(id)
+        serializer = FonctionSerializer(fonction, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        user_id = is_authenticated(self.request)
+        fonction = self.get_object(id)
+        fonction.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
@@ -50,7 +110,7 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
 
     def get_queryset(self, id=None):
 
-        filter = self.request.query_params.get('filter')
+        filter = self.request.query_params.get('filter', None)
         # field param
         fields_params = self.request.query_params.get('fields', None)
 
@@ -99,53 +159,6 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
             'metadata': metadata
         }
         return Response(data=response, status=status.HTTP_200_OK)
-
-
-class FonctionAPIView(APIView):
-
-    def get(self, request):
-        fonctions = Fonction.objects.all()
-        serializer = FonctionSerializer(fonctions, many=True)
-
-        response = {
-            'data': serializer.data,
-            'metadata': 'hello'
-        }
-        return Response(data=response, status=status.HTTP_201_CREATED)
-
-    def post(self, request):
-        serializer = FonctionSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class FonctionDetails(APIView):
-
-    def get_object(self, id):
-        try:
-            return Fonction.objects.get(id=id)
-        except Fonction.DoesNotExist:
-            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-
-    def get(self, request, id):
-        fonction = self.get_object(id)
-        serializer = FonctionSerializer(fonction)
-        return Response(serializer.data)
-
-    def put(self, request, id):
-        fonction = self.get_object(id)
-        serializer = FonctionSerializer(fonction, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, id):
-        fonction = self.get_object(id)
-        fonction.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])
