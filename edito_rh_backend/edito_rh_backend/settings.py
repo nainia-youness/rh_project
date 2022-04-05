@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third party apps
     "rest_framework",
-
+    "corsheaders",
     # project apps
     'apps.fonctions',
     'apps.entites',
@@ -53,11 +53,13 @@ INSTALLED_APPS = [
     'apps.villes',
     'apps.contrats',
     'apps.affectations',
+    'apps.users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,9 +92,18 @@ WSGI_APPLICATION = 'edito_rh_backend.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'main_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "bd_rh",
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'users_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'user',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -119,6 +130,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -138,3 +155,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'users.User'
+DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',
+                    'routers.db_routers.MainRouter']
+
+CORS_ORIGIN_ALLOW_ALL = True
+# so that the frontend will be able to access teh cookies
+CORS_ALLOW_CREDENTIALS = True

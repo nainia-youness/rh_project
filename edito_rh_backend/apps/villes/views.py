@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from common.api_metadata import APIMetadata
 from common.filter_parser import get_filter
-
+from ..users.authentication import is_authenticated
 
 sys.path.insert(1, '../../common')
 
@@ -20,17 +20,21 @@ class VillesView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateMo
     lookup_field = 'id'
 
     def get(self, request, id=None):
+        user = is_authenticated(self.request)
         if id:
             return self.retrieve(request)
         return self.list(request)
 
     def post(self, request):
+        user = is_authenticated(self.request)
         return self.create(request)
 
     def put(self, request, id=None):
+        user = is_authenticated(self.request)
         return self.update(request, id)
 
     def delete(self, request, id=None):
+        user = is_authenticated(self.request)
         return self.destroy(request, id)
 
     def get_queryset(self, id=None):

@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
+
+from ..users.authentication import is_authenticated
 from .models import Fonction
 from .serializer import FonctionSerializer
 import datetime
@@ -29,17 +31,21 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     lookup_field = 'id'
 
     def get(self, request, id=None):
+        user_id = is_authenticated(self.request)
         if id:
             return self.retrieve(request)
         return self.list(request)
 
     def post(self, request):
+        user_id = is_authenticated(self.request)
         return self.create(request)
 
     def put(self, request, id=None):
+        user_id = is_authenticated(self.request)
         return self.update(request, id)
 
     def delete(self, request, id=None):
+        user_id = is_authenticated(self.request)
         return self.destroy(request, id)
 
     def get_queryset(self, id=None):

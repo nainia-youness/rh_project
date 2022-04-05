@@ -2,10 +2,12 @@
 -then activate it with: venv\Scripts\activate
 -pip list
 
--genrate requirement: pip freeze > requirements.txt
+-generate requirement: pip freeze > requirements.txt
 -create venv from requirement: 
 virtualenv -p python3 venv
 venv\Scripts\activate
+-make vs code with venv
+palette => >python select interpreter => add path to venv/scripts/python.exe
 pip install -r requirements.txt
 ----------------------------------
 -django-admin startproject edito_rh_frontend
@@ -46,6 +48,7 @@ pip install pymysql
 - python manage.py inspectdb > models.py
 -python manage.py makemigrations
 -python manage.py migrate
+-python manage.py migrate --database=users
 -
 ----------------------------------------
 from rest_framework.views import APIView
@@ -72,3 +75,20 @@ q2 = User.objects.filter(income__gte=5000) | User.objects.filter(income__isnull=
 
 .filter(somethin).filter(something_else)
 .filter(entry__headline__contains='Lennon', entry__pub_date__year=2008)
+-----------------------------
+metadata
+https://johnfraney.ca/blog/typescript-synchronize-django-rest-framework-vue-js/
+
+-----------------------------
+
+python manage.py migrate --database=users_db
+python manage.py migrate --database=main_db
+python manage.py createsuperuser --database=users_db
+
+user1@gmail.com
+
+manage.py makemigrations (when you add a model)
+-----------------------------
+pip install PyJWT
+pip install django-cors-headers
+
