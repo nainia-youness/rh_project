@@ -1,4 +1,6 @@
 import sys
+
+from django.http import Http404
 from .serializer import EntiteSerializer
 from .models import Entite
 from rest_framework import status
@@ -7,7 +9,7 @@ from common.api_metadata import APIMetadata
 from ..users.authentication import is_authenticated
 from common.filter_parser import get_queryset
 from rest_framework.views import APIView
-
+from common.response_handler import handle_error, handle_successful_response
 sys.path.insert(1, '../../common')
 
 
@@ -22,11 +24,11 @@ class EntitesAPIView(APIView):
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
-        response = {
-            'data': serializer.data,
-            'metadata': metadata
-        }
-        return Response(data=response, status=status.HTTP_200_OK)
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+        ]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
         user_id = is_authenticated(self.request)
@@ -35,9 +37,10 @@ class EntitesAPIView(APIView):
         serializer = EntiteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            key_values = [{'key': 'data','value': serializer.data}]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
 class EntiteAPIView(APIView):
@@ -46,13 +49,14 @@ class EntiteAPIView(APIView):
         try:
             return Entite.objects.get(id=id)
         except Entite.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            raise Http404
 
     def get(self, request, id):
         user_id = is_authenticated(self.request)
         entite = self.get_object(id)
         serializer = EntiteSerializer(entite)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        key_values = [{'key': 'data','value': serializer.data}]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
         user_id = is_authenticated(self.request)
@@ -62,11 +66,14 @@ class EntiteAPIView(APIView):
         serializer = EntiteSerializer(entite, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            key_values = [{'key': 'data','value': serializer.data}]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
+
+        return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         user_id = is_authenticated(self.request)
         entite = self.get_object(id)
         entite.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        key_values = [{'key': 'message','value': 'entite deleted'}]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_204_NO_CONTENT)

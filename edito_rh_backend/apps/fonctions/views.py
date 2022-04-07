@@ -1,5 +1,6 @@
 
 
+from django.http import Http404
 from django.http import HttpResponse, JsonResponse
 import sys
 from rest_framework import mixins
@@ -20,6 +21,7 @@ import datetime
 
 from common.filter_parser import get_filter, get_queryset
 from common.api_metadata import APIMetadata
+from common.response_handler import handle_error, handle_successful_response
 
 sys.path.insert(1, '../../common')
 
@@ -35,21 +37,24 @@ class FonctionsAPIView(APIView):
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
-        response = {
-            'data': serializer.data,
-            'metadata': metadata
-        }
-        return Response(data=response, status=status.HTTP_200_OK)
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+        ]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
         user_id = is_authenticated(self.request)
         request.data['user_id'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
-        serializer = FonctionSerializer(data=request.data)
+        serializer = FonctionSerializer(
+            data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            key_values = [{'key': 'data','value': serializer.data}]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_201_CREATED)
+
+        return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
 class FonctionAPIView(APIView):
@@ -58,13 +63,14 @@ class FonctionAPIView(APIView):
         try:
             return Fonction.objects.get(id=id)
         except Fonction.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            raise Http404
 
     def get(self, request, id):
         user_id = is_authenticated(self.request)
         fonction = self.get_object(id)
         serializer = FonctionSerializer(fonction)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        key_values = [{'key': 'data','value': serializer.data}]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
         user_id = is_authenticated(self.request)
@@ -74,14 +80,16 @@ class FonctionAPIView(APIView):
         serializer = FonctionSerializer(fonction, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            key_values = [{'key': 'data','value': serializer.data}]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
+        return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         user_id = is_authenticated(self.request)
         fonction = self.get_object(id)
         fonction.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        key_values = [{'key': 'message','value': 'fonction deleted'}]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_204_NO_CONTENT)
 
 
 class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
