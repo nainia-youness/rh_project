@@ -10,13 +10,13 @@ def handle_successful_response(key_values=[], status=None, cookies=[]):
     }
     if(len(key_values) != 0):
         for key_value in key_values:
-            response[key_value.key] = key_value.value
+            response[key_value['key']] = key_value['value']
 
     res = Response(data=response, status=status)
     if(len(cookies) != 0):
         for cookie in cookies:
-            res.set_cookie(key=cookie.key,
-                           value=cookie.value, httponly=True)
+            res.set_cookie(key=cookie['key'],
+                           value=cookie['value'], httponly=True)
     return res
 
 

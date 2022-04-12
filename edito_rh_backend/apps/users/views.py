@@ -40,21 +40,21 @@ class LoginView(APIView):
         refresh_token = create_refresh_token(user)
 
         #response = Response(status=status.HTTP_200_OK)
-        #response.set_cookie(key='refreshToken',
+        # response.set_cookie(key='refreshToken',
         #                    value=refresh_token, httponly=True)
-        #response.data = {
+        # response.data = {
         #    'token': access_token
-        #}
-        key_values = [{
-            'key': 'token',
-            'value': access_token
-        }]
-        cookies=[{
-            'key': 'refreshToken',
-            'value': refresh_token
-        }]
-        return handle_successful_response(key_values=key_values,cookies=cookies,status=status.HTTP_200_OK)
-        #return response
+        # }
+        key_values = [
+            {'key': 'access_token', 'value': access_token},
+            {'key': 'refresh_token', 'value': refresh_token}
+        ]
+        # cookies = [{
+        #    'key': 'refreshToken',
+        #    'value': refresh_token
+        # }]
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
+        # return response
 
 
 class UserView(APIView):
@@ -67,12 +67,11 @@ class UserView(APIView):
             id = decode_access_token(token)
             user = User.objects.filter(id=id).first()
             serializer = UserSerializer(user)
-            key_values = [{
-                'key': 'data',
-                'value': serializer.data
-            }]
-            return handle_successful_response(key_values=key_values,status=status.HTTP_200_OK)
-            #return Response(serializer.data)
+            key_values = [
+                {'key': 'data', 'value': serializer.data}
+            ]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
+            # return Response(serializer.data)
         else:
             raise AuthenticationFailed('unauthenticated')
 
@@ -80,34 +79,37 @@ class UserView(APIView):
 class RefreshView(APIView):
 
     def post(self, request):
-        refresh_token = request.COOKIES.get('refreshToken')
+        refresh_token = request.data['refresh_token']
+        #access_token = request.data['access_token']
+        #refresh_token = request.COOKIES.get('refreshToken')
         id = decode_refresh_token(refresh_token)
         user = User.objects.filter(id=id).first()
         access_token = create_access_token(user)
         key_values = [{
-                'key': 'token',
-                'value': access_token
+            'key': 'token',
+            'value': access_token
         }]
-        return handle_successful_response(key_values=key_values,status=status.HTTP_200_OK)
-        #return Response({
+        return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
+        # return Response({
         #    'token': access_token
-        #})
+        # })
 
 
 class LogoutView(APIView):
 
     def post(self, request):
-        
+
         #response = Response()
-        #response.delete_cookie(key="refreshToken")
-        #response.data = {
+        # response.delete_cookie(key="refreshToken")
+        # response.data = {
         #    'message': 'success'
-        #}
+        # }
         key_values = [{
             'key': 'message',
             'value': 'success'
         }]
-        res=handle_successful_response(key_values=key_values,status=status.HTTP_200_OK)
+        res = handle_successful_response(
+            key_values=key_values, status=status.HTTP_200_OK)
         res.delete_cookie(key="refreshToken")
         return res
-        #return response
+        # return response

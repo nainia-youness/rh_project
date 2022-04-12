@@ -9,20 +9,38 @@ from common.filter_parser import get_queryset
 from rest_framework.views import APIView
 from common.response_handler import handle_error, handle_successful_response
 from django.http import Http404
+from ..users.models import User
 sys.path.insert(1, '../../common')
 
 
 class CentreCoutsAPIView(APIView):
 
+    def get_User(self, user_id):
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
     def get(self, request):
         user_id = is_authenticated(self.request)
         centreCouts = CentreCout.objects.all()
-        centreCouts = get_queryset(request, centreCouts)
+        centreCouts, max_pages = get_queryset(request, centreCouts)
         serializer = CentreCoutSerializer(centreCouts, many=True)
         metadata_generator = APIMetadata()
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # remove user_id and replace it with nom et prenom of user
+        data = serializer.data
+        for contrat in data:
+            user_id = contrat['user_id']
+            del contrat['user_id']
+            user = self.get_User(user_id)
+            contrat['user_nom'] = user.nom
+            contrat['user_prenom'] = user.prenom
         key_values = [
             {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},

@@ -9,20 +9,38 @@ from common.filter_parser import get_queryset
 from rest_framework.views import APIView
 from common.response_handler import handle_error, handle_successful_response
 from django.http import Http404
+from ..users.models import User
 sys.path.insert(1, '../../common')
 
 
 class DirectionsAPIView(APIView):
 
+    def get_User(self, user_id):
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
     def get(self, request):
         user_id = is_authenticated(self.request)
         directions = Direction.objects.all()
-        directions = get_queryset(request, directions)
+        directions, max_pages = get_queryset(request, directions)
         serializer = DirectionSerializer(directions, many=True)
         metadata_generator = APIMetadata()
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # remove user_id and replace it with nom et prenom of user
+        data = serializer.data
+        for direction in data:
+            user_id = direction['user_id']
+            del direction['user_id']
+            user = self.get_User(user_id)
+            direction['user_nom'] = user.nom
+            direction['user_prenom'] = user.prenom
         key_values = [
             {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},

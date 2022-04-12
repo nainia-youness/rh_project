@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from corsheaders.defaults import default_headers
 import os
 import pymysql
 
@@ -164,3 +165,12 @@ DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',
 CORS_ORIGIN_ALLOW_ALL = True
 # so that the frontend will be able to access teh cookies
 CORS_ALLOW_CREDENTIALS = True
+#CORS_ALLOW_HEADERS = ['*']
+CORS_ORIGIN_WHITELIST = ('http://localhost:4200',)
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Access-Control-Allow-Origin',
+]

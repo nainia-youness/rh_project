@@ -13,6 +13,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
+from ..users.models import User
+
 from ..users.authentication import is_authenticated
 from .models import Fonction
 from .serializer import FonctionSerializer
@@ -28,17 +30,37 @@ sys.path.insert(1, '../../common')
 
 class FonctionsAPIView(APIView):
 
+    def get_User(self, user_id):
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
     def get(self, request):
         user_id = is_authenticated(self.request)
         fonctions = Fonction.objects.all()
-        fonctions = get_queryset(request, fonctions)
+
+        fonctions, max_pages = get_queryset(request, fonctions)
+
         serializer = FonctionSerializer(fonctions, many=True)
         metadata_generator = APIMetadata()
         metadata = {
             'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         }
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # remove user_id and replace it with nom et prenom of user
+        data = serializer.data
+        for fonction in data:
+            user_id = fonction['user_id']
+            del fonction['user_id']
+            user = self.get_User(user_id)
+            fonction['user_nom'] = user.nom
+            fonction['user_prenom'] = user.prenom
+
         key_values = [
-            {'key': 'data', 'value': serializer.data},
+            {'key': 'data', 'value': data},
             {'key': 'metadata', 'value': metadata},
         ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
@@ -51,7 +73,7 @@ class FonctionsAPIView(APIView):
             data=request.data)
         if serializer.is_valid():
             serializer.save()
-            key_values = [{'key': 'data','value': serializer.data}]
+            key_values = [{'key': 'data', 'value': serializer.data}]
             return handle_successful_response(key_values=key_values, status=status.HTTP_201_CREATED)
 
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
@@ -69,7 +91,7 @@ class FonctionAPIView(APIView):
         user_id = is_authenticated(self.request)
         fonction = self.get_object(id)
         serializer = FonctionSerializer(fonction)
-        key_values = [{'key': 'data','value': serializer.data}]
+        key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
@@ -80,7 +102,7 @@ class FonctionAPIView(APIView):
         serializer = FonctionSerializer(fonction, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            key_values = [{'key': 'data','value': serializer.data}]
+            key_values = [{'key': 'data', 'value': serializer.data}]
             return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
@@ -88,7 +110,7 @@ class FonctionAPIView(APIView):
         user_id = is_authenticated(self.request)
         fonction = self.get_object(id)
         fonction.delete()
-        key_values = [{'key': 'message','value': 'fonction deleted'}]
+        key_values = [{'key': 'message', 'value': 'fonction deleted'}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_204_NO_CONTENT)
 
 

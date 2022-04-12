@@ -128,21 +128,25 @@ def get_queryset(request, query):
     # limit and offset params
     limit = request.query_params.get('limit', None)
     offset = request.query_params.get('offset', None)
+    print(limit)
+    print(offset)
     # distinct param
     distinct_field = request.query_params.get('distinct', None)
 
     if(filter is not None):
         query = query.filter(get_filter(filter))
 
-    if id == None:
-        if(sort_params is not None):
-            sort = sort_params.split(',')
-            query = query.order_by(*sort)
-        # if(distinct_field is not None):
-        #fields = fields_params.split(',')
-        #    query = query.distinct()
-        if(limit is not None and offset is not None):
-            query = query[int(offset):int(limit)]
+    max_pages = None
+
+    if(sort_params is not None):
+        sort = sort_params.split(',')
+        query = query.order_by(*sort)
+    # if(distinct_field is not None):
+    #fields = fields_params.split(',')
+    #    query = query.distinct()
+    if(limit is not None and offset is not None):
+        query = query[int(offset):int(limit)]
+        max_pages = query.count()
 
     # if(len(fields) != 0):
     #    print("hhhhh")
@@ -150,4 +154,4 @@ def get_queryset(request, query):
 
     #query = query.values('description')
 
-    return query
+    return query, max_pages
