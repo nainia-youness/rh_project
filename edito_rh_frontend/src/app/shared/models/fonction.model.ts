@@ -1,7 +1,7 @@
 
 export interface Fonction {
     id:number,
-    label:string,
+    designation:string,
     description:string
 }
 
@@ -9,12 +9,12 @@ export interface Fonction {
 export class FonctionModel implements Fonction{
 
     private  _id=0
-    private  _label=""
+    private  _designation=""
     private  _description=""
 
-    constructor(id:number,label:string,description:string){
+    constructor(id:number,designation:string,description:string){
         this._id=id
-        this._label=label
+        this._designation=designation
         this._description=description
     }
 
@@ -22,8 +22,8 @@ export class FonctionModel implements Fonction{
         return this._id;
     }
 
-    get label() {
-        return this._label;
+    get designation() {
+        return this._designation;
     }
 
     get description(){

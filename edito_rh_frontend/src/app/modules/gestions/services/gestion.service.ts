@@ -37,9 +37,9 @@ export class GestionService {
         cell: (element: FonctionModel) => `${element.id}`,
       },
       {
-        columnDef: 'label',
-        header: 'label',
-        cell: (element: FonctionModel) => `${element.label}`,
+        columnDef: 'designation',
+        header: 'designation',
+        cell: (element: FonctionModel) => `${element.designation}`,
       },
       {
         columnDef: 'description',

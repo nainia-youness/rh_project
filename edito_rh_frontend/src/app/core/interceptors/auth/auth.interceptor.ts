@@ -42,6 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(newReq);
       }
       else{//if the access the token is expired
+        console.log('expireddddddddddddddddddddddddddddddddddddddddd')
         this.store.dispatch(getAccessTokenStart({access_token,refresh_token}))
         this.getAccessToken$
         this.store.pipe(

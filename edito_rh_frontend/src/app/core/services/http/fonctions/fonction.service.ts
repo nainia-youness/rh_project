@@ -25,12 +25,6 @@ export class FonctionService {
     params=this.addPageParams(params)
     return this.http.get<any>(this.fonctions_url,{params})
   }
-
-  getFonctionsLogs():Observable<any>{
-    const fonctionsLogsUrl=`${this.fonctions_url}/logs`
-    
-    return this.http.get<any>(fonctionsLogsUrl)
-  }
   
   private addFilterParams(params:HttpParams):HttpParams{
     this.store.pipe(

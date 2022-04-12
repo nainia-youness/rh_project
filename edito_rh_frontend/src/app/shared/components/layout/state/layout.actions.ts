@@ -1,5 +1,6 @@
 import { createAction,props} from "@ngrx/store";
-import { Logs } from "./layout.interface";
+import { Logs } from "src/app/modules/gestions/state/gestion.state";
+
 
 
 

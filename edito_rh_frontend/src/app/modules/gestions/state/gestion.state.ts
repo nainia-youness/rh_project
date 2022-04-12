@@ -35,15 +35,24 @@ export interface Page {
     maxPages?:number,
 }
 
+
+export interface Logs {
+    userName?:string,
+    date_derniere_operation?:Date,
+    derniere_operation?:string
+}
+
+
 export interface gestionState {
     filters:Filter[],
     page:Page,
     gestionPage:GestionPage,
     entities?:FonctionModel[],
-    entitiesError?:string,
     metadata?: Metadata,
     fonctions?:FonctionModel[]
-    fonctionsError?:string
+    error?:string,
+    entitiesLogs:Logs,
+    entitiesLogsError:string,
 }
 
 
@@ -53,7 +62,8 @@ export const initialState: gestionState={
     metadata:undefined,
     gestionPage:GestionPage.NO_PAGE,
     entities:undefined,
-    entitiesError:undefined,
     fonctions:undefined,
-    fonctionsError:undefined
+    error:undefined,
+    entitiesLogs:{},
+    entitiesLogsError:"",
 }

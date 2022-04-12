@@ -10,16 +10,11 @@ export const getEntitiesSuccessSelector =createSelector(getGestionState,state=>{
 })
 
 export const getEntitiesFailureSelector =createSelector(getGestionState,state=>{
-    return state.entitiesError
+    return state.error
 })
 
 export const getFonctionsSuccessSelector =createSelector(getGestionState,state=>{
     return state.fonctions
-})
-
-
-export const getFonctionsFailureSelector =createSelector(getGestionState,state=>{
-    return state.fonctionsError
 })
 
 export const gestionPageSelector =createSelector(getGestionState,state=>{
@@ -36,4 +31,13 @@ export const filtersSelector =createSelector(getGestionState,state=>{
 
 export const pageSelector =createSelector(getGestionState,state=>{
     return state.page
+})
+
+//logs
+export const getEntitiesLogsSuccessSelector =createSelector(getGestionState,state=>{
+    return state.entitiesLogs
+})
+
+export const getEntitiesLogsFailureSelector =createSelector(getGestionState,state=>{
+    return state.entitiesLogsError
 })

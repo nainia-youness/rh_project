@@ -20,16 +20,15 @@
   </mat-card>
 
   <app-filters [filterApiCall]="filterApiCall" [metadata$]="metadata$"></app-filters>
-  <div *ngIf="(dataSource$ | async)" fxFlex="10" >
-    <mat-paginator  *ngIf="(page$ | async) as page"  #paginator
+ <div *ngIf="(dataSource$ | async) && (page$ | async) as page" fxFlex="10" >
+    <mat-paginator *ngIf="page.maxPages && page.rowsPerPage" #paginator
     [length]="page.maxPages!.toString()"
     [pageSize]="page.rowsPerPage!.toString()"
     [hidePageSize]="true"
-    
     aria-label="Select page">
-</mat-paginator>
+    </mat-paginator>
   </div>
-  
+
   <app-table fxFlex="70"  [dataSource$]="dataSource$" [displayedColumns]="displayedColumns" [columns]="columns"></app-table>
   
 </div>

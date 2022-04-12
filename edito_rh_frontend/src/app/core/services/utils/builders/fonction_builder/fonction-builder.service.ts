@@ -17,7 +17,7 @@ export class FonctionBuilderService {
     if(!fonctions) return undefined
     let result:FonctionModel[]=[]
     fonctions.forEach((f:any)=> {
-        const fonction=this.buildFonction(f.id,f.label,f.description)
+        const fonction=this.buildFonction(f.id,f.designation,f.description)
         result.push(fonction)
     });
     return result

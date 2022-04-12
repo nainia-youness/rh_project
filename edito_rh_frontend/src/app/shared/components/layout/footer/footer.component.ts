@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store,select } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
+import { getEntitiesLogsSuccessSelector } from 'src/app/modules/gestions/state/gestion.selectors';
+import { Logs } from 'src/app/modules/gestions/state/gestion.state';
 import { AppState } from 'src/app/store/app.state';
-import { Logs } from '../state/layout.interface';
-import { getEntitiesLogsSuccessSelector, getShowFooter } from '../state/layout.selector';
+import { getShowFooter } from '../state/layout.selector';
 
 @Component({
   selector: 'app-footer',

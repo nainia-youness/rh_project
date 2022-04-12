@@ -20,9 +20,13 @@ import { getFonctionsLogsStart } from 'src/app/shared/components/layout/state/la
 export class GestionFonctionsComponent implements OnInit {
   
   layoutConfig={
-    sideNavItems:['Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
+    sideNavItems:[
+      {title:'Gestion des employés',path:'#'},
+      {title:'Gestion des fonctions',path:'/gestion/fonctions'},
+      {title:'Gestion des directions',path:'#'}
+    ],
     showSideNav:true,
-    showFooter:true,
+    showFooter:false,
   }
   dataSource$?:Observable<FonctionModel[] | undefined>;
   ngOnInit(): void {

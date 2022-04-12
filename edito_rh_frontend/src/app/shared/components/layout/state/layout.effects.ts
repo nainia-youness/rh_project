@@ -13,24 +13,7 @@ import { GetFonctionsLogsFailure, getFonctionsLogsStart, getFonctionsLogsSuccess
 @Injectable()
 export class LayoutEffects{
 
-    layout$:any=createEffect(():any=>
-            this.actions$.pipe(
-                ofType(getFonctionsLogsStart),
-                exhaustMap(
-                    (action)=> this.fonctionService.getFonctionsLogs()
-                    .pipe(
-                        map((fonctionsLogs):any=>{//if successful
-                            return getFonctionsLogsSuccess({fonctionsLogs})
-                        }),
-                        catchError((error):any=>{//if failure
-                            const errorMessage = this.errorHandler.handleError(error)
-                            return of(GetFonctionsLogsFailure({fonctionsLogsError:errorMessage}))
-                        }
-                        ) 
-                    )
-                ),
-            )
-    )
+  
 
     constructor(
         private actions$: Actions,
