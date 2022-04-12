@@ -15,17 +15,17 @@
   
               <div   fxShow.xs="false" *ngIf="isLoggedIn">
   
-                    <button mat-flat-button>Traitement</button>
+                    <button mat-flat-button (click)="goToTraitement()">Traitement</button>
   
               </div>
               <div   fxShow.xs="false" *ngIf="isLoggedIn">
   
-                <button mat-flat-button>Gestion</button>
+                <button mat-flat-button (click)="goToGestion()">Gestion</button>
   
               </div>
               <div  fxShow.xs="false" *ngIf="isLoggedIn">
   
-                <button mat-flat-button>Administration</button>
+                <button mat-flat-button (click)="goToAdministration()">Administration</button>
   
               </div>
             </div>
@@ -52,17 +52,17 @@
   
         <div >
   
-            <button mat-flat-button>Traitement</button>
+            <button mat-flat-button  (click)="goToTraitement()">Traitement</button>
   
         </div>
         <div  >
   
-        <button mat-flat-button>Gestion</button>
+        <button mat-flat-button (click)="goToGestion()">Gestion</button>
   
         </div>
         <div >
   
-        <button mat-flat-button>Administration</button>
+        <button mat-flat-button  (click)="goToAdministration()">Administration</button>
   
         </div>
         </div>

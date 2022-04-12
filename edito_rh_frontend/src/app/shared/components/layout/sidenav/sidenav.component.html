@@ -1,11 +1,10 @@
-
 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   <div *ngFor="let item of (sideNavItems$ | async)">
     <button mat-menu-item>
-      <span>{{item}}</span>
+      <span style="font-size: 20px;" (click)="goToItem(item.path)">{{item.title}}</span>
     </button>
   </div>
 </mat-menu>

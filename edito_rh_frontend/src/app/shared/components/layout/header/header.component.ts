@@ -2,7 +2,6 @@ import { Component, OnInit,AfterViewChecked, ChangeDetectorRef, ChangeDetectionS
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { SidenavService } from '../services/side-nav.service';
 import { getShowSideNav } from '../state/layout.selector';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage/storage.service';
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
   user=this.storageService.getItem('user')
 
   constructor(private store:Store<AppState>,
-    private sidenav: SidenavService,
     private cdRef : ChangeDetectorRef,
     private router :Router,
     private storageService:StorageService,
@@ -47,16 +45,24 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
     this.isLoggedIn=this.storageService.isLoggedIn()
   }
 
+  goToGestion=()=>{
+    this.router.navigate(['/gestion'])
+  }
+
+  goToTraitement=()=>{
+
+  }
+
+  goToAdministration=()=>{
+
+  }
+
   openDialog(): void {
     this.matDialog.open(ChooseEntiteDialogComponent,{})
   }
   
   openMenu=()=>{
     this.showMenu=!this.showMenu
-  }
-
-  openSideNav=()=>{
-    this.sidenav.toggle();
   }
 
   ngAfterViewChecked() {

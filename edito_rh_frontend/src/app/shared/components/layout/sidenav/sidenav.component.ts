@@ -6,7 +6,8 @@ import { AppState } from 'src/app/store/app.state';
 import { getSideNavItems } from '../state/layout.selector';
 
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidenavService } from '../services/side-nav.service';
+import { SideNavItem } from '../state/layout.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,18 +16,18 @@ import { SidenavService } from '../services/side-nav.service';
 })
 export class SidenavComponent implements OnInit,AfterViewChecked{ 
 
-  sideNavItems$!:Observable<string[]>
+  sideNavItems$!:Observable<SideNavItem[]>
   @ViewChild('sidenav') sidenav!:MatSidenav;
 
 
-  constructor(private store: Store<AppState>,private sidenavService: SidenavService,private cdRef : ChangeDetectorRef) { }
+  constructor(private store: Store<AppState>,private cdRef : ChangeDetectorRef,private router :Router,) { }
   
   ngOnInit(): void {
     this.sideNavItems$= this.store.select(getSideNavItems)
   }
-  
-  ngAfterViewInit(): void {
-    this.sidenavService.setSidenav(this.sidenav);
+
+  goToItem=(path:string)=>{
+    this.router.navigate([path])
   }
 
   ngAfterViewChecked() {

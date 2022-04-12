@@ -1,0 +1,39 @@
+@import "../../../../../styles/variables.scss";
+
+.container{
+    
+}
+
+mat-card {
+    height:500px;
+    width:900px;
+    text-align: center;
+    font-weight: 10;
+}
+
+mat-card-content{
+    font-size: 25px;
+}
+
+mat-card-title{
+    font-size: 40px;
+    text-decoration: solid;
+    color: $base_color;
+    font-weight: bold;
+}
+
+button {
+    background-color: $lighter_color !important;
+    color: white;
+    font-size: 25px;
+  }
+  
+button:disabled {
+    background-color: $lighter_color !important;
+    pointer-events: none !important;
+    opacity: 0.8;
+  }
+  
+button:hover {
+    background-color: $darker_color !important;
+  }

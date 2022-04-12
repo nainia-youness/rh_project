@@ -3,7 +3,7 @@ import { LayoutState } from "./layout.interface";
 
 
 export const initialState: LayoutState={
-    sideNavItems:[''],
+    sideNavItems:[{title:'',path:''}],
     showSideNav:false,
     showFooter:false,
     entitiesLogs:{},
