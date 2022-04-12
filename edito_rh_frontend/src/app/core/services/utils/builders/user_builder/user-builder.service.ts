@@ -19,7 +19,6 @@ export class UserBuilderService {
   }
 
   fromResponse(response:any){
-    console.log(response)
     const email=response.email
     const id=response.id
     const nom=response.nom

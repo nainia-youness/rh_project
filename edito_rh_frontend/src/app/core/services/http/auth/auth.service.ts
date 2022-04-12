@@ -28,8 +28,12 @@ export class AuthService {
     return this.http.post<any>(this.auth_url+'/register/',{email,password,nom,prenom},{withCredentials:true})
   }
 
-
   getUser():Observable<any>{
     return this.http.get<any>(this.auth_url+'/user/')
   }
+
+  getNewAccessToken(access_token:string,refresh_token:string):Observable<any>{
+    return this.http.post<any>(this.auth_url+'/refresh/',{access_token,refresh_token})
+  }
+
 }

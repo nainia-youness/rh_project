@@ -13,3 +13,8 @@ export const loginSuccessSelector =createSelector(getAuthState,state=>{
 export const loginFailureSelector =createSelector(getAuthState,state=>{
     return state.error
 })
+
+
+export const getAccessTokenSuccessSelector =createSelector(getAuthState,state=>{
+    return state.accessToken
+})

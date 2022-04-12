@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
     this.storageService.watchStorage().subscribe((data:any) => {
       if(data.key==='user'){
         this.isLoggedIn=this.storageService.isLoggedIn()
+        
         this.user=this.storageService.getItem('user')
       }
     })

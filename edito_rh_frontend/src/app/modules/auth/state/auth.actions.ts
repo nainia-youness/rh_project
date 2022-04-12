@@ -8,8 +8,11 @@ enum ActionTypes {
     LOGIN_SUCCESS= '[Login Page] Login Success',
     LOGIN_FAILURE= '[Login Page] Login Failure',
     GET_USER_START = '[Home Page] Get User Start',
-    GET_USER_SUCCESS= '[Home Page] Get User Success',
-    GET_USER_FAILURE= '[Home Page] Get User Failure',
+    GET_USER_SUCCESS= '[Login Page] Get User Success',
+    GET_USER_FAILURE= '[Login Page] Get User Failure',
+    GET_ACCESS_TOKEN_START = '[Any Pages] Get User Start',
+    GET_ACCESS_TOKEN_SUCCESS= '[Any Page] Get User Success',
+    GET_ACCESS_TOKEN_FAILURE= '[Any Page] Get User Failure',
 }
 
 
@@ -30,3 +33,11 @@ export const getUserSuccess=createAction(ActionTypes.GET_USER_SUCCESS,props<{use
 
 export const getUserFailure=createAction(ActionTypes.GET_USER_FAILURE,props<{error:any}>())
 
+
+export const getAccessTokenStart=createAction(ActionTypes.GET_ACCESS_TOKEN_START,props<{access_token:string,refresh_token:string}>())
+
+
+export const getAccessTokenSuccess=createAction(ActionTypes.GET_ACCESS_TOKEN_SUCCESS,props<{accessToken:string}>())
+
+
+export const getAccessTokenFailure=createAction(ActionTypes.GET_ACCESS_TOKEN_FAILURE,props<{error:any}>())

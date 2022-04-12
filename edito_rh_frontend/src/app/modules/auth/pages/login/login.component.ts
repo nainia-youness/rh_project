@@ -105,7 +105,6 @@ export class LoginComponent implements OnInit {
       select(loginSuccessSelector),
       filter( val=> val !== undefined),
       map((loginResponse)=>{
-        console.log(loginResponse.access_token)
         const access_token=loginResponse.access_token
         const refresh_token=loginResponse.refresh_token
       

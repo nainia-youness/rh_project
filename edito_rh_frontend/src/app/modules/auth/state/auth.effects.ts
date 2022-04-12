@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, Observable,concatMap,switchMap, of } from "rxjs";
 
-import { getUserFailure, getUserStart, getUserSuccess, loginFailure, loginStart, loginSuccess } from "./auth.actions";
+import { getAccessTokenStart, getAccessTokenSuccess, getUserFailure, getUserStart, getUserSuccess, loginFailure, loginStart, loginSuccess } from "./auth.actions";
 import {catchError} from 'rxjs/operators'; 
 import { ErrorHandlerService } from "src/app/core/services/error/error-handler.service";
 import { AuthService } from "src/app/core/services/http/auth/auth.service";
@@ -45,6 +45,27 @@ export class AuthEffects{
                     const user=this.userBuilder.fromResponse(res.data)
                     this.storageService.setItem('user',user)
                     return getUserSuccess({user:user})
+                }),
+                catchError((error):any=>{//if failure
+                    console.log(error)
+                    const errorMessage = this.errorHandler.handleError(error)
+                    return of(getUserFailure({error:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    getAccessToken$:any=createEffect(():any=> //create effect
+    this.actions$.pipe(
+        ofType(getAccessTokenStart),//specify the action you are listening to
+        concatMap(
+            (action)=> this.authService.getNewAccessToken(action.access_token,action.refresh_token)//when the action is lunched, execute service
+            .pipe(
+                map((res):any=>{//if successful
+                    this.storageService.setItem('access_token',res.token)
+                    return getAccessTokenSuccess({accessToken:res.token})
                 }),
                 catchError((error):any=>{//if failure
                     console.log(error)
