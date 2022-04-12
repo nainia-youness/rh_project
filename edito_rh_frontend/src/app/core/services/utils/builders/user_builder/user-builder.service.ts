@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { UserModel } from 'src/app/shared/models/user.model';
-import { AuthResponse } from '../../../http/auth/auth.interface';
-
 
 
 @Injectable({
@@ -13,17 +11,20 @@ export class UserBuilderService {
 
   fromParsedData(parsedData:any){
     const email=parsedData._email
-    const firstName=parsedData._firstName
-    const lastName=parsedData._lastName
-    const user=new UserModel(email,firstName,lastName)
+    const nom=parsedData._nom
+    const prenom=parsedData._prenom
+    const id=parsedData._id
+    const user=new UserModel(email,nom,prenom,id)
     return user
   }
 
-  fromAuthResponse(authResponse:AuthResponse){
-    const email=authResponse.email
-    const firstName=authResponse.firstName
-    const lastName=authResponse.lastName
-    const user=new UserModel(email,firstName,lastName)
+  fromResponse(response:any){
+    console.log(response)
+    const email=response.email
+    const id=response.id
+    const nom=response.nom
+    const prenom=response.prenom
+    const user=new UserModel(email,nom,prenom,id)
     return user
   }
 }

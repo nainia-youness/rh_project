@@ -84,6 +84,7 @@ export class StorageService {
   }
 
   isLoggedIn(){
-    return !!localStorage.getItem('user')
+    return !!(localStorage.getItem('access_token') && localStorage.getItem('refresh_token'))
   }
+
 }

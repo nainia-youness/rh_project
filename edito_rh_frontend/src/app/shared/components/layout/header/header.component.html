@@ -2,11 +2,11 @@
   <div class="header" fxLayout="column">
     <mat-toolbar-row fxLayoutAlign="start center" fxFlexFill >
             <div fxShow.xs="false" style="width: 10px;"></div>
-  
-              <button mat-icon-button color="warn" *ngIf="showSideNav$ | async" (click)="openSideNav()">
-                <mat-icon>more_vert</mat-icon>
-              </button>
 
+             <!-- <button mat-icon-button color="warn" *ngIf="showSideNav$ | async" (click)="openSideNav()">
+                <mat-icon>more_vert</mat-icon>
+              </button>-->
+            <app-sidenav></app-sidenav>
             <span fxFlex.xs="20">
                   My App
             </span>
@@ -32,7 +32,7 @@
   
           <div fxLayout="row" fxFlex.xs="80" fxLayoutAlign="end center" >
             <div *ngIf="isLoggedIn">
-              <button mat-button [matMenuTriggerFor]="belowMenu">sss{{user.email}}</button>
+              <button mat-button [matMenuTriggerFor]="belowMenu" *ngIf="user">{{user.email}}</button>
               <mat-menu mat-menu #belowMenu="matMenu" yPosition="below" style="background-color: red;">
                 <button mat-menu-item class="user_nav_but" (click)="onLogout()">Se déconnecter</button>
                 <button mat-menu-item class="user_nav_but" (click)="openDialog()">Changer de fonction</button>

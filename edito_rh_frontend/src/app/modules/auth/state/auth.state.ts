@@ -1,13 +1,16 @@
-import { AuthResponse } from "src/app/core/services/http/auth/auth.interface"
+import { UserModel } from "src/app/shared/models/user.model"
+
 
 
 
 export interface authState {
-    authResponse?:AuthResponse,
-    error?:string
+    user?:UserModel,
+    error?:string,
+    loginResponse?:any
 }
 
 export const initialState: authState={
-    authResponse:undefined,
-    error:undefined
+    user:undefined,
+    error:undefined,
+    loginResponse:undefined
 }

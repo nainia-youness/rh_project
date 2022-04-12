@@ -20,7 +20,7 @@ import { getFonctionsLogsStart } from 'src/app/shared/components/layout/state/la
 export class GestionFonctionsComponent implements OnInit {
   
   layoutConfig={
-    sideNavItems:['','Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
+    sideNavItems:['Gestion des employés','Gestion des fonctions','Gestion des directions','Gestion des entité'],
     showSideNav:true,
     showFooter:true,
   }

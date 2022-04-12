@@ -9,7 +9,6 @@ import { MaterialModule } from './core/material.module';
 
 import { appEffects, appReducers } from './store/app.state';
 
-import { HeaderSideNavComponent } from './shared/components/layout/header-side-nav/header-side-nav.component';
 import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.component';
 import { HeaderComponent } from './shared/components/layout/header/header.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -18,17 +17,17 @@ import { environment } from 'src/environments/environment';
 import { FooterComponent } from './shared/components/layout/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './core/guards/auth.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { ChooseEntiteDialogComponent } from './shared/components/layout/choose-entite-dialog/choose-entite-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavComponent,
-    HeaderSideNavComponent,
     FooterComponent,
     ChooseEntiteDialogComponent,
   ],
@@ -51,7 +50,13 @@ import { FormsModule } from '@angular/forms';
   exports:[
     FooterComponent
   ],
-  providers: [AuthGuard],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true
+    },
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

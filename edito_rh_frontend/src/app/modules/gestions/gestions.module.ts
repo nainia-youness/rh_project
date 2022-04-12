@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FiltersComponent } from './components/filters/filters.component';
 import { TableComponent } from './components/table/table.component';
+import { GestionComponent } from './pages/gestion/gestion.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { TableComponent } from './components/table/table.component';
     GestionTemplateComponent,
     FiltersComponent,
     TableComponent,
+    GestionComponent,
   ],
   imports: [
     CommonModule,

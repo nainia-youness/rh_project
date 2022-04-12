@@ -66,6 +66,7 @@ https://developer.sas.com/reference/filtering/
 (specify the columns needed)
 ?fields=items.id,items.displayName 
 
+//important url
 https://developer.sas.com/reference/filtering/
 
 url encoded
@@ -97,3 +98,12 @@ https://stackoverflow.com/questions/40618327/how-to-design-generic-filtering-ope
     //page 1   limit=100    offset=0
     //page 2   limit=100    offset=100
 ------------------------------------------------
+For REST, I prefer a more intuitive syntax:
+
+http://myapp.com/books?sort=author,-datepublished&count=12
+
+Easy to remember... (means: ORDER BY author ASC, datepublished DESC)
+
+note: removed "+" prefix because is a reserved word
+
+-------------------interceptors-----------------------------  

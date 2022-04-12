@@ -9,10 +9,10 @@ import { LayoutState } from 'src/app/shared/components/layout/state/layout.inter
 import { User, UserModel } from 'src/app/shared/models/user.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import {loginStart} from '../../state/auth.actions';
-import {getLoginFailure, getLoginSuccess } from '../../state/auth.selector';
+import {getUserStart, loginStart} from '../../state/auth.actions';
 import { select } from '@ngrx/store';
-import { AuthResponse } from 'src/app/core/services/http/auth/auth.interface';
+import { loginFailureSelector, loginSuccessSelector } from '../../state/auth.selector';
+
 
 
 @Component({
@@ -23,7 +23,7 @@ import { AuthResponse } from 'src/app/core/services/http/auth/auth.interface';
 export class LoginComponent implements OnInit {
 
   loginForm!:FormGroup;
-  authResponse$!:Observable<AuthResponse>
+  authResponse$!:Observable<any>
   error$!:Observable<string | undefined>
   entite:string=""
   entites: string[] = ['SAPRESS', 'SOCHEPRESS', 'SOTADEC', 'WARAKTRADING'];
@@ -100,22 +100,30 @@ export class LoginComponent implements OnInit {
     const password=this.loginForm.controls['password'].value
     const entite=this.loginForm.controls['entite'].value
     this.store.dispatch(loginStart({password,email}))
-    
+    this.router.navigate(['/gestion'])
     this.store.pipe(
-      select(getLoginSuccess),
+      select(loginSuccessSelector),
       filter( val=> val !== undefined),
-      map((authResponse)=>{
-          this.storageService.setItem('user',authResponse)
-          this.storageService.setItem('entite',entite)
-          this.router.navigate(['gestion/fonctions'])
+      map((loginResponse)=>{
+        console.log(loginResponse.access_token)
+        const access_token=loginResponse.access_token
+        const refresh_token=loginResponse.refresh_token
+      
+        this.storageService.setItem('access_token',access_token)
+        this.storageService.setItem('refresh_token',refresh_token)
+        this.storageService.setItem('entite',entite)
+
+        this.store.dispatch(getUserStart())
+
+        this.router.navigate(['/gestion'])
       })
     ).subscribe()
 
     this.error$=this.store.pipe(
-      select(getLoginFailure),
-      filter( val=> val !== undefined)
+      select(loginFailureSelector),
+      filter( val=> val !== undefined),
     )
-  
+
   }
 
   constructor(

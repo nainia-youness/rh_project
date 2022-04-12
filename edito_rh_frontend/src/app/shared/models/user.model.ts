@@ -2,21 +2,24 @@
 
 export interface User {
     email:string,
-    firstName:string,
-    lastName:string
+    nom:string,
+    prenom:string,
+    id:number,
 }
 
 
 export class UserModel implements User{
 
     private  _email=""
-    private  _firstName=""
-    private  _lastName=""
+    private  _prenom=""
+    private  _nom=""
+    private  _id=0
 
-    constructor(email:string,firstName:string,lastName:string){
+    constructor(email:string,nom:string,prenom:string,id:number){
         this._email=email
-        this._firstName=firstName
-        this._lastName=lastName
+        this._nom=nom
+        this._prenom=prenom
+        this._id=id
     }
 
     get email() {
@@ -27,11 +30,15 @@ export class UserModel implements User{
         this._email=email
     }*/
 
-    get firstName() {
-        return this._firstName;
+    get nom() {
+        return this._nom;
     }
 
-    get lastName() {
-        return this._lastName;
+    get prenom() {
+        return this._prenom;
+    }
+
+    get id() {
+        return this._id;
     }
 }
