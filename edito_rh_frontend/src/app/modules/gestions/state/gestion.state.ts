@@ -31,8 +31,8 @@ export interface Filter {
 
 export interface Page {
     currentPage?:number,
-    rowsPerPage?:number,
-    maxPages?:number,
+    rowsPerPage?:number,//len of data
+    maxPages?:number,//get from res
 }
 
 
@@ -58,7 +58,7 @@ export interface gestionState {
 
 export const initialState: gestionState={
     filters:[],
-    page:{currentPage:1,rowsPerPage:100},
+    page:{currentPage:1,rowsPerPage:2},//100
     metadata:undefined,
     gestionPage:GestionPage.NO_PAGE,
     entities:undefined,

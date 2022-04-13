@@ -67,7 +67,7 @@ export class GestionsEffects{
         const deepCopy=JSON.parse(JSON.stringify(result))
         //change te rowsPerPage if the number of rows is < to what it s supposed to be
         if(rowsPerPage) deepCopy.rowsPerPage=rowsPerPage
-        deepCopy.maxPages=res.maxPages
+        deepCopy.maxPages=res.metadata.max_pages
         this.store.dispatch(pageChange({page:deepCopy}))
     }
 

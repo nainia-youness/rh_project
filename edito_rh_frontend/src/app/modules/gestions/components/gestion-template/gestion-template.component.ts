@@ -7,10 +7,10 @@ import { AppState } from 'src/app/store/app.state';
 import { gestionPageSelector, getEntitiesSuccessSelector, getFonctionsSuccessSelector, getMetadataSelector, pageSelector } from '../../state/gestion.selectors';
 import { Observable } from 'rxjs';
 import { GestionService } from '../../services/gestion.service';
-import { gestionPageChange } from '../../state/gestion.actions';
+import { gestionPageChange, getFonctionsStart, pageChange } from '../../state/gestion.actions';
 import { GestionPage, Page } from '../../state/gestion.state';
 import { MatPaginator } from '@angular/material/paginator';
-
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-gestion-template',
@@ -27,8 +27,10 @@ export class GestionTemplateComponent implements OnInit {
   columns:any[]=[]
   displayedColumns:any
   selectedFilter:string=""
-
+  pageEvent!: PageEvent;
   ngOnInit(): void {
+
+
 
     this.gestionPage$=this.store.pipe(
       select(gestionPageSelector),
@@ -71,7 +73,21 @@ export class GestionTemplateComponent implements OnInit {
     console.log("export all")
   }
 
-
+  goToNextPage=($event:any)=>{
+    
+      let result!:Page
+      this.store.pipe(
+          select(pageSelector),
+          map((page:Page)=> {
+            result=page
+            return page
+          })
+      ).subscribe()
+      const deepCopy=JSON.parse(JSON.stringify(result))
+      deepCopy.currentPage=$event.pageIndex+1
+      this.store.dispatch(pageChange({page:deepCopy}))
+      this.store.dispatch(getFonctionsStart())
+  }
 
 
   constructor(
