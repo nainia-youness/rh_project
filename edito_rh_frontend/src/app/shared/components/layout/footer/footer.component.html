@@ -1,7 +1,8 @@
+
 <div class="footer" fxLayout.xs="column" fxLayout.gt-xs="row" *ngIf="showFooter$ | async"  fxLayoutAlign="space-around center"  >
-    <ng-container *ngIf="(entitiesLogs$ | async) as entitiesLogs">
-        <div>{{ entitiesLogs.userName }}</div>
-        <div>{{ entitiesLogs.date_derniere_operation  | date:'dd/MM/yy'}}</div>
-        <div >{{entitiesLogs.derniere_operation}}</div>
+    <ng-container *ngIf="(logs$ | async) as logs">
+        <div>{{ logs.user_prenom }} {{ logs.user_nom }}</div>
+        <div>{{ logs.date_derniere_operation  | date:'dd/MM/yy'}}</div>
+        <div >{{logs.derniere_operation}}</div>
     </ng-container>
 </div>

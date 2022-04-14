@@ -17,4 +17,7 @@ export const getShowFooter=createSelector(getLayoutState,state=>{
     return state.showFooter
 })
 
+export const getLogsSelector=createSelector(getLayoutState,state=>{
+    return state.logs
+})
 

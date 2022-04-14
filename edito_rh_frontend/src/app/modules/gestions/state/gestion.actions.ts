@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store"
 import { FonctionModel } from "src/app/shared/models/fonction.model"
-import { Filter, Logs, Metadata, Page } from "./gestion.state"
+import { Filter,Metadata, Page } from "./gestion.state"
 
 
 enum ActionTypes {

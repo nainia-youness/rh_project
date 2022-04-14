@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store,select } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
-import { getEntitiesLogsSuccessSelector } from 'src/app/modules/gestions/state/gestion.selectors';
-import { Logs } from 'src/app/modules/gestions/state/gestion.state';
 import { AppState } from 'src/app/store/app.state';
-import { getShowFooter } from '../state/layout.selector';
+import { Logs } from '../state/layout.interface';
+import { getLogsSelector, getShowFooter } from '../state/layout.selector';
 
 @Component({
   selector: 'app-footer',
@@ -14,15 +13,15 @@ import { getShowFooter } from '../state/layout.selector';
 export class FooterComponent implements OnInit {
 
   showFooter$!:Observable<boolean>
-  entitiesLogs$!:Observable<Logs>
+  logs$!:Observable<Logs | undefined>
   constructor( private store:Store<AppState>) { }
 
   ngOnInit(): void {
     this.showFooter$= this.store.select(getShowFooter)
-    this.entitiesLogs$= this.store.pipe(
-      select(getEntitiesLogsSuccessSelector),
+    this.logs$= this.store.pipe(
+      select(getLogsSelector),
       filter( val=> val!==undefined),
-      map((entitiesLogs)=>entitiesLogs)
+      map((logs)=>logs)
     )    
   }
 }

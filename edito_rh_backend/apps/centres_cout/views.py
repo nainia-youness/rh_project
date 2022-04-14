@@ -24,7 +24,7 @@ class CentreCoutsAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         centreCouts = CentreCout.objects.all()
-        centreCouts, max_pages = get_queryset(request, centreCouts)
+        centreCouts, max_pages,count = get_queryset(request, centreCouts)
         serializer = CentreCoutSerializer(centreCouts, many=True)
         metadata_generator = APIMetadata()
         metadata = {
@@ -33,6 +33,9 @@ class CentreCoutsAPIView(APIView):
         # add maxPages
         if(max_pages is not None):
             metadata['max_pages'] = max_pages
+        # add count
+        if(count is not None):
+            metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for contrat in data:

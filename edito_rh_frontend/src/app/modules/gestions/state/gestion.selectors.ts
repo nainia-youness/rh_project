@@ -32,12 +32,3 @@ export const filtersSelector =createSelector(getGestionState,state=>{
 export const pageSelector =createSelector(getGestionState,state=>{
     return state.page
 })
-
-//logs
-export const getEntitiesLogsSuccessSelector =createSelector(getGestionState,state=>{
-    return state.entitiesLogs
-})
-
-export const getEntitiesLogsFailureSelector =createSelector(getGestionState,state=>{
-    return state.entitiesLogsError
-})

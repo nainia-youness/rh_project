@@ -10,7 +10,6 @@ import { getEntitiesSuccessSelector, getFonctionsSuccessSelector } from '../../s
 import { GestionPage } from '../../state/gestion.state';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
-import { getFonctionsLogsStart } from 'src/app/shared/components/layout/state/layout.actions';
 
 @Component({
   selector: 'app-gestion-fonctions',
@@ -30,7 +29,6 @@ export class GestionFonctionsComponent implements OnInit {
   }
   dataSource$?:Observable<FonctionModel[] | undefined>;
   ngOnInit(): void {
-    this.store.dispatch(getFonctionsLogsStart())
     this.store.dispatch(getFonctionsStart())
     this.store.dispatch(gestionPageChange({gestionPage:"Fonctions"}))
     

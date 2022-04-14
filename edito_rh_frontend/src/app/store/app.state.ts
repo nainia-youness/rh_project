@@ -4,7 +4,6 @@ import { authState } from "../modules/auth/state/auth.state";
 import { GestionsEffects } from "../modules/gestions/state/gestion.effects";
 import { gestionReducer } from "../modules/gestions/state/gestion.reducers";
 import { gestionState } from "../modules/gestions/state/gestion.state";
-import { LayoutEffects } from "../shared/components/layout/state/layout.effects";
 import { LayoutState } from "../shared/components/layout/state/layout.interface";
 import { layoutReducer } from "../shared/components/layout/state/layout.reducer";
 
@@ -28,5 +27,4 @@ export const appReducers={
 export const appEffects=[
     AuthEffects,
     GestionsEffects,
-    LayoutEffects
 ]

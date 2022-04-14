@@ -10,8 +10,10 @@ import { Store,select } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
 import { ChangeDetectionStrategy } from "@angular/compiler";
 import { pageSelector } from "./gestion.selectors";
-import { Logs, Page } from "./gestion.state";
+import { Page } from "./gestion.state";
 import { GridRowStyleBuilder } from "@angular/flex-layout";
+import { getLogs } from "src/app/shared/components/layout/state/layout.actions";
+import { Logs } from "src/app/shared/components/layout/state/layout.interface";
 
 
 
@@ -26,11 +28,15 @@ export class GestionsEffects{
                     .pipe(
                         map((res):any=>{
                             const fonctionsModels=this.fonctionBuilder.buildFonctions(res.data)
-                            /*const log:Logs={
-                                userName:res.user_id,
-                                date_derniere_operation:res.date_derniere_operation,
-                                derniere_operation:res.derniere_operation}
-                            */
+                            //for single model
+                            /*const logs:Logs={
+                                user_nom:res.data.user_nom,
+                                user_prenom:res.data.user_prenom,
+                                date_derniere_operation:res.data.date_derniere_operation,
+                                derniere_operation:res.data.derniere_operation
+                            }
+                            this.store.dispatch(getLogs({logs:logs}))*/
+
                             this.store.dispatch(getMetadata({metadata:res.metaData}))
 
                             this.changePage(res)

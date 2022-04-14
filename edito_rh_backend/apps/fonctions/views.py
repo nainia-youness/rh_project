@@ -52,7 +52,6 @@ class FonctionsAPIView(APIView):
             metadata['max_pages'] = max_pages
         # add count
         if(count is not None):
-            print(count)
             metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
