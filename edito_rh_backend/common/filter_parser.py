@@ -142,6 +142,8 @@ def get_queryset(request, query):
     # if(distinct_field is not None):
     #fields = fields_params.split(',')
     #    query = query.distinct()
+    count = None
+    max_pages = None
     if(limit is not None and offset is not None):
         count = query.count()
         query = query[int(offset):int(limit)]

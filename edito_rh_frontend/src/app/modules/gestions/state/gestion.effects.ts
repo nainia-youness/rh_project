@@ -36,8 +36,7 @@ export class GestionsEffects{
                                 derniere_operation:res.data.derniere_operation
                             }
                             this.store.dispatch(getLogs({logs:logs}))*/
-
-                            this.store.dispatch(getMetadata({metadata:res.metaData}))
+                            this.store.dispatch(getMetadata({metadata:res.metadata}))
 
                             this.changePage(res)
 

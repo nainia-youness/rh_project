@@ -1,6 +1,6 @@
 <mat-card class="filtre"  *ngIf="(metadata$ | async) as metadata" style.xs="height: 150px;" ngStyle.gt-xs="60px" fxLayout="column">
     <div FxFlex="20" *ngIf="(filters$ | async) as filters">
-        <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip-list #chipList aria-label="filter selection">
           <mat-chip *ngFor="let filter of filters">
             <span *ngIf="filter.gte" >
               {{filter.gte}}<
@@ -20,12 +20,13 @@
     </div>
     <form FxFlex="80" [formGroup]="filtersForm" (ngSubmit)="confirm()"  fxLayout="column" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">  
       
-  
       <mat-form-field  fxFlex="20">
             <mat-label>Filtre</mat-label>
             <mat-select formControlName="chooseField" (ngModelChange)="updateChosenField()">
-              <div *ngFor="let fieldMetadata of metadata.fields" >
-                <mat-option [value]="fieldMetadata.name">{{fieldMetadata.name}}</mat-option>
+              <div *ngFor="let fieldMetadata of metadata.fields">
+                <div *ngIf="fieldMetadata.label!=='Derniere operation' && fieldMetadata.label!=='Date derniere operation' && fieldMetadata.label!=='User id'">
+                  <mat-option [value]="fieldMetadata.label">{{fieldMetadata.label}}</mat-option>
+                </div>
               </div>
             </mat-select>
           </mat-form-field>

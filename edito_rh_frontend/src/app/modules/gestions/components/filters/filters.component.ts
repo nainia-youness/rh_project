@@ -92,15 +92,7 @@ export class FiltersComponent implements OnInit {
     return !!(array.length!==0)
   }
 
-  getField=(fields:any,chosenFieldName:string)=>{
-    let result=""
-    fields.forEach((field:any)=>{
-      if(field.name===chosenFieldName){
-        result=field
-      }
-    });
-    return result
-  }
+
   
   createFiltersForm=()=>{
     const integerFieldPattern='^[0-9]+$'
@@ -125,17 +117,25 @@ export class FiltersComponent implements OnInit {
   }
 
   updateChosenField=()=>{
-
+    console.log('update chosen field')
     this.initializeFields()
 
     const chosenFieldName=this.filtersForm.controls['chooseField'].value
-    
+    console.log(chosenFieldName)
     this.metadata$.subscribe((metadata)=>{
       const fields= metadata.fields
       this.chosenField= this.getField(fields,chosenFieldName)
     })
   }
-
+  getField=(fields:any,chosenFieldName:string)=>{
+    let result=""
+    fields.forEach((field:any)=>{
+      if(field.name===chosenFieldName){
+        result=field
+      }
+    });
+    return result
+  }
   updateIsAdvancedIntegerFilter(){
     this.isAdvancedIntegerFilter=!this.isAdvancedIntegerFilter
   }

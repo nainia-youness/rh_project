@@ -14,20 +14,21 @@ export enum FieldType {
 }
 
 export interface Field{
-    name:string,
-    field_type:FieldType,
+    label:string,
+    type:FieldType,
     values?:any[]
 }
 
 export interface Metadata {
     fields:Field[]
 }
+
 export interface Filter {
     field:string,
     value?:number,
     gte?:number,
     lte?:number
-  }
+}
 
 export interface Page {
     currentPage?:number,

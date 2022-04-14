@@ -5,7 +5,7 @@ from .serializer import EntiteSerializer
 from .models import Entite
 from rest_framework import status
 from rest_framework.response import Response
-from common.api_metadata import APIMetadata
+from common.api_metadata import get_metadata
 from ..users.authentication import is_authenticated
 from common.filter_parser import get_queryset
 from rest_framework.views import APIView
@@ -27,16 +27,7 @@ class EntitesAPIView(APIView):
         entites = Entite.objects.all()
         entites, max_pages, count = get_queryset(request, entites)
         serializer = EntiteSerializer(entites, many=True)
-        metadata_generator = APIMetadata()
-        metadata = {
-            'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
-        }
-        # add maxPages
-        if(max_pages is not None):
-            metadata['max_pages'] = max_pages
-        # add count
-        if(count is not None):
-            metadata['count'] = count
+        metadata = get_metadata('entite', entites, max_pages, count)
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for entite in data:

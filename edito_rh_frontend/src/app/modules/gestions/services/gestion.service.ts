@@ -32,17 +32,17 @@ export class GestionService {
         cell: (element:any) => `${"hi"}`,
       },*/
       {
-        columnDef: 'id',
-        header: 'id',
+        columnDef: 'ID',
+        header: 'ID',
         cell: (element: FonctionModel) => `${element.id}`,
       },
       {
-        columnDef: 'designation',
-        header: 'designation',
+        columnDef: 'Designation',
+        header: 'Designation',
         cell: (element: FonctionModel) => `${element.designation}`,
       },
       {
-        columnDef: 'description',
+        columnDef: 'Description',
         header: 'description',
         cell: (element: FonctionModel) => `${element.description}`,
       },

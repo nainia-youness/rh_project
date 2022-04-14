@@ -49,7 +49,6 @@ export class GestionTemplateComponent implements OnInit {
         return page
       })
     )
-
     this.metadata$=this.store.pipe(
       select(getMetadataSelector),
       filter( val=> val !== undefined),

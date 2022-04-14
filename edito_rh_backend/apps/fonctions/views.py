@@ -22,7 +22,7 @@ import datetime
 
 
 from common.filter_parser import get_filter, get_queryset
-from common.api_metadata import APIMetadata
+from common.api_metadata import APIMetadata, get_metadata
 from common.response_handler import handle_error, handle_successful_response
 
 sys.path.insert(1, '../../common')
@@ -41,18 +41,19 @@ class FonctionsAPIView(APIView):
         fonctions = Fonction.objects.all()
 
         fonctions, max_pages, count = get_queryset(request, fonctions)
-
+        #print(max_pages, count)
         serializer = FonctionSerializer(fonctions, many=True)
         metadata_generator = APIMetadata()
-        metadata = {
-            'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
-        }
+        metadata = get_metadata('fonction', fonctions, max_pages, count)
+        # metadata = {
+        #    'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
+        # }
         # add maxPages
-        if(max_pages is not None):
-            metadata['max_pages'] = max_pages
+        # if(max_pages is not None):
+        #    metadata['max_pages'] = max_pages
         # add count
-        if(count is not None):
-            metadata['count'] = count
+        # if(count is not None):
+        #    metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for fonction in data:

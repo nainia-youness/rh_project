@@ -10,7 +10,7 @@ def create_access_token(user):
         'user_nom': user.nom,
         'user_prenom': user.prenom,
         'user_email': user.email,
-        'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=1),  # normally max 1 min
+        'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=60),  # normally max 1 min
         'iat': datetime.datetime.utcnow()
     }
     # iat= creation time

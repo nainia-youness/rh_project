@@ -123,10 +123,32 @@ you can add value before or after the subscription
 you're sure to get the current value
 ----------------refresh token------------------------------
 https://dev-academy.com/angular-jwt/?utm_source=youtube&utm_medium=social&utm_campaign=video&utm_term=angular_jwt_video&utm_content=F1GUjHPpCLA
--------------------------
+--------paginator-----------------
+[pageSize]="10" items per page
 
-
-
+-------filters----------------
+1-you choose a filter
+2-updateChosenField()
+3-it calls getField 
+4-it makes
+this.chosenFileld={
+        type: 'string',
+        required: true,
+        read_only: false,
+        label: 'Designation',
+        max_length: 255,
+        initial: '',
+        field_name: 'designation',
+        write_only: false
+      }
+TODO 
+it needs to be like that 
+Field{
+    label:string,
+    type:FieldType,
+    values?:any[]
+}
+5-
 
 
 

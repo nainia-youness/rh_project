@@ -3,7 +3,7 @@ from .serializer import CentreCoutSerializer
 from .models import CentreCout
 from rest_framework import status
 from rest_framework.response import Response
-from common.api_metadata import APIMetadata
+from common.api_metadata import get_metadata
 from ..users.authentication import is_authenticated
 from common.filter_parser import get_queryset
 from rest_framework.views import APIView
@@ -24,18 +24,9 @@ class CentreCoutsAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         centreCouts = CentreCout.objects.all()
-        centreCouts, max_pages,count = get_queryset(request, centreCouts)
+        centreCouts, max_pages, count = get_queryset(request, centreCouts)
         serializer = CentreCoutSerializer(centreCouts, many=True)
-        metadata_generator = APIMetadata()
-        metadata = {
-            'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
-        }
-        # add maxPages
-        if(max_pages is not None):
-            metadata['max_pages'] = max_pages
-        # add count
-        if(count is not None):
-            metadata['count'] = count
+        metadata = get_metadata('centre_cout', centreCouts, max_pages, count)
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for contrat in data:
