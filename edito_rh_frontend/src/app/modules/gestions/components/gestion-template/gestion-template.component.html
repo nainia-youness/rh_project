@@ -23,14 +23,13 @@
 
  <div *ngIf="(dataSource$ | async) && (page$ | async) as page" fxFlex="10" >
     <mat-paginator *ngIf="page.maxPages && page.maxRowsPerPage" #paginator
-    [length]="(page.maxPages*page.maxRowsPerPage)!.toString()"
-    [pageSize]="100"
+    [length]="(page.count)!.toString()"
+    [pageSize]="page.maxRowsPerPage.toString()"
     [hidePageSize]="true"
     (page)="goToNextPage($event)"
     aria-label="Select page">
     </mat-paginator>
   </div>
-
   <app-table fxFlex="70"  [dataSource$]="dataSource$" [displayedColumns]="displayedColumns" [columns]="columns"></app-table>
   
 </div>

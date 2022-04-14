@@ -22,17 +22,13 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing=false
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   getAccessToken$!:Observable<string>
-  private requests: BehaviorSubject<any> = new BehaviorSubject<any>(null)
-  private is_return=false
-  private is_got_access_token=false
-  private ac:string | undefined=''
   
   intercept(request: HttpRequest<any>, next: HttpHandler):  Observable<HttpEvent<Object>>{
     const access_token=this.storageService.getItem('access_token')
     const refresh_token=this.storageService.getItem('refresh_token')
 
-    let access_token_payload=this.jwtHelper.decode(access_token)
-    let refresh_token_payload=this.jwtHelper.decode(refresh_token)
+    const access_token_payload=this.jwtHelper.decode(access_token)
+    const refresh_token_payload=this.jwtHelper.decode(refresh_token)
     if(this.storageService.isLoggedIn()){
       if(Date.now()>Number(refresh_token_payload.exp)*1000){
         this.handleExpiredRefreshToken()

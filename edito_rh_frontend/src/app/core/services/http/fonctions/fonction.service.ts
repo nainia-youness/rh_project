@@ -66,7 +66,6 @@ private pageParams(params:HttpParams,page:Page):HttpParams{
   let limit=100
   let offset=0
   if(limit && page.currentPage && page.maxRowsPerPage) {
-    console.log(page)
     const maxRowsPerPage=page.maxRowsPerPage
     const currentPage=page.currentPage
     limit=maxRowsPerPage*currentPage

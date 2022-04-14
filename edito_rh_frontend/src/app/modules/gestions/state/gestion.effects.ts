@@ -65,6 +65,7 @@ export class GestionsEffects{
         
         if(nbrRowsInCurrentPage) deepCopy.nbrRowsInCurrentPage=nbrRowsInCurrentPage
         deepCopy.maxPages=res.metadata.max_pages
+        deepCopy.count=res.metadata.count
         this.store.dispatch(pageChange({page:deepCopy}))
     }
 

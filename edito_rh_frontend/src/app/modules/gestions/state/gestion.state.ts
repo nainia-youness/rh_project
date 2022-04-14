@@ -33,7 +33,8 @@ export interface Page {
     currentPage?:number,
     maxRowsPerPage?:number,
     maxPages?:number,
-    nbrRowsInCurrentPage?:number
+    nbrRowsInCurrentPage?:number,
+    count?:number,
 }
 
 
@@ -59,7 +60,7 @@ export interface gestionState {
 
 export const initialState: gestionState={
     filters:[],
-    page:{currentPage:1,maxRowsPerPage:100},
+    page:{currentPage:1,maxRowsPerPage:50},
     metadata:undefined,
     gestionPage:GestionPage.NO_PAGE,
     entities:undefined,
