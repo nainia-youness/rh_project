@@ -51,22 +51,19 @@ export class GestionsEffects{
     
     private changePage(res:any){
         let result!:Page
-        let rowsPerPage!:number
+        let nbrRowsInCurrentPage!:number
         this.store.pipe(
             select(pageSelector),
             map((page:Page)=> {
               result=page
-              if(page.rowsPerPage && res.data){
-                if(res.data.length<page.rowsPerPage){
-                    rowsPerPage=res.data.length
-                }
-              }
+              nbrRowsInCurrentPage=res.data.length
               return page
             })
         ).subscribe()
         const deepCopy=JSON.parse(JSON.stringify(result))
         //change te rowsPerPage if the number of rows is < to what it s supposed to be
-        if(rowsPerPage) deepCopy.rowsPerPage=rowsPerPage
+        
+        if(nbrRowsInCurrentPage) deepCopy.nbrRowsInCurrentPage=nbrRowsInCurrentPage
         deepCopy.maxPages=res.metadata.max_pages
         this.store.dispatch(pageChange({page:deepCopy}))
     }

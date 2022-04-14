@@ -28,19 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `affectation` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `affectation`
 --
 
-INSERT INTO `affectation` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('AGENCE MARRAKECH', 'AGENCE MARRAKECH ', 'Ajouter', '2022-03-06');
+INSERT INTO `affectation` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('AGENCE MARRAKECH', 'AGENCE MARRAKECH ', 'Ajouter',1);
 
 -- --------------------------------------------------------
 
@@ -49,19 +51,21 @@ INSERT INTO `affectation` (`id`, `designation`, `description`, `derniere_operati
 --
 
 CREATE TABLE `centre_cout` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `centre_cout`
 --
 
-INSERT INTO `centre_cout` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('Logistique ', 'Logistique ', 'Ajouter', '2022-03-02');
+INSERT INTO `centre_cout` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('Logistique ', 'Logistique ', 'Ajouter',1);
 
 -- --------------------------------------------------------
 
@@ -70,19 +74,21 @@ INSERT INTO `centre_cout` (`id`, `designation`, `description`, `derniere_operati
 --
 
 CREATE TABLE `contrat` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `contrat`
 --
 
-INSERT INTO `contrat` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('CDI', 'Contrat a duree indeterminee', 'Modifier', '2022-03-05');
+INSERT INTO `contrat` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('CDI', 'Contrat a duree indeterminee', 'Modifier',1);
 
 -- --------------------------------------------------------
 
@@ -91,19 +97,21 @@ INSERT INTO `contrat` (`id`, `designation`, `description`, `derniere_operation`,
 --
 
 CREATE TABLE `direction` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `direction`
 --
 
-INSERT INTO `direction` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('DIRECTION LOGISTIQUE ET DEVELOPPEMENT ', 'DIRECTION LOGISTIQUE ET DEVELOPPEMENT ', 'Ajouter', '2022-03-03');
+INSERT INTO `direction` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('DIRECTION LOGISTIQUE ET DEVELOPPEMENT ', 'DIRECTION LOGISTIQUE ET DEVELOPPEMENT ', 'Ajouter',1);
 
 -- --------------------------------------------------------
 
@@ -112,15 +120,15 @@ INSERT INTO `direction` (`id`, `designation`, `description`, `derniere_operation
 --
 
 CREATE TABLE `employe` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `matricule` int(11) NOT NULL,
   `nom` varchar(255) CHARACTER SET utf8 NOT NULL,
   `prenom` varchar(255) CHARACTER SET utf8 NOT NULL,
   `date_naissance` date NOT NULL,
-  `sexe` text CHARACTER SET utf8 NOT NULL,
+  `sexe` ENUM('M','F'),
   `cin` varchar(255) CHARACTER SET utf8 NOT NULL,
   `date_entree` date NOT NULL,
-  `situation_familiale` text CHARACTER SET utf8 NOT NULL,
+  `situation_familiale` ENUM('Marié(e)','Célibataire'),
   `nombre_enfant` int(11) NOT NULL,
   `charge_familiale` int(11) NOT NULL,
   `adresse` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -129,10 +137,10 @@ CREATE TABLE `employe` (
   `salaire` float NOT NULL,
   `numero_compte` int(11) NOT NULL,
   `participation` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL,
   `date_sortie` date NOT NULL,
+  `derniere_operation` text CHARACTER SET utf8 NOT NULL,
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
   `fonction_id` int(11) NOT NULL,
   `centre_cout_id` int(11) NOT NULL,
   `direction_id` int(11) NOT NULL,
@@ -140,15 +148,16 @@ CREATE TABLE `employe` (
   `contrat_id` int(11) NOT NULL,
   `affectation_id` int(11) NOT NULL,
   `entite_id` int(11) NOT NULL,
-  `delegue_id` int(11) NOT NULL
+  `delegue_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `employe`
 --
 
-INSERT INTO `employe` (`id`, `matricule`, `nom`, `prenom`, `date_naissance`, `sexe`, `cin`, `date_entree`, `situation_familiale`, `nombre_enfant`, `charge_familiale`, `adresse`, `nationalite`, `cnss`, `salaire`, `numero_compte`, `participation`, `user_id`, `derniere_operation`, `date_derniere_operation`, `date_sortie`, `fonction_id`, `centre_cout_id`, `direction_id`, `ville_id`, `contrat_id`, `affectation_id`, `entite_id`, `delegue_id`) VALUES
-(484, 'Chakir', 'Mohamed', '1994-01-01', 'M', 'BK179415', '2017-03-01', 'Marie', 2, 2, 'RES El mehdi IMM B N°13 Sidi Maarouf ', 'MAR', '112166634', 8000, 1907802000, '5665mm', 4346, 'Modifier', '2022-03-16', '2022-03-18', 343434, 236534, 54, 343, 12323, 23123, 234, 123);
+INSERT INTO `employe` (`matricule`, `nom`, `prenom`, `date_naissance`, `sexe`, `cin`, `date_entree`, `situation_familiale`, `nombre_enfant`, `charge_familiale`, `adresse`, `nationalite`, `cnss`, `salaire`, `numero_compte`, `participation`, `user_id`, `derniere_operation`,  `date_sortie`, `fonction_id`, `centre_cout_id`, `direction_id`, `ville_id`, `contrat_id`, `affectation_id`, `entite_id`, `delegue_id`) VALUES
+(484, 'Chakir', 'Mohamed', '1994-01-01', 'M', 'BK179415', '2017-03-01', 'Marié(e)', 2, 2, 'RES El mehdi IMM B N°13 Sidi Maarouf ', 'MAR', '112166634', 8000, 1907802000, '5665mm', 4346, 'Modifier', '2022-03-18', 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +171,9 @@ CREATE TABLE `employe_rubrique` (
   `rubrique_id` int(11) NOT NULL,
   `montant` float NOT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -172,19 +183,21 @@ CREATE TABLE `employe_rubrique` (
 --
 
 CREATE TABLE `entite` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `entite`
 --
 
-INSERT INTO `entite` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('SAPRESS', 'SAPRESS', 'Ajouter', '2022-03-02');
+INSERT INTO `entite` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('SAPRESS', 'SAPRESS', 'Ajouter',1);
 
 -- --------------------------------------------------------
 
@@ -193,19 +206,21 @@ INSERT INTO `entite` (`id`, `designation`, `description`, `derniere_operation`, 
 --
 
 CREATE TABLE `fonction` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `fonction`
 --
 
-INSERT INTO `fonction` (`id`, `designation`, `description`, `derniere_operation`, `date_derniere_operation`) VALUES
-('Achat', 'Achat', 'Ajouter', '2022-03-01');
+INSERT INTO `fonction` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
+('Achat', 'Achat', 'Ajouter',1);
 
 -- --------------------------------------------------------
 
@@ -214,11 +229,13 @@ INSERT INTO `fonction` (`id`, `designation`, `description`, `derniere_operation`
 --
 
 CREATE TABLE `parametre` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
   `valeur` float NOT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -228,11 +245,13 @@ CREATE TABLE `parametre` (
 --
 
 CREATE TABLE `rubrique` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `designation` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -242,165 +261,29 @@ CREATE TABLE `rubrique` (
 --
 
 CREATE TABLE `ville` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) CHARACTER SET utf8 NOT NULL,
   `derniere_operation` text CHARACTER SET utf8 NOT NULL,
-  `date_derniere_operation` date NOT NULL
+  `date_derniere_operation` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dechargement des donnees de la table `ville`
 --
 
-INSERT INTO `ville` (`id`, `nom`, `derniere_operation`, `date_derniere_operation`) VALUES
-('Marrakech', 'Ajouter', '2022-03-02');
+INSERT INTO `ville` (`nom`, `derniere_operation`,`user_id`) VALUES
+('Marrakech', 'Ajouter',1);
 
 --
 -- Index pour les tables dechargees
 --
 
---
--- Index pour la table `affectation`
---
-ALTER TABLE `affectation`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE  `employe` ADD UNIQUE (`matricule`, `entite_id`);
 
---
--- Index pour la table `centre_cout`
---
-ALTER TABLE `centre_cout`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `employe_rubrique`ADD UNIQUE (`employe_id`,`rubrique_id`);
 
---
--- Index pour la table `contrat`
---
-ALTER TABLE `contrat`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `direction`
---
-ALTER TABLE `direction`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `employe`
---
-ALTER TABLE `employe`
-  ADD PRIMARY KEY (`id`,`matricule`),
-  ADD KEY `entite_id` (`entite_id`),
-  ADD KEY `affectation_id` (`affectation_id`),
-  ADD KEY `centre_cout_id` (`centre_cout_id`),
-  ADD KEY `contrat_id` (`contrat_id`),
-  ADD KEY `direction_id` (`direction_id`),
-  ADD KEY `fonction_id` (`fonction_id`),
-  ADD KEY `ville_id` (`ville_id`);
-
---
--- Index pour la table `employe_rubrique`
---
-ALTER TABLE `employe_rubrique`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `employe_id` (`employe_id`,`rubrique_id`),
-  ADD KEY `rubrique_id` (`rubrique_id`);
-
---
--- Index pour la table `entite`
---
-ALTER TABLE `entite`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `fonction`
---
-ALTER TABLE `fonction`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `parametre`
---
-ALTER TABLE `parametre`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `rubrique`
---
-ALTER TABLE `rubrique`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ville`
---
-ALTER TABLE `ville`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables dechargees
---
-
---
--- AUTO_INCREMENT pour la table `affectation`
---
-ALTER TABLE `affectation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23124;
-
---
--- AUTO_INCREMENT pour la table `centre_cout`
---
-ALTER TABLE `centre_cout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236535;
-
---
--- AUTO_INCREMENT pour la table `contrat`
---
-ALTER TABLE `contrat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12324;
-
---
--- AUTO_INCREMENT pour la table `direction`
---
-ALTER TABLE `direction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
-
---
--- AUTO_INCREMENT pour la table `employe_rubrique`
---
-ALTER TABLE `employe_rubrique`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `entite`
---
-ALTER TABLE `entite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
-
---
--- AUTO_INCREMENT pour la table `fonction`
---
-ALTER TABLE `fonction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343435;
-
---
--- AUTO_INCREMENT pour la table `parametre`
---
-ALTER TABLE `parametre`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `rubrique`
---
-ALTER TABLE `rubrique`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `ville`
---
-ALTER TABLE `ville`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
-
---
--- Contraintes pour les tables dechargees
---
 
 --
 -- Contraintes pour la table `employe`

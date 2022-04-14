@@ -58,7 +58,6 @@ export class StorageService {
     const arrayOfelems=this.getItem(key)    
     let newArrayOfElems=arrayOfelems.filter((item:any) => JSON.stringify(value) !== JSON.stringify(item))
     this.setArray(key,newArrayOfElems)
-
   }
 
   getItem(key:string){

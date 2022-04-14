@@ -8,7 +8,9 @@ const keycloakHost = 'localhost';
 const keycloakPort = '8080';
 const realmName = 'myrealm';
 const bodyParser = require('body-parser');
-app.use(cors())
+app.use(cors({origin: 'http://localhost:4200',credentials:true,allowedHeaders:['Content-Type', 'Authorization','Set-Cookie'],
+exposedHeaders:['Content-Type', 'Authorization','Set-Cookie']
+}))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json('application/json'));
 
@@ -21,14 +23,19 @@ let data=[
 ]
 
 
-app.post('/users',(req, res) => {
+app.post('/api/v1/auth/login/',(req, res) => {
   const password=req.body.password
   const email= req.body.email
-  console.log(password)
+
+  res.setHeader('Set-Cookie', 'Testttttttttttttttttttttttt')
+  //console.log(password)
   //throw new Error('database failed to connect')
   //res.status(404).json({error: 'Internal server error',message:"OUPS! y'a un probleme"})
   res.send({firstName:"youness",lastName:"nainia",email:email})
 })
+
+
+
 
 app.get('/fonctions',(req, res) => {
 

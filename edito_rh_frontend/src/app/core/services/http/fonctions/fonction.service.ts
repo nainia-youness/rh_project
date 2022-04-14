@@ -65,11 +65,12 @@ export class FonctionService {
 private pageParams(params:HttpParams,page:Page):HttpParams{
   let limit=100
   let offset=0
-  if(limit && page.currentPage && page.rowsPerPage) {
-    const rowsPerPage=page.rowsPerPage
+  if(limit && page.currentPage && page.maxRowsPerPage) {
+    console.log(page)
+    const maxRowsPerPage=page.maxRowsPerPage
     const currentPage=page.currentPage
-    limit=rowsPerPage*currentPage
-    offset=rowsPerPage*(currentPage-1)
+    limit=maxRowsPerPage*currentPage
+    offset=maxRowsPerPage*(currentPage-1)
   }
   params=params.append(`offset`,`${offset}`)
   params=params.append(`limit`,`${limit}`)

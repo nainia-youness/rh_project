@@ -146,7 +146,11 @@ def get_queryset(request, query):
     #    query = query.distinct()
     if(limit is not None and offset is not None):
         query = query[int(offset):int(limit)]
-        max_pages = query.count()
+
+        models_count = query.count()
+        max_pages = models_count//int(limit)
+        if(max_pages != 1):
+            max_pages += 1
 
     # if(len(fields) != 0):
     #    print("hhhhh")

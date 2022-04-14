@@ -22,9 +22,9 @@
   <app-filters [filterApiCall]="filterApiCall" [metadata$]="metadata$"></app-filters>
 
  <div *ngIf="(dataSource$ | async) && (page$ | async) as page" fxFlex="10" >
-    <mat-paginator *ngIf="page.maxPages && page.rowsPerPage" #paginator
-    [length]="(page.maxPages*page.rowsPerPage)!.toString()"
-    [pageSize]="page.rowsPerPage!.toString()"
+    <mat-paginator *ngIf="page.maxPages && page.maxRowsPerPage" #paginator
+    [length]="(page.maxPages*page.maxRowsPerPage)!.toString()"
+    [pageSize]="100"
     [hidePageSize]="true"
     (page)="goToNextPage($event)"
     aria-label="Select page">

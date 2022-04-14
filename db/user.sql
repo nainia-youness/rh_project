@@ -28,9 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `programme` (
-  `programme_id` int(11) NOT NULL,
-  `programme_designation` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `programme_description` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `designation` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -40,9 +41,10 @@ CREATE TABLE `programme` (
 --
 
 CREATE TABLE `role` (
-  `Role_id` int(11) NOT NULL,
-  `role_designation` varchar(255) NOT NULL,
-  `role_description` varchar(255) DEFAULT NULL
+  `id` int(11) NOT NULL  AUTO_INCREMENT,
+  `designation` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -52,7 +54,7 @@ CREATE TABLE `role` (
 --
 
 CREATE TABLE `role_programme` (
-  `Role_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   `programme_id` int(11) NOT NULL,
   `permission` varchar(255) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -64,24 +66,15 @@ CREATE TABLE `role_programme` (
 --
 
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `user_nom` varchar(255) NOT NULL,
-  `user_prenom` varchar(255) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_mdp` varchar(255) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) NOT NULL,
+  `prenom` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mdp` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `user_mdp`
---
-
-CREATE TABLE `user_mdp` (
-  `user_mdp_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `mdp` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -106,114 +99,27 @@ CREATE TABLE `user_role` (
   `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `programme`
---
-ALTER TABLE `programme`
-  ADD PRIMARY KEY (`programme_id`);
-
---
--- Index pour la table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`Role_id`);
-
---
--- Index pour la table `role_programme`
---
-ALTER TABLE `role_programme`
-  ADD KEY `programme_id` (`programme_id`),
-  ADD KEY `Role_id` (`Role_id`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- Index pour la table `user_mdp`
---
-ALTER TABLE `user_mdp`
-  ADD PRIMARY KEY (`user_mdp_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Index pour la table `user_programme`
---
-ALTER TABLE `user_programme`
-  ADD KEY `programme_id` (`programme_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Index pour la table `user_role`
---
-ALTER TABLE `user_role`
-  ADD KEY `role_id` (`role_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `programme`
---
-ALTER TABLE `programme`
-  MODIFY `programme_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `role`
---
-ALTER TABLE `role`
-  MODIFY `Role_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `user_mdp`
---
-ALTER TABLE `user_mdp`
-  MODIFY `user_mdp_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Contraintes pour les tables déchargées
---
 
 --
 -- Contraintes pour la table `role_programme`
 --
 ALTER TABLE `role_programme`
-  ADD CONSTRAINT `role_programme_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programme` (`programme_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `role_programme_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `user_mdp`
---
-ALTER TABLE `user_mdp`
-  ADD CONSTRAINT `user_mdp_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `role_programme_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `role_programme_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `user_programme`
 --
 ALTER TABLE `user_programme`
-  ADD CONSTRAINT `user_programme_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programme` (`programme_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_programme_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_programme_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programme` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_programme_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `user_role`
 --
 ALTER TABLE `user_role`
-  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`Role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

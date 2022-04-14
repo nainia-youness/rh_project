@@ -1,6 +1,6 @@
 import { createReducer,on } from "@ngrx/store"
 
-import {getAccessTokenFailure, getAccessTokenSuccess, getUserFailure, getUserSuccess, loginFailure, loginSuccess } from "./auth.actions"
+import { getUserFailure, getUserSuccess, loginFailure, loginSuccess } from "./auth.actions"
 import { initialState } from "./auth.state"
 
 
@@ -30,19 +30,7 @@ const _authReducer= createReducer(
             ...state,
             error:action.error
         }
-    }),
-    on(getAccessTokenSuccess,(state:any,action:any)=>{
-        return {
-            ...state,
-            accessToken: action.accessToken
-        }
-    }),
-    on(getAccessTokenFailure,(state:any,action:any)=>{
-        return {
-            ...state,
-            error:action.error
-        }
-    }),
+    })
 )
 
 

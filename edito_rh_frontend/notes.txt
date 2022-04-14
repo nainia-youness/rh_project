@@ -106,4 +106,108 @@ Easy to remember... (means: ORDER BY author ASC, datepublished DESC)
 
 note: removed "+" prefix because is a reserved word
 
--------------------interceptors-----------------------------  
+-------------------subjects----------------------------- 
+-subject
+when you submit sub.next(2)
+all the people who are subscribed to the subject receive 2
+but you need to subscribe before sending the next
+    sub.subscribe((data:number)=>{
+      console.log('i got it')
+      console.log(data)
+    })
+    sub.next(2)
+-behavior subject
+you give it an initial value
+the behavior subject store the values 
+you can add value before or after the subscription
+you're sure to get the current value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------
+      /*if(request.url==='http://127.0.0.1:8000/api/v1/auth/refresh/'){
+        return next.handle(request)
+      }
+        
+
+      if(Date.now()>Number(refresh_token_payload.exp)*1000){
+        this.handleExpiredRefreshToken()
+      }
+
+      if(Date.now()<Number(access_token_payload.exp)*1000){
+        return this.handleAccessTokenValid(request,next,access_token)
+      }
+      else{//////////////////////////////////////////////////////////////////////
+        if(!this.isRefreshing){
+          this.isRefreshing=true
+          this.requests.next(null)
+          this.authService.getNewAccessToken(access_token,refresh_token).pipe(
+            switchMap((res)=>{
+              this.storageService.setItem('access_token',res.token)
+              return this.addAccessTokenToRequest(request,res.token)
+            })
+          )
+        }
+        console.log('expiredddddd')
+        //let this.requests.next({request,access_token:a})
+        console.log(request)
+
+
+
+
+        /*this.store.dispatch(getAccessTokenStart({access_token,refresh_token}))
+        this.store.pipe(
+          select(getAccessTokenSuccessSelector),
+          filter( val=> val !== undefined)
+          )
+          .subscribe((a)=>{
+            console.log('helooooooooooooo')
+            this.requests.next({request,access_token:a})
+          })*/
+      /*this.requests.pipe(
+        filter(val=>val!=null),
+        take(1),
+        switchMap((req:any)=>{
+          console.log('subject values')
+          console.log(req)
+          const requ=req.request
+          const acc=req.access_token
+          
+          const newReq=requ.clone({
+            headers:requ.headers.set("Authorization",`Bearer ${acc}`)
+          })
+          return next.handle(newReq);
+        })
+      ).subscribe()
+        //return this.handleAccessTokenExpired(request,next,access_token,refresh_token)
+      }
+    }
+    return next.handle(request);*/
