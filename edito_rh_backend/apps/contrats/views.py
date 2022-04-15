@@ -24,9 +24,15 @@ class ContratsAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         contrats = Contrat.objects.all()
+        metadata = get_metadata('contrat', contrats)
         contrats, max_pages, count = get_queryset(request, contrats)
         serializer = ContratSerializer(contrats, many=True)
-        metadata = get_metadata('contrat', contrats, max_pages, count)
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # add count
+        if(count is not None):
+            metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for contrat in data:

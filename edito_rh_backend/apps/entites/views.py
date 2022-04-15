@@ -25,9 +25,15 @@ class EntitesAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         entites = Entite.objects.all()
+        metadata = get_metadata('entite', entites)
         entites, max_pages, count = get_queryset(request, entites)
         serializer = EntiteSerializer(entites, many=True)
-        metadata = get_metadata('entite', entites, max_pages, count)
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # add count
+        if(count is not None):
+            metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for entite in data:

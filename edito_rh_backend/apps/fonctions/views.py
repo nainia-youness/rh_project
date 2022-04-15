@@ -39,21 +39,20 @@ class FonctionsAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         fonctions = Fonction.objects.all()
-
+        metadata = get_metadata('fonction', fonctions)
         fonctions, max_pages, count = get_queryset(request, fonctions)
         #print(max_pages, count)
         serializer = FonctionSerializer(fonctions, many=True)
-        metadata_generator = APIMetadata()
-        metadata = get_metadata('fonction', fonctions, max_pages, count)
+
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # add count
+        if(count is not None):
+            metadata['count'] = count
         # metadata = {
         #    'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         # }
-        # add maxPages
-        # if(max_pages is not None):
-        #    metadata['max_pages'] = max_pages
-        # add count
-        # if(count is not None):
-        #    metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for fonction in data:

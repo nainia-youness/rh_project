@@ -30,7 +30,7 @@ class APIMetadata(SimpleMetadata):
         return result
 
 
-def get_metadata(model, query, max_pages, count):
+def get_metadata(model, query):
     result = {}
     fields = None
     if(model == 'fonction'):
@@ -47,12 +47,6 @@ def get_metadata(model, query, max_pages, count):
         fields = centre_cout_metadata(query)
     elif(model == 'affectation'):
         fields = affectation_metadata(query)
-    # add maxPages
-    if(max_pages is not None):
-        result['max_pages'] = max_pages
-    # add count
-    if(count is not None):
-        result['count'] = count
     if(fields is not None):
         result['fields'] = fields
     return result

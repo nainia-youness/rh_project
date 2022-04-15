@@ -24,9 +24,16 @@ class VillesAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(self.request)
         villes = Ville.objects.all()
+        metadata = get_metadata('ville', villes)
         villes, max_pages, count = get_queryset(request, villes)
         serializer = VilleSerializer(villes, many=True)
-        metadata = get_metadata('ville', villes, max_pages, count)
+
+        # add maxPages
+        if(max_pages is not None):
+            metadata['max_pages'] = max_pages
+        # add count
+        if(count is not None):
+            metadata['count'] = count
         # remove user_id and replace it with nom et prenom of user
         data = serializer.data
         for ville in data:
