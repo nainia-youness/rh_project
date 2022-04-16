@@ -53,6 +53,7 @@ export class GestionTemplateComponent implements OnInit {
       select(getMetadataSelector),
       filter( val=> val !== undefined),
       map((metadata)=> {
+        console.log(metadata)
         return metadata
       })
     )

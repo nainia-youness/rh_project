@@ -35,7 +35,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDividerModule} from '@angular/material/divider';
-
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule( {
     imports: [
         CommonModule,
@@ -71,7 +71,8 @@ import {MatDividerModule} from '@angular/material/divider';
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
-        MatDividerModule
+        MatDividerModule,
+        MatNativeDateModule,
     ],
     exports: [
         MatCheckboxModule,
@@ -94,10 +95,11 @@ import {MatDividerModule} from '@angular/material/divider';
         MatTooltipModule,
         MatTableModule,
         MatPaginatorModule,
-        MatCardModule
+        MatCardModule,
+        MatNativeDateModule,
     ],
     providers: [
-        MatDatepickerModule,
+        //MatDatepickerModule,
     ]
 } )
 

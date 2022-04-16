@@ -52,32 +52,38 @@ def get_metadata(model, query):
     return result
 
 
-integer = 'integer'
+number = 'number'
 string = 'string'
 date = 'date'
 boolean = 'boolean'
 
 
 def fonction_metadata(query):
-    designation_values = list(query.values('designation').distinct())
+    designation_values =get_distinct_values(query,'designation') 
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': designation_values},
-        {'type': string, 'label': 'Description'}
+        {'type': string, 'label': 'Description'},
+        {'type': date, 'label': 'DateTest'}
     ]
+
+def get_distinct_values(query,model):
+    distinct_values_dict=list(query.values(model).distinct())
+    distinct_values_list=[i['designation'] for i in distinct_values_dict]
+    return distinct_values_list
 
 
 def ville_metadata(query):
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Nom'},
     ]
 
 
 def entite_metadata(query):
-    entite_values = list(query.values('designation').distinct())
+    entite_values = get_distinct_values(query,'designation') 
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': entite_values},
         {'type': string, 'label': 'Description'}
     ]
@@ -86,34 +92,34 @@ def entite_metadata(query):
 def direction_metadata(query):
     direction_values = list(query.values('designation').distinct())
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': direction_values},
         {'type': string, 'label': 'Description'}
     ]
 
 
 def contrat_metadata(query):
-    contrat_values = list(query.values('designation').distinct())
+    contrat_values = get_distinct_values(query,'designation') 
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': contrat_values},
         {'type': string, 'label': 'Description'}
     ]
 
 
 def centre_cout_metadata(query):
-    centre_cout_values = list(query.values('designation').distinct())
+    centre_cout_values = get_distinct_values(query,'designation') 
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': centre_cout_values},
         {'type': string, 'label': 'Description'}
     ]
 
 
 def affectation_metadata(query):
-    affectation_values = list(query.values('designation').distinct())
+    affectation_values = get_distinct_values(query,'designation') 
     return [
-        {'type': integer, 'label': 'ID'},
+        {'type': number, 'label': 'ID'},
         {'type': string, 'label': 'Designation', 'values': affectation_values},
         {'type': string, 'label': 'Description'}
     ]

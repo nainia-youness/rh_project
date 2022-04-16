@@ -8,9 +8,9 @@ export enum GestionPage {
 
 export enum FieldType {
     STRING = "string",
-    INTEGER= "integer",
+    NUMBER= "number",
     BOOLEAN= "boolean",
-    DATETIME="date_time"
+    DATE="date"
 }
 
 export interface Field{
@@ -23,11 +23,23 @@ export interface Metadata {
     fields:Field[]
 }
 
+export enum FilterMode {
+    CONTIENT = "Contient",
+    EGAL= "Egal",
+    DIFFERENT= "Différent",
+    SUPPERIEUR_STRICT="Supperieur strictement",
+    INFERIEUR_STRICT="Inférieur strictement",
+    SUPPERIEUR="Supperieur",
+    INFERIEUR="Inférieur",
+    COMPRIS_ENTRE="Compris entre"
+  }
+
 export interface Filter {
     field:string,
-    value?:number,
-    gte?:number,
-    lte?:number
+    filterMode:FilterMode,
+    value?:number | string,
+    gte?:number | string,
+    lte?:number | string
 }
 
 export interface Page {

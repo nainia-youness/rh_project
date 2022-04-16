@@ -17,6 +17,9 @@
   color: white;
 }
 
+.chip_operator{
+  color:$lighter_color
+}
 //forms and cards
 .mat-card:not([class*="mat-elevation-z"]) {
   box-shadow: 0 2px 1px -1px $light_green, 0 1px 1px 0 $light_green,
@@ -38,14 +41,14 @@
   background-color: $lighter_color !important;
 }
 
-//checkbox
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: $base_color !important;
-}
-::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: $base_color !important;
+//datepicker
+::ng-deep datepicker-value-example .mat-form-field-label{
+  color:$base_color;
 }
 
-::ng-deep .mat-checkbox-ripple .mat-ripple-element {
-  background-color: $light_green !important;
+::ng-deep .mat-datepicker-toggle{
+  color:$base_color;
+}
+::ng-deep .mat-form-field-underline{
+background: $base_color;
 }
