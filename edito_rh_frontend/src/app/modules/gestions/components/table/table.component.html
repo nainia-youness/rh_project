@@ -1,5 +1,6 @@
-<div class="table-responsive">
-  <table  *ngIf="(dataSource$ | async) as dataSource"  mat-table [dataSource]="dataSource" class="table">
+<div class="table-responsive" fxLayout="row">
+  <div fxFlex="2.5"></div>
+  <table fxFlex="95" *ngIf="(dataSource$ | async) as dataSource"  mat-table [dataSource]="dataSource" class="table">
     <div *ngFor="let column of columns ;   let i = index" [attr.data-index]="i"  [matColumnDef]="column.columnDef">
 
         <th mat-header-cell *matHeaderCellDef class="header">
@@ -15,5 +16,6 @@
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr class="example-element-row" (click)="goToEntity()" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+  </table>
+  <div fxFlex="2.5"></div>
 </div>
