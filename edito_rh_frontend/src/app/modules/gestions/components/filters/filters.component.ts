@@ -62,6 +62,7 @@ export class FiltersComponent implements OnInit {
     const deepCopy=JSON.parse(JSON.stringify(newSelectedFilters))
     this.selectedFilters=this.selectedFilters.filter(item => JSON.stringify(item) !== JSON.stringify(filter))
     this.store.dispatch(filtersChange({filters:deepCopy}))
+    this.filterApiCall()
   }
 
   confirm=()=>{
@@ -104,7 +105,7 @@ export class FiltersComponent implements OnInit {
     this.selectedFilters.push(filter)
     const deepCopy=JSON.parse(JSON.stringify(this.selectedFilters))
     this.store.dispatch(filtersChange({filters:deepCopy}))
-    //this.filterApiCall()//does the action getFonctionsStart()
+    this.filterApiCall()//does the action getFonctionsStart()
   }
 
   getChipValue(filter:Filter){
@@ -176,7 +177,6 @@ export class FiltersComponent implements OnInit {
   filterModes:FilterMode[]=[FilterMode.EGAL]
 
   updateChosenField=()=>{
-    console.log('update chosen field')
     this.initializeFields()
     this.filtersForm.get( 'filterMode' )!.patchValue( FilterMode.EGAL, {emitEvent: false} );
     this.isAdvancedNumberFilter=false
@@ -187,18 +187,8 @@ export class FiltersComponent implements OnInit {
       this.updateFilterMode()
     })
   }
-  filterModesOperators = new Map([
-    [FilterMode.CONTIENT, 'iexact'],
-    [FilterMode.EGAL,'eq'],
-    [FilterMode.DIFFERENT, 'ne'],
-    [FilterMode.SUPPERIEUR_STRICT,'gt'],
-    [FilterMode.INFERIEUR_STRICT, 'lt'],
-    [FilterMode.SUPPERIEUR,'gte'],
-    [FilterMode.INFERIEUR,'lte'],
-    [FilterMode.COMPRIS_ENTRE, 'gte and lte']
-  ])
+
   updateFilterMode(){
-    console.log('update Filter mode')
     if(this.chosenField.type===FieldType.STRING && this.isFieldEnum()){//string with choices
       this.filterModes=[FilterMode.EGAL]
     }

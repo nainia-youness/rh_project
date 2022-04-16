@@ -6,7 +6,7 @@ import { filter,map } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.state';
 import {select, Store } from '@ngrx/store';
 import { filtersSelector, pageSelector } from 'src/app/modules/gestions/state/gestion.selectors';
-import { Filter, Page } from 'src/app/modules/gestions/state/gestion.state';
+import { Filter, FilterMode, Page } from 'src/app/modules/gestions/state/gestion.state';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,7 +16,15 @@ export class FonctionService {
 
 
   fonctions_url=`${environment.apiUrl}/fonctions`
-
+  filterModesOperators = new Map([
+    [FilterMode.CONTIENT, 'icontains'],
+    [FilterMode.EGAL,'eq'],
+    [FilterMode.DIFFERENT, 'ne'],
+    [FilterMode.SUPPERIEUR_STRICT,'gt'],
+    [FilterMode.INFERIEUR_STRICT, 'lt'],
+    [FilterMode.SUPPERIEUR,'gte'],
+    [FilterMode.INFERIEUR,'lte'],
+  ])
 
   getFonctions():Observable<any>{
     
@@ -39,17 +47,29 @@ export class FonctionService {
   }
 
   private filterParams(params:HttpParams,filters:Filter[]):HttpParams{
-
+      let filterParams:string[]=[]
       filters.forEach((filter:Filter)=>{
-        if(filter.value){//equal
-          params=params.append(`${filter.field}[eq]`,`${filter.value.toString()}`)
+        if(filter.filterMode!==FilterMode.COMPRIS_ENTRE){
+          const operator=this.filterModesOperators.get(filter.filterMode)
+          filterParams.push(`${operator}(${filter.field},${filter.value})`)
         }
-        else if(filter.gte && filter.lte){
-          params=params.append(`${filter.field}[gte]`,`${filter.gte.toString()}`)
-          params=params.append(`${filter.field}[lte]`,`${filter.lte.toString()}`)
+        else{
+          filterParams.push(`and(gte(${filter.field},${filter.gte}),lte(${filter.field},${filter.lte}))`)
         }
       });
+      let filter=this.addAndOrOperators(filterParams)
+      params=params.append('filter',filter)
       return params
+  }
+
+  addAndOrOperators(filterParams:string[]):string{
+    if(filterParams.length===1) return filterParams[0]
+    let result=filterParams[0]
+    filterParams.shift()
+    filterParams.forEach((item:string)=>{
+      result=`and(${result},${item})`
+    })
+    return result
   }
 
   private addPageParams(params:HttpParams):HttpParams{

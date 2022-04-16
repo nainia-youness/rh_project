@@ -61,10 +61,9 @@ boolean = 'boolean'
 def fonction_metadata(query):
     designation_values =get_distinct_values(query,'designation') 
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': designation_values},
-        {'type': string, 'label': 'Description'},
-        {'type': date, 'label': 'DateTest'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': designation_values},
+        {'type': string, 'label': 'description'}
     ]
 
 def get_distinct_values(query,model):
@@ -75,51 +74,51 @@ def get_distinct_values(query,model):
 
 def ville_metadata(query):
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Nom'},
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'nom'},
     ]
 
 
 def entite_metadata(query):
     entite_values = get_distinct_values(query,'designation') 
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': entite_values},
-        {'type': string, 'label': 'Description'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': entite_values},
+        {'type': string, 'label': 'description'}
     ]
 
 
 def direction_metadata(query):
     direction_values = list(query.values('designation').distinct())
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': direction_values},
-        {'type': string, 'label': 'Description'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': direction_values},
+        {'type': string, 'label': 'description'}
     ]
 
 
 def contrat_metadata(query):
     contrat_values = get_distinct_values(query,'designation') 
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': contrat_values},
-        {'type': string, 'label': 'Description'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': contrat_values},
+        {'type': string, 'label': 'description'}
     ]
 
 
 def centre_cout_metadata(query):
     centre_cout_values = get_distinct_values(query,'designation') 
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': centre_cout_values},
-        {'type': string, 'label': 'Description'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': centre_cout_values},
+        {'type': string, 'label': 'description'}
     ]
 
 
 def affectation_metadata(query):
     affectation_values = get_distinct_values(query,'designation') 
     return [
-        {'type': number, 'label': 'ID'},
-        {'type': string, 'label': 'Designation', 'values': affectation_values},
-        {'type': string, 'label': 'Description'}
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': affectation_values},
+        {'type': string, 'label': 'description'}
     ]
