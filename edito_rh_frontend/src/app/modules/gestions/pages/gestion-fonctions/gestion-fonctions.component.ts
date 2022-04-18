@@ -6,7 +6,7 @@ import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
 import { gestionPageChange, getFonctionsStart} from '../../state/gestion.actions';
-import { getEntitiesSuccessSelector, getFonctionsSuccessSelector } from '../../state/gestion.selectors';
+import { getFonctionsSuccessSelector} from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
@@ -20,9 +20,12 @@ export class GestionFonctionsComponent implements OnInit {
   
   layoutConfig={
     sideNavItems:[
-      {title:'Gestion des employés',path:'#'},
       {title:'Gestion des fonctions',path:'/gestion/fonctions'},
-      {title:'Gestion des directions',path:'#'}
+      {title:'Gestion des villes',path:'/gestion/villes'},
+      {title:'Gestion des entités',path:'/gestion/entités'},
+      {title:'Gestion des directions',path:'/gestion/directions'},
+      {title:'Gestion des contrats',path:'/gestion/contrats'},
+      {title:'Gestion des centres-cout',path:'/gestion/centres-cout'}
     ],
     showSideNav:true,
     showFooter:false,
@@ -30,7 +33,7 @@ export class GestionFonctionsComponent implements OnInit {
   dataSource$?:Observable<FonctionModel[] | undefined>;
   ngOnInit(): void {
     this.store.dispatch(getFonctionsStart())
-    this.store.dispatch(gestionPageChange({gestionPage:"Fonctions"}))
+    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.FONCTIONS}))
     
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFonctions()
@@ -38,7 +41,7 @@ export class GestionFonctionsComponent implements OnInit {
 
   getFonctions=()=>{
     this.dataSource$=this.store.pipe(
-      select(getEntitiesSuccessSelector),
+      select(getFonctionsSuccessSelector),
       filter( val=> val !== undefined),
       map((fonctions)=> fonctions)
     )

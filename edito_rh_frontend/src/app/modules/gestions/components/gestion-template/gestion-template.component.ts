@@ -4,7 +4,7 @@ import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageSelector, getEntitiesSuccessSelector, getFonctionsSuccessSelector, getMetadataSelector, pageSelector } from '../../state/gestion.selectors';
+import { gestionPageSelector, getFonctionsSuccessSelector, getMetadataSelector, pageSelector } from '../../state/gestion.selectors';
 import { Observable } from 'rxjs';
 import { GestionService } from '../../services/gestion.service';
 import { gestionPageChange, getFonctionsStart, pageChange } from '../../state/gestion.actions';
@@ -20,7 +20,7 @@ import {PageEvent} from '@angular/material/paginator';
 export class GestionTemplateComponent implements OnInit {
   
   @Input()
-  dataSource$?:Observable<FonctionModel[] | undefined>;
+  dataSource$?:Observable<any[] | undefined>;
   metadata$!:Observable<any>
   page$!:Observable<Page>
   gestionPage$!:Observable<string>

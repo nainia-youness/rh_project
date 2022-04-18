@@ -3,8 +3,8 @@
 </button>
 <mat-menu #menu="matMenu">
   <div *ngFor="let item of (sideNavItems$ | async)">
-    <button mat-menu-item>
-      <span style="font-size: 20px;" (click)="goToItem(item.path)">{{item.title}}</span>
+    <button mat-menu-item style="font-size: 20px;" (click)="goToItem(item.path)">
+      {{item.title}}
     </button>
   </div>
 </mat-menu>

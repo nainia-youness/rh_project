@@ -5,17 +5,37 @@ import { gestionState } from "./gestion.state"
 
 const getGestionState= createFeatureSelector<gestionState>('gestion')
 
-export const getEntitiesSuccessSelector =createSelector(getGestionState,state=>{
-    return state.entities
-})
 
-export const getEntitiesFailureSelector =createSelector(getGestionState,state=>{
+export const getModelsFailureSelector =createSelector(getGestionState,state=>{
     return state.error
 })
 
+//fonctions
 export const getFonctionsSuccessSelector =createSelector(getGestionState,state=>{
     return state.fonctions
 })
+//villes
+export const getVillesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.villes
+})
+//centres_cout
+export const getCentresCoutSuccessSelector =createSelector(getGestionState,state=>{
+    return state.centres_cout
+})
+//contrats
+export const getContratsSuccessSelector =createSelector(getGestionState,state=>{
+    return state.contrats
+})
+//directions
+export const getDirectionsSuccessSelector =createSelector(getGestionState,state=>{
+    return state.directions
+})
+//entites
+export const getEntitesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.entites
+})
+
+
 
 export const gestionPageSelector =createSelector(getGestionState,state=>{
     return state.gestionPage

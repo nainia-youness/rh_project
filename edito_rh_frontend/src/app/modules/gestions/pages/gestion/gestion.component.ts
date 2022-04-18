@@ -18,9 +18,12 @@ export class GestionComponent implements OnInit {
 
   layoutConfig={
     sideNavItems:[
-      {title:'Gestion des employés',path:'#'},
       {title:'Gestion des fonctions',path:'/gestion/fonctions'},
-      {title:'Gestion des directions',path:'#'}
+      {title:'Gestion des villes',path:'/gestion/villes'},
+      {title:'Gestion des entités',path:'/gestion/entités'},
+      {title:'Gestion des directions',path:'/gestion/directions'},
+      {title:'Gestion des contrats',path:'/gestion/contrats'},
+      {title:'Gestion des centres-cout',path:'/gestion/centres-cout'}
     ],
     showSideNav:true,
     showFooter:false,

@@ -8,7 +8,6 @@ export class FonctionBuilderService {
 
   constructor() { }
 
-
   buildFonction(id:number,label:string,description:string):FonctionModel{
     return new FonctionModel(id,label,description)
   }
@@ -22,4 +21,5 @@ export class FonctionBuilderService {
     });
     return result
   }
+
 }

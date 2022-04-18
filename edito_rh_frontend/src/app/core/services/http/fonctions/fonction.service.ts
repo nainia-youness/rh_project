@@ -1,13 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FonctionModel } from 'src/app/shared/models/fonction.model';
-import { filter,map } from 'rxjs/operators';
 import { AppState } from 'src/app/store/app.state';
 import {select, Store } from '@ngrx/store';
-import { filtersSelector, pageSelector } from 'src/app/modules/gestions/state/gestion.selectors';
-import { Filter, FilterMode, Page } from 'src/app/modules/gestions/state/gestion.state';
 import { environment } from 'src/environments/environment';
+import { ParamsService } from '../helpers/params/params.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,87 +13,16 @@ export class FonctionService {
 
 
   fonctions_url=`${environment.apiUrl}/fonctions`
-  filterModesOperators = new Map([
-    [FilterMode.CONTIENT, 'icontains'],
-    [FilterMode.EGAL,'eq'],
-    [FilterMode.DIFFERENT, 'ne'],
-    [FilterMode.SUPPERIEUR_STRICT,'gt'],
-    [FilterMode.INFERIEUR_STRICT, 'lt'],
-    [FilterMode.SUPPERIEUR,'gte'],
-    [FilterMode.INFERIEUR,'lte'],
-  ])
+
 
   getFonctions():Observable<any>{
     
     let params = new HttpParams();
-    params=this.addFilterParams(params)
-    params=this.addPageParams(params)
+    params=this.paramsService.addFilterParams(params)
+    params=this.paramsService.addPageParams(params)
     return this.http.get<any>(this.fonctions_url,{params})
   }
   
-  private addFilterParams(params:HttpParams):HttpParams{
-    this.store.pipe(
-      select(filtersSelector),
-      filter( val => val.length!==0),
-      map((filters)=> {
-        params=this.filterParams(params,filters)
-        return filters
-      })
-    ).subscribe()
-    return params
-  }
 
-  private filterParams(params:HttpParams,filters:Filter[]):HttpParams{
-      let filterParams:string[]=[]
-      filters.forEach((filter:Filter)=>{
-        if(filter.filterMode!==FilterMode.COMPRIS_ENTRE){
-          const operator=this.filterModesOperators.get(filter.filterMode)
-          filterParams.push(`${operator}(${filter.field},${filter.value})`)
-        }
-        else{
-          filterParams.push(`and(gte(${filter.field},${filter.gte}),lte(${filter.field},${filter.lte}))`)
-        }
-      });
-      let filter=this.addAndOrOperators(filterParams)
-      params=params.append('filter',filter)
-      return params
-  }
-
-  addAndOrOperators(filterParams:string[]):string{
-    if(filterParams.length===1) return filterParams[0]
-    let result=filterParams[0]
-    filterParams.shift()
-    filterParams.forEach((item:string)=>{
-      result=`and(${result},${item})`
-    })
-    return result
-  }
-
-  private addPageParams(params:HttpParams):HttpParams{
-    this.store.pipe(
-      select(pageSelector),
-      map((page:Page)=> {
-        params=this.pageParams(params,page)
-        return page
-      })
-    ).subscribe()
-    return params
-}
-private pageParams(params:HttpParams,page:Page):HttpParams{
-  let limit=100
-  let offset=0
-  if(limit && page.currentPage && page.maxRowsPerPage) {
-    const maxRowsPerPage=page.maxRowsPerPage
-    const currentPage=page.currentPage
-    limit=maxRowsPerPage*currentPage
-    offset=maxRowsPerPage*(currentPage-1)
-  }
-  params=params.append(`offset`,`${offset}`)
-  params=params.append(`limit`,`${limit}`)
-
-  return params
-}
-
-
-  constructor(private http:HttpClient,private store:Store<AppState>){}
+  constructor(private http:HttpClient,private store:Store<AppState>,private paramsService:ParamsService){}
 }
