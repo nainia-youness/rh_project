@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { LayoutState } from 'src/app/shared/components/layout/state/layout.interface';
-import { FonctionModel } from 'src/app/shared/models/fonction.model';
+import { select, Store } from '@ngrx/store';
+import { filter, map, Observable } from 'rxjs';
+import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getFonctionsStart} from '../../state/gestion.actions';
-import { getFonctionsSuccessSelector} from '../../state/gestion.selectors';
+import { gestionPageChange, getAffectationsStart } from '../../state/gestion.actions';
+import { getAffectationsSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
-import { filter,map } from 'rxjs/operators';
-import { select, Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-gestion-fonctions',
-  templateUrl: './gestion-fonctions.component.html',
-  styleUrls: ['./gestion-fonctions.component.scss']
+  selector: 'app-gestion-affectations',
+  templateUrl: './gestion-affectations.component.html',
+  styleUrls: ['./gestion-affectations.component.scss']
 })
-export class GestionFonctionsComponent implements OnInit {
-  
+export class GestionAffectationsComponent implements OnInit {
+
   layoutConfig={
     sideNavItems:[
       {title:'Gestion des fonctions',path:'/gestion/fonctions'},
@@ -32,25 +29,25 @@ export class GestionFonctionsComponent implements OnInit {
     showSideNav:true,
     showFooter:false,
   }
-  dataSource$?:Observable<FonctionModel[] | undefined>;
+  dataSource$?:Observable<AffectationModel[] | undefined>;
   ngOnInit(): void {
-    this.store.dispatch(getFonctionsStart())
-    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.FONCTIONS}))
+    this.store.dispatch(getAffectationsStart())
+    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.AFFECTATIONS}))
     
     this.Layout.initializeLayout(this.layoutConfig)
-    this.getFonctions()
+    this.getAffectations()
   }
 
-  getFonctions=()=>{
+  getAffectations=()=>{
     this.dataSource$=this.store.pipe(
-      select(getFonctionsSuccessSelector),
+      select(getAffectationsSuccessSelector),
       filter( val=> val !== undefined),
-      map((fonctions)=> fonctions)
+      map((affectation)=> affectation)
     )
   }
 
   filterApiCall():void{
-    this.store.dispatch(getFonctionsStart())
+    this.store.dispatch(getAffectationsStart())
   }
 
 

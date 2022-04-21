@@ -12,6 +12,8 @@ import { EntiteModel } from 'src/app/shared/models/entite.model';
 import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { ContratModel } from 'src/app/shared/models/contrat.model';
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
+import { AffectationModel } from 'src/app/shared/models/affectation.model';
+import { EmployeModel } from 'src/app/shared/models/employe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +43,170 @@ export class GestionService {
     else if(gestionPage===GestionPage.CENTRES_COUT){
       result = this.getCentresCoutColumns()
     }
+    else if(gestionPage===GestionPage.AFFECTATIONS){
+      result = this.getAffectationsColumns()
+    }
+    else if(gestionPage===GestionPage.EMPLOYES){
+      result = this.getEmployesColumns()
+    }
     return result
   }
 
+
+  private getAffectationsColumns=()=>{
+    return [
+      {
+        columnDef: 'ID',
+        header: 'ID',
+        cell: (element: AffectationModel) => `${element.id ? element.id: ''}`,
+      },
+      {
+        columnDef: 'Designation',
+        header: 'Designation',
+        cell: (element: AffectationModel) => `${element.designation ? element.designation :''}`,
+      },
+      {
+        columnDef: 'Description',
+        header: 'description',
+        cell: (element: AffectationModel) => `${element.description ? element.description :''}`,
+      },
+    ];
+  }
+
+  private getEmployesColumns=()=>{
+    return [
+      {
+        columnDef: 'ID',
+        header: 'ID',
+        cell: (element: EmployeModel) => `${element.id ? element.id: ''}`,
+      },
+      {
+        columnDef: 'Matricule',
+        header: 'Matricule',
+        cell: (element: EmployeModel) => `${element.matricule ? element.matricule :''}`,
+      },
+      {
+        columnDef: 'Nom',
+        header: 'Nom',
+        cell: (element: EmployeModel) => `${element.nom ? element.nom :''}`,
+      },
+      {
+        columnDef: 'Prenom',
+        header: 'Prenom',
+        cell: (element: EmployeModel) => `${element.prenom ? element.prenom :''}`,
+      },
+      {
+        columnDef: 'Date naissance',
+        header: 'Date naissance',
+        cell: (element: EmployeModel) => `${element.date_naissance ? element.date_naissance :''}`,
+      },
+      {
+        columnDef: 'Sexe',
+        header: 'Sexe',
+        cell: (element: EmployeModel) => `${element.sexe ? element.sexe :''}`,
+      },
+      {
+        columnDef: 'Cin',
+        header: 'Cin',
+        cell: (element: EmployeModel) => `${element.cin ? element.cin :''}`,
+      },
+      {
+        columnDef: 'Date entrée',
+        header: 'date entrée',
+        cell: (element: EmployeModel) => `${element.date_entree ? element.date_entree :''}`,
+      },
+      {
+        columnDef: 'Situation familiale',
+        header: 'Situation familiale',
+        cell: (element: EmployeModel) => `${element.situation_familiale ? element.situation_familiale :''}`,
+      },
+      {
+        columnDef: 'Charge familiale',
+        header: 'Charge familiale',
+        cell: (element: EmployeModel) => `${element.charge_familiale ? element.charge_familiale :''}`,
+      },
+      {
+        columnDef: 'Adresse',
+        header: 'Adresse',
+        cell: (element: EmployeModel) => `${element.adresse ? element.adresse :''}`,
+      },
+      {
+        columnDef: 'Nationalite',
+        header: 'Nationalite',
+        cell: (element: EmployeModel) => `${element.nationalite ? element.nationalite :''}`,
+      },
+      {
+        columnDef: 'Cnss',
+        header: 'Cnss',
+        cell: (element: EmployeModel) => `${element.cnss ? element.cnss :''}`,
+      },
+      {
+        columnDef: 'Salaire',
+        header: 'Salaire',
+        cell: (element: EmployeModel) => `${element.salaire ? element.salaire :''}`,
+      },
+      {
+        columnDef: 'Numero compte',
+        header: 'Numero compte',
+        cell: (element: EmployeModel) => `${element.numero_compte ? element.numero_compte :''}`,
+      },
+      {
+        columnDef: 'Participation',
+        header: 'Participation',
+        cell: (element: EmployeModel) => `${element.participation ? element.participation :''}`,
+      },
+      {
+        columnDef: 'Date sortie',
+        header: 'Date sortie',
+        cell: (element: EmployeModel) => `${element.date_sortie ? element.date_sortie :''}`,
+      },
+            /*
+    fonction = models.ForeignKey(Fonction,on_delete=models.CASCADE)
+    centre_cout = models.ForeignKey(CentreCout,on_delete=models.CASCADE,)
+    direction = models.ForeignKey(Direction,on_delete=models.CASCADE,)
+    ville = models.ForeignKey(Ville,on_delete=models.CASCADE,)
+    contrat = models.ForeignKey(Contrat,on_delete=models.CASCADE,)
+    affectation = models.ForeignKey(Affectation,on_delete=models.CASCADE,)
+    entite = models.ForeignKey(Entite,on_delete=models.CASCADE,)
+    delegue = models.ForeignKey('self',on_delete=models.SET_NULL,blank=True, null=True)
+  */
+      {
+        columnDef: 'fonction',
+        header: 'fonction',
+        cell: (element: EmployeModel) => `${element.fonction ? element.fonction.designation :''}`,
+      },
+      {
+        columnDef: 'centre_cout',
+        header: 'centre_cout',
+        cell: (element: EmployeModel) => `${element.centre_cout ? element.centre_cout.designation :''}`,
+      },
+      {
+        columnDef: 'direction',
+        header: 'direction',
+        cell: (element: EmployeModel) => `${element.direction ? element.direction.designation :''}`,
+      },
+      {
+        columnDef: 'ville',
+        header: 'ville',
+        cell: (element: EmployeModel) => `${element.ville ? element.ville.nom :''}`,
+      },
+      {
+        columnDef: 'contrat',
+        header: 'contrat',
+        cell: (element: EmployeModel) => `${element.contrat ? element.contrat.designation :''}`,
+      },
+      {
+        columnDef: 'affectation',
+        header: 'affectation',
+        cell: (element: EmployeModel) => `${element.affectation ? element.affectation.designation :''}`,
+      },
+      {
+        columnDef: 'delegue id',
+        header: 'delegue id',
+        cell: (element: EmployeModel) => `${element.delegue ? element.delegue.id :''}`,
+      },
+    ];
+  }
 
   private getFonctionsColumns=()=>{
     return [

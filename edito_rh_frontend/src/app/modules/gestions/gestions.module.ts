@@ -15,6 +15,8 @@ import { GestionEntitesComponent } from './pages/gestion-entites/gestion-entites
 import { GestionDirectionsComponent } from './pages/gestion-directions/gestion-directions.component';
 import { GestionContratsComponent } from './pages/gestion-contrats/gestion-contrats.component';
 import { GestionCentresCoutComponent } from './pages/gestion-centres-cout/gestion-centres-cout.component';
+import { GestionAffectationsComponent } from './pages/gestion-affectations/gestion-affectations.component';
+import { GestionEmployesComponent } from './pages/gestion-employes/gestion-employes.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { GestionCentresCoutComponent } from './pages/gestion-centres-cout/gestio
     GestionDirectionsComponent,
     GestionContratsComponent,
     GestionCentresCoutComponent,
+    GestionAffectationsComponent,
+    GestionEmployesComponent,
   ],
   imports: [
     CommonModule,

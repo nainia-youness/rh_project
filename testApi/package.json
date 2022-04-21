@@ -15,6 +15,7 @@
   "homepage": "https://github.com/nainia-youness/testRepo#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "datejs": "^1.0.0-rc3",
     "express": "^4.17.1",
     "express-oauth2-bearer": "^0.4.1",
     "express-oauth2-jwt-bearer": "^1.0.1",

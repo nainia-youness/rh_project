@@ -34,7 +34,14 @@ export const getDirectionsSuccessSelector =createSelector(getGestionState,state=
 export const getEntitesSuccessSelector =createSelector(getGestionState,state=>{
     return state.entites
 })
-
+//employes
+export const getEmployesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.employes
+})
+//affectations
+export const getAffectationsSuccessSelector =createSelector(getGestionState,state=>{
+    return state.affectations
+})
 
 
 export const gestionPageSelector =createSelector(getGestionState,state=>{

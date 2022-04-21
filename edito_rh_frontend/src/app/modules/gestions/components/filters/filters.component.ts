@@ -134,6 +134,14 @@ export class FiltersComponent implements OnInit {
         return ''
     }
   }
+  
+  capitalizeFirstLetter(s:string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  handleLabel=(label:string)=>{
+    const s=label.replace('_',' ')
+    return this.capitalizeFirstLetter(s)
+  }
 
   private isElemInArray(arr:any[],value:any){
     const array=arr.filter((item:any) => JSON.stringify(value) === JSON.stringify(item))

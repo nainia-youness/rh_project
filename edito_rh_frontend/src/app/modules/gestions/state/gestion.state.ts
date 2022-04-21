@@ -1,6 +1,8 @@
+import { AffectationModel } from "src/app/shared/models/affectation.model"
 import { CentreCoutModel } from "src/app/shared/models/centre_cout.model"
 import { ContratModel } from "src/app/shared/models/contrat.model"
 import { DirectionModel } from "src/app/shared/models/direction.model"
+import { EmployeModel } from "src/app/shared/models/employe.model"
 import { EntiteModel } from "src/app/shared/models/entite.model"
 import { FonctionModel } from "src/app/shared/models/fonction.model"
 import { VilleModel } from "src/app/shared/models/ville.model"
@@ -14,6 +16,8 @@ export enum GestionPage {
     DIRECTIONS = "Directions",
     CONTRATS = "Contrats",
     CENTRES_COUT = "Centres Cout",
+    AFFECTATIONS = "Affectations",
+    EMPLOYES = "Employés",
 }
 
 export enum FieldType {
@@ -72,6 +76,8 @@ export interface gestionState {
     centres_cout?:CentreCoutModel[],
     entites?:EntiteModel[],
     directions?:DirectionModel[],
+    affectations?:AffectationModel[],
+    employes?:EmployeModel[],
     error?:string,
 }
 
@@ -87,5 +93,7 @@ export const initialState: gestionState={
     centres_cout:undefined,
     entites:undefined,
     directions:undefined,
+    affectations:undefined,
+    employes:undefined,
     error:undefined
 }

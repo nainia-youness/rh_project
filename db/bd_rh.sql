@@ -41,8 +41,8 @@ CREATE TABLE `affectation` (
 -- Dechargement des donnees de la table `affectation`
 --
 
-INSERT INTO `affectation` (`designation`, `description`, `derniere_operation`,`user_id`) VALUES
-('AGENCE MARRAKECH', 'AGENCE MARRAKECH ', 'Ajouter',1);
+INSERT INTO `affectation` (`designation`, `description`) VALUES
+('AGENCE MARRAKECH', 'AGENCE MARRAKECH ');
 
 -- --------------------------------------------------------
 
@@ -125,10 +125,10 @@ CREATE TABLE `employe` (
   `nom` varchar(255) CHARACTER SET utf8 NOT NULL,
   `prenom` varchar(255) CHARACTER SET utf8 NOT NULL,
   `date_naissance` date NOT NULL,
-  `sexe` ENUM('M','F'),
+  `sexe` ENUM('M','F') NOT NULL,
   `cin` varchar(255) CHARACTER SET utf8 NOT NULL,
   `date_entree` date NOT NULL,
-  `situation_familiale` ENUM('Marié(e)','Célibataire'),
+  `situation_familiale` ENUM('Marié(e)','Célibataire') NOT NULL,
   `nombre_enfant` int(11) NOT NULL,
   `charge_familiale` int(11) NOT NULL,
   `adresse` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -295,8 +295,10 @@ ALTER TABLE `employe`
   ADD CONSTRAINT `employe_ibfk_4` FOREIGN KEY (`contrat_id`) REFERENCES `contrat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employe_ibfk_5` FOREIGN KEY (`direction_id`) REFERENCES `direction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employe_ibfk_6` FOREIGN KEY (`fonction_id`) REFERENCES `fonction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employe_ibfk_7` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `employe_ibfk_7` FOREIGN KEY (`ville_id`) REFERENCES `ville` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employe_ibfk_8` FOREIGN KEY (`delegue_id`) REFERENCES `employe` (`id`);
 
+  
 --
 -- Contraintes pour la table `employe_rubrique`
 --

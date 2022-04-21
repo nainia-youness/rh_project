@@ -1,7 +1,9 @@
 import { createAction, props } from "@ngrx/store"
+import { AffectationModel } from "src/app/shared/models/affectation.model"
 import { CentreCoutModel } from "src/app/shared/models/centre_cout.model"
 import { ContratModel } from "src/app/shared/models/contrat.model"
 import { DirectionModel } from "src/app/shared/models/direction.model"
+import { EmployeModel } from "src/app/shared/models/employe.model"
 import { EntiteModel } from "src/app/shared/models/entite.model"
 import { FonctionModel } from "src/app/shared/models/fonction.model"
 import { VilleModel } from "src/app/shared/models/ville.model"
@@ -30,6 +32,12 @@ enum ActionTypes {
     GET_VILLES_START = '[Gestion Villes Page] Get Villes Start',
     GET_VILLES_SUCCESS = '[Gestion Villes Page] Get Villes Success',
 
+    GET_AFFECTATIONS_START = '[Gestion Affectations Page] Get Affectations Start',
+    GET_AFFECTATIONS_SUCCESS = '[Gestion Affectations Page] Get Affectations Success',
+
+    GET_EMPLOYES_START = '[Gestion Employes Page] Get Employes Start',
+    GET_EMPLOYES_SUCCESS = '[Gestion Employes Page] Get Employes Success',
+
     FILTERS_CHANGE = '[Gestion Page] Filters change',
     PAGE_CHANGE = '[Gestion Page] Page change',
     GET_METADATA = '[Gestion Pages] Get Metadata',
@@ -44,7 +52,8 @@ export const getContratsStart=createAction(ActionTypes.GET_CONTRATS_START)
 export const getDirectionsStart=createAction(ActionTypes.GET_DIRECTIONS_START)
 export const getEntitesStart=createAction(ActionTypes.GET_ENTITES_START)
 export const getVillesStart=createAction(ActionTypes.GET_VILLES_START)
-
+export const getAffectationsStart=createAction(ActionTypes.GET_AFFECTATIONS_START)
+export const getEmployesStart=createAction(ActionTypes.GET_EMPLOYES_START)
 //success
 export const getFonctionsSuccess=createAction(ActionTypes.GET_FONCTIONS_SUCCESS,props<{fonctions:FonctionModel[] | undefined}>())
 export const getCentresCoutSuccess=createAction(ActionTypes.GET_CENTRES_COUT_SUCCESS,props<{centres_cout:CentreCoutModel[] | undefined}>())
@@ -52,7 +61,8 @@ export const getContratsSuccess=createAction(ActionTypes.GET_CONTRATS_SUCCESS,pr
 export const getDirectionsSuccess=createAction(ActionTypes.GET_DIRECTIONS_SUCCESS,props<{directions:DirectionModel[] | undefined}>())
 export const getEntitesSuccess=createAction(ActionTypes.GET_ENTITES_SUCCESS,props<{entites:EntiteModel[] | undefined}>())
 export const getVillesSuccess=createAction(ActionTypes.GET_VILLES_SUCCESS,props<{villes:VilleModel[] | undefined}>())
-
+export const getAffectationsSuccess=createAction(ActionTypes.GET_AFFECTATIONS_SUCCESS,props<{affectations:AffectationModel[] | undefined}>())
+export const getEmployesSuccess=createAction(ActionTypes.GET_EMPLOYES_SUCCESS,props<{employes:EmployeModel[] | undefined}>())
 
 export const getModelsFailure=createAction(ActionTypes.GET_MODELS_FAILURE,props<{error:string}>())
 

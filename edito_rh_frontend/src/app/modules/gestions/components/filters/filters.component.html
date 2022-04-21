@@ -17,7 +17,7 @@
             <mat-select formControlName="chooseField" (ngModelChange)="updateChosenField()">
               <div *ngFor="let fieldMetadata of metadata.fields">
                 <div *ngIf="fieldMetadata.label!=='Derniere operation' && fieldMetadata.label!=='Date derniere operation' && fieldMetadata.label!=='User id'">
-                  <mat-option [value]="fieldMetadata.label">{{fieldMetadata.label}}</mat-option>
+                  <mat-option [value]="fieldMetadata.label">{{handleLabel(fieldMetadata.label)}}</mat-option>
                 </div>
               </div>
             </mat-select>

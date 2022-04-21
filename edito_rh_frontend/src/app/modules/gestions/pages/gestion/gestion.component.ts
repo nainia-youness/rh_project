@@ -23,7 +23,9 @@ export class GestionComponent implements OnInit {
       {title:'Gestion des entités',path:'/gestion/entités'},
       {title:'Gestion des directions',path:'/gestion/directions'},
       {title:'Gestion des contrats',path:'/gestion/contrats'},
-      {title:'Gestion des centres-cout',path:'/gestion/centres-cout'}
+      {title:'Gestion des centres-cout',path:'/gestion/centres-cout'},
+      {title:'Gestion des affectations',path:'/gestion/affectations'},
+      {title:'Gestion des employés',path:'/gestion/employés'},
     ],
     showSideNav:true,
     showFooter:false,
