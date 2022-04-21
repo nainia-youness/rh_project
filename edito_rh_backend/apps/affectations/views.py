@@ -33,14 +33,6 @@ class AffectationsAPIView(APIView):
         # add count
         if(count is not None):
             metadata['count'] = count
-        # remove user_id and replace it with nom et prenom of user
-        data = serializer.data
-        for contrat in data:
-            user_id = contrat['user_id']
-            del contrat['user_id']
-            user = self.get_User(user_id)
-            contrat['user_nom'] = user.nom
-            contrat['user_prenom'] = user.prenom
         key_values = [
             {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},

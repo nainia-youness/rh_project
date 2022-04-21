@@ -88,6 +88,10 @@ python manage.py createsuperuser --database=users_db
 user1@gmail.com
 
 manage.py makemigrations (when you add a model)
+
+if prb happens
+leave only init in migrations then makemigrations then migrate
+
 -----------------------------
 pip install PyJWT
 pip install django-cors-headers
@@ -112,3 +116,7 @@ ID: Something that will let your consumers contact you. Then you can reference y
 CODE: Even though the HTTP code comes back on the header, it’s good practice to add it to the body as well. This lets others see it and easily map it to a model.
 STATUS: This is the text of what your status code means. Don’t make your consumers look it up.
 TITLE: Let the consumer know what caused the client error here, but don’t share too much info about internal server errors.
+
+
+mark=Employe
+student=Fonction

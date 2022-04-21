@@ -1,6 +1,17 @@
 from rest_framework.schemas.openapi import AutoSchema
 from rest_framework.metadata import SimpleMetadata
+import sys
 
+
+sys.path.insert(2, '../apps')
+from apps.employes.models import Employe
+from apps.fonctions.models import Fonction
+from apps.centres_cout.models import CentreCout
+from apps.villes.models import Ville
+from apps.contrats.models import Contrat
+from apps.directions.models import Direction
+from apps.affectations.models import Affectation
+from apps.entites.models import Entite
 
 class APIMetadata(SimpleMetadata):
     """Extended metadata generator."""
@@ -47,6 +58,8 @@ def get_metadata(model, query):
         fields = centre_cout_metadata(query)
     elif(model == 'affectation'):
         fields = affectation_metadata(query)
+    elif(model == 'employe'):
+        fields = employe_metadata(query)
     if(fields is not None):
         result['fields'] = fields
     return result
@@ -56,7 +69,52 @@ number = 'number'
 string = 'string'
 date = 'date'
 boolean = 'boolean'
+object = 'object' 
 
+def employe_metadata(query):
+    q_fonction=Fonction.objects.all()
+    fonction_values=get_distinct_values(q_fonction,'designation')
+    q_centre_cout=CentreCout.objects.all()
+    centre_cout_values=get_distinct_values(q_centre_cout,'designation')
+    q_direction=Direction.objects.all()
+    direction_values=get_distinct_values(q_direction,'designation')
+    q_ville=Ville.objects.all()
+    ville_values=get_distinct_values(q_ville,'nom')
+    q_contrat=Contrat.objects.all()
+    contrat_values=get_distinct_values(q_contrat,'designation')
+    q_direction=Direction.objects.all()
+    direction_values=get_distinct_values(q_direction,'designation')
+    q_affectation=Affectation.objects.all()
+    affectation_values=get_distinct_values(q_affectation,'designation')
+    q_entite=Entite.objects.all()
+    entite_values=get_distinct_values(q_entite,'designation')
+    return [
+        {'type': number, 'label': 'matricule'},
+        {'type': string, 'label': 'nom'},
+        {'type': string, 'label': 'prenom'},
+        {'type': date, 'label': 'date_naissance'},
+        {'type': string, 'label': 'sexe','values':['M','F']},
+        {'type': string, 'label': 'cin'},
+        {'type': date, 'label': 'date_entree'},
+        {'type': string, 'label': 'situation_familiale','values':['Marié(e)','Célibataire']},
+        {'type': number, 'label': 'nombre_enfant'},
+        {'type': number, 'label': 'charge_familiale'},
+        {'type': string, 'label': 'adresse'},
+        {'type': string, 'label': 'nationalite'},
+        {'type': string, 'label': 'cnss'},
+        {'type': number, 'label': 'salaire'},
+        {'type': number, 'label': 'numero_compte'},
+        {'type': number, 'label': 'participation'},
+        {'type': date, 'label': 'date_sortie'},
+        {'type': string, 'label': 'fonction','values':fonction_values},
+        {'type': string, 'label': 'centre_cout','values':centre_cout_values},
+        {'type': string, 'label': 'direction','values':direction_values},
+        {'type': string, 'label': 'ville','values':ville_values},
+        {'type': string, 'label': 'contrat','values':contrat_values},
+        {'type': string, 'label': 'affectation','values':affectation_values},
+        {'type': string, 'label': 'entite','values':entite_values},
+        {'type': string, 'label': 'delegue'},
+    ]
 
 def fonction_metadata(query):
     designation_values =get_distinct_values(query,'designation') 
@@ -68,7 +126,7 @@ def fonction_metadata(query):
 
 def get_distinct_values(query,model):
     distinct_values_dict=list(query.values(model).distinct())
-    distinct_values_list=[i['designation'] for i in distinct_values_dict]
+    distinct_values_list=[i[model] for i in distinct_values_dict]
     return distinct_values_list
 
 

@@ -19,14 +19,43 @@ from ..users.authentication import is_authenticated
 from .models import Fonction
 from .serializer import FonctionSerializer
 import datetime
-
+sys.path.insert(1, '../../common')
 
 from common.filter_parser import get_filter, get_queryset
 from common.api_metadata import APIMetadata, get_metadata
 from common.response_handler import handle_error, handle_successful_response
+from ..affectations.models import Affectation
+from ..centres_cout.models import CentreCout
+from ..contrats.models import Contrat
+from ..directions.models import Direction
+from ..employes.models import Employe
+from ..entites.models import Entite
+from ..villes.models import Ville
+from .models import Fonction
 
-sys.path.insert(1, '../../common')
+def initialize():
+    pass
+    #a = Affectation(designation='AGENCE MARRAKECH', description='AGENCE MARRAKECH',user_id=1)
+    #a.save()
+    #e = Entite(designation='SAPRESS', description='SAPRESS',user_id=1)
+    #e.save()
+    #v = Ville(nom='Marrakech',user_id=1)
+    #v.save()
+    #cc=CentreCout(designation='Logistique', description='Logistique',user_id=1)
+    #cc.save()
+    #c=Contrat(designation='CDI', description='Contrat a duree indeterminee',user_id=1)
+    #c.save()
+    #f=Fonction(designation='Achat', description='Achat',user_id=1)
+    #f.save()
+    #d=Direction(designation='DIRECTION LOGISTIQUE ET DEVELOPPEMENT', description='DIRECTION LOGISTIQUE ET DEVELOPPEMENT',user_id=1)
+    #d.save()
+    #e=Employe(matricule=484, nom='Chakir', prenom='Mohamed', date_naissance='1994-01-01', sexe='M', 
+    #cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
+    #adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
+    #participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
+    #e.save()
 
+initialize()
 
 class FonctionsAPIView(APIView):
 
@@ -41,7 +70,6 @@ class FonctionsAPIView(APIView):
         fonctions = Fonction.objects.all()
         metadata = get_metadata('fonction', fonctions)
         fonctions, max_pages, count = get_queryset(request, fonctions)
-        #print(max_pages, count)
         serializer = FonctionSerializer(fonctions, many=True)
 
         # add maxPages
@@ -54,16 +82,9 @@ class FonctionsAPIView(APIView):
         #    'fields': metadata_generator.change_metadata_format(metadata_generator.get_serializer_info(serializer))
         # }
         # remove user_id and replace it with nom et prenom of user
-        data = serializer.data
-        for fonction in data:
-            user_id = fonction['user_id']
-            del fonction['user_id']
-            user = self.get_User(user_id)
-            fonction['user_nom'] = user.nom
-            fonction['user_prenom'] = user.prenom
-
+        
         key_values = [
-            {'key': 'data', 'value': data},
+            {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},
         ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)

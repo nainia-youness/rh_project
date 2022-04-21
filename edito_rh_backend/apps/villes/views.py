@@ -34,16 +34,9 @@ class VillesAPIView(APIView):
         # add count
         if(count is not None):
             metadata['count'] = count
-        # remove user_id and replace it with nom et prenom of user
-        data = serializer.data
-        for ville in data:
-            user_id = ville['user_id']
-            del ville['user_id']
-            user = self.get_User(user_id)
-            ville['user_nom'] = user.nom
-            ville['user_prenom'] = user.prenom
+
         key_values = [
-            {'key': 'data', 'value': data},
+            {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},
         ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)

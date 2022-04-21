@@ -33,14 +33,6 @@ class DirectionsAPIView(APIView):
         # add count
         if(count is not None):
             metadata['count'] = count
-        # remove user_id and replace it with nom et prenom of user
-        data = serializer.data
-        for direction in data:
-            user_id = direction['user_id']
-            del direction['user_id']
-            user = self.get_User(user_id)
-            direction['user_nom'] = user.nom
-            direction['user_prenom'] = user.prenom
         key_values = [
             {'key': 'data', 'value': serializer.data},
             {'key': 'metadata', 'value': metadata},

@@ -81,12 +81,17 @@ def operator_filter(exp):
         left = operator_filter(exp['left'])
 
     r = {
-        'left': left,
+        'left': handle_left(left),
         'right': right,
         'operator': exp['operator']
     }
 
     return operator_filter(r)
+
+def handle_left(left):
+    if(isinstance(left, str)):
+        return left.replace('.','__')
+    return left
 
 
 # both left and right are simple filters
@@ -98,7 +103,7 @@ def simple_operator_filter(exp):
     if(not isinstance(exp['left'], Q)):
         left_filter = simple_filter(exp['left'])
     else:
-        left_filter = exp['left']
+        left_filter = handle_left(exp['left'])
 
     if(exp['operator'] == 'and'):
         return (left_filter & right_filter)
@@ -108,7 +113,7 @@ def simple_operator_filter(exp):
 
 def simple_filter(exp):
     parameters_dict = {}
-    left = exp['left']
+    left = handle_left(exp['left'])
     if(exp['operator'] != 'eq'):
         left += ('__'+exp['operator'])
 
@@ -132,6 +137,7 @@ def get_queryset(request, query):
     distinct_field = request.query_params.get('distinct', None)
 
     if(filter is not None):
+        print(get_filter(filter))
         query = query.filter(get_filter(filter))
 
     max_pages = None

@@ -34,14 +34,6 @@ class EntitesAPIView(APIView):
         # add count
         if(count is not None):
             metadata['count'] = count
-        # remove user_id and replace it with nom et prenom of user
-        data = serializer.data
-        for entite in data:
-            user_id = entite['user_id']
-            del entite['user_id']
-            user = self.get_User(user_id)
-            entite['user_nom'] = user.nom
-            entite['user_prenom'] = user.prenom
 
         key_values = [
             {'key': 'data', 'value': serializer.data},
