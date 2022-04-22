@@ -22,7 +22,7 @@ class VillesAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         villes = Ville.objects.all()
         metadata = get_metadata('ville', villes)
         villes, max_pages, count = get_queryset(request, villes)
@@ -42,8 +42,8 @@ class VillesAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = VilleSerializer(data=request.data)
         if serializer.is_valid():
@@ -63,15 +63,15 @@ class VilleAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         ville = self.get_object(id)
         serializer = VilleSerializer(ville)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         ville = self.get_object(id)
         serializer = VilleSerializer(ville, data=request.data)
@@ -82,7 +82,7 @@ class VilleAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         ville = self.get_object(id)
         ville.delete()
         key_values = [{'key': 'message', 'value': 'ville deleted'}]

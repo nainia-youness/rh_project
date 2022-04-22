@@ -7,7 +7,11 @@ from ..users.serializer import UserSerializer
 
 class FonctionSerializer(serializers.ModelSerializer):
 
-    user=UserSerializer(read_only=True,many=False)
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['user'] = UserSerializer(instance.user).data
+        return response
+        
     class Meta:
         model = Fonction
         fields = '__all__'

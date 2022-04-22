@@ -5,6 +5,7 @@ from ..fonctions.models import Fonction
 from ..centres_cout.models import CentreCout
 from ..affectations.models import Affectation
 from ..contrats.models import Contrat
+from ..rubriques.models import Rubrique
 from ..directions.models import Direction
 from ..villes.models import Ville
 from ..entites.models import Entite
@@ -39,7 +40,7 @@ class Employe(models.Model):
     cnss = models.CharField(max_length=255)
     salaire = models.FloatField()
     numero_compte = models.IntegerField()
-    participation = models.IntegerField()
+    participation = models.FloatField()
     date_sortie = models.DateField(blank=True, null=True)
     derniere_operation = models.CharField(max_length=255,default="Aucune Operation")
     date_derniere_operation = models.DateTimeField(auto_now=True)
@@ -52,8 +53,23 @@ class Employe(models.Model):
     affectation = models.ForeignKey(Affectation,on_delete=models.CASCADE,)
     entite = models.ForeignKey(Entite,on_delete=models.CASCADE,)
     delegue = models.ForeignKey('self',on_delete=models.SET_NULL,blank=True, null=True)
+    rubriques = models.ManyToManyField(Rubrique, through='EmployesRubriques')
 
     class Meta:
         managed = True
         db_table = 'employe'
         unique_together = (('matricule', 'entite'),)
+
+
+class EmployesRubriques(models.Model):
+    rubrique = models.ForeignKey(Rubrique, on_delete=models.CASCADE)
+    employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
+    montant = models.FloatField()
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True, null=True)
+    derniere_operation = models.CharField(max_length=255,default="Aucune Operation")
+    date_derniere_operation = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'employes_rubriques'
+        unique_together = (('rubrique', 'employe'),)

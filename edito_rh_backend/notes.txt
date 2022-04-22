@@ -116,7 +116,3 @@ ID: Something that will let your consumers contact you. Then you can reference y
 CODE: Even though the HTTP code comes back on the header, it’s good practice to add it to the body as well. This lets others see it and easily map it to a model.
 STATUS: This is the text of what your status code means. Don’t make your consumers look it up.
 TITLE: Let the consumer know what caused the client error here, but don’t share too much info about internal server errors.
-
-
-mark=Employe
-student=Fonction

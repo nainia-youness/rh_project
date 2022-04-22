@@ -28,32 +28,49 @@ from ..affectations.models import Affectation
 from ..centres_cout.models import CentreCout
 from ..contrats.models import Contrat
 from ..directions.models import Direction
-from ..employes.models import Employe
+from ..employes.models import Employe,EmployesRubriques
 from ..entites.models import Entite
 from ..villes.models import Ville
+from ..rubriques.models import Rubrique
 from .models import Fonction
 
 def initialize():
+    # a = Affectation(designation='AGENCE MARRAKECH', description='AGENCE MARRAKECH',user_id=1)
+    # a.save()
+    # e = Entite(designation='SAPRESS', description='SAPRESS',user_id=1)
+    # e.save()
+    # v = Ville(nom='Marrakech',user_id=1)
+    # v.save()
+    # cc=CentreCout(designation='Logistique', description='Logistique',user_id=1)
+    # cc.save()
+    # c=Contrat(designation='CDI', description='Contrat a duree indeterminee',user_id=1)
+    # c.save()
+    # f=Fonction(designation='Achat', description='Achat',user_id=1)
+    # f.save()
+    # d=Direction(designation='DIRECTION LOGISTIQUE ET DEVELOPPEMENT', description='DIRECTION LOGISTIQUE ET DEVELOPPEMENT',user_id=1)
+    # d.save()
+    # r1=Rubrique(designation='prime1', description='prime1',user_id=1)
+    # r1.save()
+    # r2=Rubrique(designation='prime2', description='prime2',user_id=1)
+    # r2.save()
+    # e=Employe(matricule=484, nom='Chakir', prenom='Mohamed', date_naissance='1994-01-01', sexe='M', 
+    # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
+    # adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
+    # participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
+    # e.save()
+
+
+    # #r=Rubrique.objects.get(id=1)
+    # #e=Employe.objects.get(id=1)
+
+    # rubriques = Rubrique.objects.all()
+    # e=Employe.objects.get(id=1)
+    # for r in rubriques:
+    #     print(r)
+    #     re = EmployesRubriques(rubrique=r, employe=e,montant=0.00)
+    #     re.save()
+    #     print(re)
     pass
-    #a = Affectation(designation='AGENCE MARRAKECH', description='AGENCE MARRAKECH',user_id=1)
-    #a.save()
-    #e = Entite(designation='SAPRESS', description='SAPRESS',user_id=1)
-    #e.save()
-    #v = Ville(nom='Marrakech',user_id=1)
-    #v.save()
-    #cc=CentreCout(designation='Logistique', description='Logistique',user_id=1)
-    #cc.save()
-    #c=Contrat(designation='CDI', description='Contrat a duree indeterminee',user_id=1)
-    #c.save()
-    #f=Fonction(designation='Achat', description='Achat',user_id=1)
-    #f.save()
-    #d=Direction(designation='DIRECTION LOGISTIQUE ET DEVELOPPEMENT', description='DIRECTION LOGISTIQUE ET DEVELOPPEMENT',user_id=1)
-    #d.save()
-    #e=Employe(matricule=484, nom='Chakir', prenom='Mohamed', date_naissance='1994-01-01', sexe='M', 
-    #cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
-    #adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
-    #participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
-    #e.save()
 
 initialize()
 
@@ -66,7 +83,7 @@ class FonctionsAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         fonctions = Fonction.objects.all()
         metadata = get_metadata('fonction', fonctions)
         fonctions, max_pages, count = get_queryset(request, fonctions)
@@ -90,8 +107,8 @@ class FonctionsAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = FonctionSerializer(
             data=request.data)
@@ -112,15 +129,15 @@ class FonctionAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         fonction = self.get_object(id)
         serializer = FonctionSerializer(fonction)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         fonction = self.get_object(id)
         serializer = FonctionSerializer(fonction, data=request.data)
@@ -131,7 +148,7 @@ class FonctionAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         fonction = self.get_object(id)
         fonction.delete()
         key_values = [{'key': 'message', 'value': 'fonction deleted'}]
@@ -145,37 +162,37 @@ class FonctionsView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Creat
     lookup_field = 'id'
 
     def get(self, request, id=None):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         if id:
             return self.retrieve(request)
         return self.list(request)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         return self.create(request)
 
     def put(self, request, id=None):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         return self.update(request, id)
 
     def delete(self, request, id=None):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         return self.destroy(request, id)
 
     def get_queryset(self, id=None):
 
-        filter = self.request.query_params.get('filter', None)
+        filter = request.query_params.get('filter', None)
         # field param
-        fields_params = self.request.query_params.get('fields', None)
+        fields_params = request.query_params.get('fields', None)
 
         # sort param
-        sort_params = self.request.query_params.get('sort', None)
+        sort_params = request.query_params.get('sort', None)
 
         # limit and offset params
-        limit = self.request.query_params.get('limit', None)
-        offset = self.request.query_params.get('offset', None)
+        limit = request.query_params.get('limit', None)
+        offset = request.query_params.get('offset', None)
         # distinct param
-        distinct_field = self.request.query_params.get('distinct', None)
+        distinct_field = request.query_params.get('distinct', None)
 
         # apply params
         q = Fonction.objects.all()

@@ -22,7 +22,7 @@ class AffectationsAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         affectations = Affectation.objects.all()
         metadata = get_metadata('affectation', affectations)
         affectations, max_pages, count = get_queryset(request, affectations)
@@ -40,8 +40,8 @@ class AffectationsAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = AffectationSerializer(data=request.data)
         if serializer.is_valid():
@@ -61,15 +61,15 @@ class AffectationAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         affectation = self.get_object(id)
         serializer = AffectationSerializer(affectation)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         affectation = self.get_object(id)
         serializer = AffectationSerializer(affectation, data=request.data)
@@ -80,7 +80,7 @@ class AffectationAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         affectation = self.get_object(id)
         affectation.delete()
         key_values = [{'key': 'message', 'value': 'affectation deleted'}]

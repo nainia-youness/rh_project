@@ -29,5 +29,6 @@ urlpatterns = [
     path(base_url, include('apps.affectations.urls')),
     path(base_url, include('apps.users.urls')),
     path(base_url, include('apps.employes.urls')),
+    path(base_url, include('apps.rubriques.urls')),
     path('admin/', admin.site.urls),
 ]

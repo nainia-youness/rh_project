@@ -22,7 +22,7 @@ class ContratsAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         contrats = Contrat.objects.all()
         metadata = get_metadata('contrat', contrats)
         contrats, max_pages, count = get_queryset(request, contrats)
@@ -40,8 +40,8 @@ class ContratsAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = ContratSerializer(data=request.data)
         if serializer.is_valid():
@@ -61,15 +61,15 @@ class ContratAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         contrat = self.get_object(id)
         serializer = ContratSerializer(contrat)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         contrat = self.get_object(id)
         serializer = ContratSerializer(contrat, data=request.data)
@@ -80,7 +80,7 @@ class ContratAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         contrat = self.get_object(id)
         contrat.delete()
         key_values = [{'key': 'message', 'value': 'contrat deleted'}]

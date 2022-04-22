@@ -22,7 +22,7 @@ class DirectionsAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         directions = Direction.objects.all()
         metadata = get_metadata('direction', directions)
         directions, max_pages, count = get_queryset(request, directions)
@@ -40,8 +40,8 @@ class DirectionsAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = DirectionSerializer(data=request.data)
         if serializer.is_valid():
@@ -61,15 +61,15 @@ class DirectionAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         direction = self.get_object(id)
         serializer = DirectionSerializer(direction)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         direction = self.get_object(id)
         serializer = DirectionSerializer(direction, data=request.data)
@@ -80,7 +80,7 @@ class DirectionAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         direction = self.get_object(id)
         direction.delete()
         key_values = [{'key': 'message', 'value': 'ville deleted'}]

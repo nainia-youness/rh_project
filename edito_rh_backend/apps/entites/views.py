@@ -23,7 +23,7 @@ class EntitesAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         entites = Entite.objects.all()
         metadata = get_metadata('entite', entites)
         entites, max_pages, count = get_queryset(request, entites)
@@ -42,8 +42,8 @@ class EntitesAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = EntiteSerializer(data=request.data)
         if serializer.is_valid():
@@ -63,15 +63,15 @@ class EntiteAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         entite = self.get_object(id)
         serializer = EntiteSerializer(entite)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         entite = self.get_object(id)
         serializer = EntiteSerializer(entite, data=request.data)
@@ -83,7 +83,7 @@ class EntiteAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         entite = self.get_object(id)
         entite.delete()
         key_values = [{'key': 'message', 'value': 'entite deleted'}]

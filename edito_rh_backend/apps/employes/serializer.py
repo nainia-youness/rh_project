@@ -8,21 +8,38 @@ from ..affectations.serializer import AffectationSerializer
 from ..entites.serializer import EntiteSerializer
 from ..users.serializer import UserSerializer
 from ..fonctions.models import Fonction
-from .models import Employe
+from .models import Employe,EmployesRubriques
 from rest_framework import serializers
 
 class EmployeSerializer(serializers.ModelSerializer):
-    fonction=FonctionSerializer(read_only=True,many=False)
-    centre_cout=CentreCoutSerializer(read_only=True,many=False)
-    direction=DirectionSerializer(read_only=True,many=False)
-    ville=VilleSerializer(read_only=True,many=False)
-    contrat=ContratSerializer(read_only=True,many=False)
-    affectation=AffectationSerializer(read_only=True,many=False)
-    entite=EntiteSerializer(read_only=True,many=False)
-    user=UserSerializer(read_only=True,many=False)
+    #fonction=FonctionSerializer(read_only=True,many=False)
     #delegue_nom=serializers.CharField(source='delegue.nom')
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['user'] = UserSerializer(instance.user).data
+        response['fonction'] = FonctionSerializer(instance.fonction).data
+        response['centre_cout'] = CentreCoutSerializer(instance.centre_cout).data
+        response['direction'] = DirectionSerializer(instance.direction).data
+        response['ville'] = VilleSerializer(instance.ville).data
+        response['contrat'] = ContratSerializer(instance.contrat).data
+        response['affectation'] = AffectationSerializer(instance.affectation).data
+        response['entite'] = EntiteSerializer(instance.entite).data
+        return response
 
     class Meta:
         model = Employe
         fields = '__all__'
     #    extra_fields = ['delegue_nom']
+
+
+class EmployesRubriquesSerializer(serializers.ModelSerializer):
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['user'] = UserSerializer(instance.user).data
+        return response
+        
+    class Meta:
+        model = EmployesRubriques
+        fields = '__all__'

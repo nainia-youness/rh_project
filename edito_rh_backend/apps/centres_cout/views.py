@@ -22,7 +22,7 @@ class CentreCoutsAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         centreCouts = CentreCout.objects.all()
         metadata = get_metadata('centre_cout', centreCouts)
         centreCouts, max_pages, count = get_queryset(request, centreCouts)
@@ -40,8 +40,8 @@ class CentreCoutsAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def post(self, request):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'
         serializer = CentreCoutSerializer(data=request.data)
         if serializer.is_valid():
@@ -61,15 +61,15 @@ class CentreCoutAPIView(APIView):
             raise Http404
 
     def get(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         centreCout = self.get_object(id)
         serializer = CentreCoutSerializer(centreCout)
         key_values = [{'key': 'data', 'value': serializer.data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        user_id = is_authenticated(self.request)
-        request.data['user_id'] = user_id
+        user_id = is_authenticated(request)
+        request.data['user'] = user_id
         request.data['derniere_operation'] = 'Modifier'
         centreCout = self.get_object(id)
         serializer = CentreCoutSerializer(centreCout, data=request.data)
@@ -80,7 +80,7 @@ class CentreCoutAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
-        user_id = is_authenticated(self.request)
+        user_id = is_authenticated(request)
         centreCout = self.get_object(id)
         centreCout.delete()
         key_values = [{'key': 'message', 'value': 'centre cout deleted'}]
