@@ -1,4 +1,6 @@
 import sys
+
+from ..rubriques.serializer import RubriqueSerializer
 from .serializer import EmployeSerializer,EmployesRubriquesSerializer
 from .models import Employe
 from rest_framework import status
@@ -45,8 +47,10 @@ class EmployesAPIView(APIView):
         # add delegue
         for employe in serializer.data:
             try:
-                delegue=EmployeSerializer(self.get_object(employe['delegue']))
-                employe['delegue']=delegue.data
+                delegue=self.get_object(employe['delegue'])
+                delegue=EmployeSerializer(delegue)
+                delegue=change_delegue_format(delegue.data)
+                employe['delegue']=delegue
             except:
                 pass
         key_values = [
@@ -82,14 +86,26 @@ class EmployeAPIView(APIView):
         except Employe.DoesNotExist:
             raise Http404
 
+    def get_rubrique(self,id):
+        try:
+            return Rubrique.objects.get(id=id)
+        except Rubrique.DoesNotExist:
+            raise Http404
+
     def get(self, request, id):
         user_id = is_authenticated(request)
         employe = self.get_object(id)
         serializer = EmployeSerializer(employe)
         data=serializer.data
         #add delegue
-        delegue=EmployeSerializer(employe.delegue).data
+        delegue=change_delegue_format(EmployeSerializer(employe.delegue).data)
         data['delegue']=delegue
+        #add rubriques
+        rubriques=[]
+        for rubrique_id in data['rubriques']:
+            ser_data=RubriqueSerializer(self.get_rubrique(rubrique_id)).data
+            rubriques.append(ser_data)
+        data['rubriques']=rubriques
         key_values = [{'key': 'data', 'value': data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
@@ -113,13 +129,28 @@ class EmployeAPIView(APIView):
         return handle_successful_response(key_values=key_values, status=status.HTTP_204_NO_CONTENT)
 
 
+def change_delegue_format(delegue):
+    if(not 'id' in delegue): return None
+    return {
+        'id':delegue['id'],
+        'nom':delegue['nom'],
+        'prenom':delegue['prenom'],
+        'matricule':delegue['matricule']
+    }
+
 class EmployesRubriquesAPIView(APIView):
     def get_object(self,employe_id, rubrique_id):
         try:
             employe=Employe.objects.get(id=employe_id)
+        except Employe.DoesNotExist:
+            raise Http404
+        try:
             rubrique=Rubrique.objects.get(id=rubrique_id)
+        except Rubrique.DoesNotExist:
+            raise Http404
+        try:
             return EmployesRubriques.objects.get(employe=employe,rubrique=rubrique)
-        except EmployesRubriques.DoesNotExist or Employe.DoesNotExist or Rubrique.DoesNotExist:
+        except EmployesRubriques.DoesNotExist:
             raise Http404
 
     def get(self, request, employe_id, rubrique_id):
@@ -134,6 +165,8 @@ class EmployesRubriquesAPIView(APIView):
         user_id = is_authenticated(request)
         request.data['user_id'] = user_id
         request.data['derniere_operation'] = 'Modifier'
+        request.data['employe']=employe_id
+        request.data['rubrique']=rubrique_id
         employeRubrique = self.get_object(employe_id, rubrique_id)
         serializer = EmployesRubriquesSerializer(employeRubrique, data=request.data)
         if serializer.is_valid():

@@ -1,6 +1,7 @@
 import { AffectationModel } from "./affectation.model"
 import { CentreCoutModel } from "./centre_cout.model"
 import { ContratModel } from "./contrat.model"
+import { DelegueModel } from "./delegue.model"
 import { DirectionModel } from "./direction.model"
 import { EntiteModel } from "./entite.model"
 import { Fonction, FonctionModel } from "./fonction.model"
@@ -32,7 +33,7 @@ export interface Employe {
     contrat:ContratModel,
     affectation:AffectationModel,
     entite:EntiteModel,
-    delegue:EmployeModel
+    delegue:DelegueModel
 }
 
 
@@ -92,7 +93,7 @@ export class EmployeModel implements Employe{
         contrat:ContratModel,
         affectation:AffectationModel,
         entite:EntiteModel,
-        delegue:EmployeModel){
+        delegue:DelegueModel){
         this._id=id
         this._matricule=matricule
         this._nom=nom

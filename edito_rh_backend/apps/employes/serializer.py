@@ -12,8 +12,6 @@ from .models import Employe,EmployesRubriques
 from rest_framework import serializers
 
 class EmployeSerializer(serializers.ModelSerializer):
-    #fonction=FonctionSerializer(read_only=True,many=False)
-    #delegue_nom=serializers.CharField(source='delegue.nom')
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
@@ -30,7 +28,6 @@ class EmployeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employe
         fields = '__all__'
-    #    extra_fields = ['delegue_nom']
 
 
 class EmployesRubriquesSerializer(serializers.ModelSerializer):

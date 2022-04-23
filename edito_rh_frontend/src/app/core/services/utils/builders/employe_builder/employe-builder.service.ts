@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { ContratModel } from 'src/app/shared/models/contrat.model';
+import { DelegueModel } from 'src/app/shared/models/delegue.model';
 import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { EntiteModel } from 'src/app/shared/models/entite.model';
@@ -46,7 +47,7 @@ export class EmployeBuilderService {
     contrat:ContratModel,
     affectation:AffectationModel,
     entite:EntiteModel,
-    delegue:EmployeModel
+    delegue:DelegueModel
   ):EmployeModel{
     return new EmployeModel(    
       id,
@@ -88,10 +89,15 @@ export class EmployeBuilderService {
         const contrat=this.contratBuilder.buildContrat(f.contrat.id,f.contrat.designation,f.contrat.description)
         const affectation=this.affectationBuilder.buildAffectation(f.affectation.id,f.affectation.designation,f.affectation.description)
         const entite=this.entiteBuilder.buildEntite(f.entite.id,f.entite.designation,f.entite.description)
-        const delegue=this.buildEmploye(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.date_naissance,f.delegue.sexe,f.delegue.cin,f.delegue.date_entree,
-          f.delegue.situation_familiale,f.delegue.nombre_enfant,f.delegue.charge_familiale,f.delegue.adresse,f.delegue.nationalite,f.delegue.cnss,f.delegue.salaire,
-          f.delegue.numero_compte,f.delegue.participation,f.delegue.date_sortie,f.delegue.fonction,f.delegue.centre_cout,f.delegue.direction,f.delegue.ville,f.delegue.contrat,
-          f.delegue.affectation,f.delegue.entite,f.delegue.delegue)
+        let delegue:any={}
+        if(f.delegue){
+          /*delegue=this.buildEmploye(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.date_naissance,f.delegue.sexe,f.delegue.cin,f.delegue.date_entree,
+            f.delegue.situation_familiale,f.delegue.nombre_enfant,f.delegue.charge_familiale,f.delegue.adresse,f.delegue.nationalite,f.delegue.cnss,f.delegue.salaire,
+            f.delegue.numero_compte,f.delegue.participation,f.delegue.date_sortie,f.delegue.fonction,f.delegue.centre_cout,f.delegue.direction,f.delegue.ville,f.delegue.contrat,
+            f.delegue.affectation,f.delegue.entite,f.delegue.delegue)*/
+            delegue=new DelegueModel(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom)
+            //console.log(delegue)
+        }
 
         const employe=this.buildEmploye(      
           f.id,
@@ -120,6 +126,7 @@ export class EmployeBuilderService {
           affectation,
           entite,
           delegue)
+        console.log(employe)
         result.push(employe)
     });
     return result

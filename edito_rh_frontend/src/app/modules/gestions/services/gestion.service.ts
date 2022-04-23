@@ -14,6 +14,7 @@ import { ContratModel } from 'src/app/shared/models/contrat.model';
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { EmployeModel } from 'src/app/shared/models/employe.model';
+import { DelegueModel } from 'src/app/shared/models/delegue.model';
 
 @Injectable({
   providedIn: 'root'
@@ -160,16 +161,6 @@ export class GestionService {
         header: 'Date sortie',
         cell: (element: EmployeModel) => `${element.date_sortie ? element.date_sortie :''}`,
       },
-            /*
-    fonction = models.ForeignKey(Fonction,on_delete=models.CASCADE)
-    centre_cout = models.ForeignKey(CentreCout,on_delete=models.CASCADE,)
-    direction = models.ForeignKey(Direction,on_delete=models.CASCADE,)
-    ville = models.ForeignKey(Ville,on_delete=models.CASCADE,)
-    contrat = models.ForeignKey(Contrat,on_delete=models.CASCADE,)
-    affectation = models.ForeignKey(Affectation,on_delete=models.CASCADE,)
-    entite = models.ForeignKey(Entite,on_delete=models.CASCADE,)
-    delegue = models.ForeignKey('self',on_delete=models.SET_NULL,blank=True, null=True)
-  */
       {
         columnDef: 'fonction',
         header: 'fonction',
@@ -201,9 +192,9 @@ export class GestionService {
         cell: (element: EmployeModel) => `${element.affectation ? element.affectation.designation :''}`,
       },
       {
-        columnDef: 'delegue id',
-        header: 'delegue id',
-        cell: (element: EmployeModel) => `${element.delegue ? element.delegue.id :''}`,
+        columnDef: 'delegue',
+        header: 'delegue',
+        cell: (element: EmployeModel) => `${element.delegue.id ? `${element.delegue.prenom} ${element.delegue.nom}` :''}`
       },
     ];
   }

@@ -60,6 +60,8 @@ def get_metadata(model, query):
         fields = affectation_metadata(query)
     elif(model == 'employe'):
         fields = employe_metadata(query)
+    elif(model == 'rubrique'):
+        fields = rubrique_metadata(query)
     if(fields is not None):
         result['fields'] = fields
     return result
@@ -70,6 +72,14 @@ string = 'string'
 date = 'date'
 boolean = 'boolean'
 object = 'object' 
+
+def rubrique_metadata(query):
+    rubrique_values =get_distinct_values(query,'rubrique') 
+    return [
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': rubrique_values},
+        {'type': string, 'label': 'description'}
+    ]
 
 def employe_metadata(query):
     q_fonction=Fonction.objects.all()
