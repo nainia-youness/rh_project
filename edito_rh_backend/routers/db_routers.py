@@ -40,7 +40,9 @@ class AuthRouter:
 
 class MainRouter:
     route_app_labels = {'villes', 'fonctions', 'entites',
-                        'directions', 'contrats', 'centres_cout', 'affectations','employes','rubriques'}
+                        'directions', 'contrats', 'centres_cout', 'affectations','employes','rubriques',
+                        'variables'
+                        }
 
     def db_for_read(self, model, **hints):
         if model._meta.app_label in self.route_app_labels:

@@ -28,6 +28,7 @@ from ..affectations.models import Affectation
 from ..centres_cout.models import CentreCout
 from ..contrats.models import Contrat
 from ..directions.models import Direction
+from ..variables.models import Variable
 from ..employes.models import Employe,EmployesRubriques
 from ..entites.models import Entite
 from ..villes.models import Ville
@@ -53,23 +54,14 @@ def initialize():
     # r1.save()
     # r2=Rubrique(designation='prime2', description='prime2',user_id=1)
     # r2.save()
+    # v=Variable(designation='var1', valeur=5,user_id=1)
+    # v.save()
     # e=Employe(matricule=484, nom='Chakir', prenom='Mohamed', date_naissance='1994-01-01', sexe='M', 
     # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
     # adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
     # participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
     # e.save()
 
-
-    # #r=Rubrique.objects.get(id=1)
-    # #e=Employe.objects.get(id=1)
-
-    # rubriques = Rubrique.objects.all()
-    # e=Employe.objects.get(id=1)
-    # for r in rubriques:
-    #     print(r)
-    #     re = EmployesRubriques(rubrique=r, employe=e,montant=0.00)
-    #     re.save()
-    #     print(re)
     pass
 
 initialize()
