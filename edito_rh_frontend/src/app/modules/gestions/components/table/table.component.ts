@@ -1,6 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
+import { AppState } from 'src/app/store/app.state';
+import { modelPageTypeChange } from '../../modules/models/state/model.actions';
+import { ModelPageType } from '../../modules/models/state/model.state';
+import { GestionService } from '../../services/gestion.service';
+import { gestionPageSelector } from '../../state/gestion.selectors';
+import { GestionPage } from '../../state/gestion.state';
 
 @Component({
   selector: 'app-table',
@@ -12,13 +20,28 @@ export class TableComponent implements OnInit {
   @Input() dataSource$?:Observable<FonctionModel[] | undefined>;
   @Input() displayedColumns:any
   @Input() columns:any[]=[]
-  constructor() { }
 
   ngOnInit(): void {
   }
 
   
-  goToEntity=()=>{
-    console.log("i m gone")
+  goToModel=(row:any)=>{
+    const id=row.id
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
+    this.store.pipe(
+      select(gestionPageSelector),
+      map((gestionPage:GestionPage)=> {
+        if(gestionPage===GestionPage.VILLES){
+          this.router.navigate([`/gestion/villes/${id}`])
+        }
+        return gestionPage
+      })
+    ).subscribe()
   }
+
+  constructor(
+    private store:Store<AppState>,
+    private gestionService:GestionService,
+    private router:Router
+    ) { }
 }

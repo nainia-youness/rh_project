@@ -29,8 +29,8 @@ const routes: Routes = [
   {path:"",component:GestionComponent},
   {
     path:"",
-      loadChildren:()=>import('./modules/entites/entites.module')
-        .then(mod=>mod.EntitesModule),
+      loadChildren:()=>import('./modules/models/models.module')
+        .then(mod=>mod.ModelsModule),
     canActivate:[AuthGuard]
   }
 ];

@@ -1,6 +1,8 @@
 import { AuthEffects } from "../modules/auth/state/auth.effects";
 import { authReducer } from "../modules/auth/state/auth.reducer";
 import { authState } from "../modules/auth/state/auth.state";
+import { modelReducer } from "../modules/gestions/modules/models/state/model.refucers";
+import { modelState } from "../modules/gestions/modules/models/state/model.state";
 import { GestionsEffects } from "../modules/gestions/state/gestion.effects";
 import { gestionReducer } from "../modules/gestions/state/gestion.reducers";
 import { gestionState } from "../modules/gestions/state/gestion.state";
@@ -14,7 +16,8 @@ export interface AppState {
     screenSize: ScreenSizeState,
     layout:LayoutState,
     auth:authState,
-    gestion:gestionState
+    gestion:gestionState,
+    model:modelState
 }
 
 export const appReducers={
@@ -22,6 +25,7 @@ export const appReducers={
     layout:layoutReducer,
     auth:authReducer,
     gestion:gestionReducer,
+    model:modelReducer
 }
 
 export const appEffects=[

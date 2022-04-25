@@ -11,6 +11,8 @@ import { gestionPageChange, getFonctionsStart, pageChange } from '../../state/ge
 import { GestionPage, Page } from '../../state/gestion.state';
 import { MatPaginator } from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
+import { modelPageTypeChange } from '../../modules/models/state/model.actions';
+import { ModelPage, ModelPageType } from '../../modules/models/state/model.state';
 
 @Component({
   selector: 'app-gestion-template',
@@ -61,7 +63,16 @@ export class GestionTemplateComponent implements OnInit {
   @Input() filterApiCall!: () => void;
 
   create=()=>{
-    console.log("create")
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.CREER}))
+    this.store.pipe(
+      select(gestionPageSelector),
+      map((gestionPage:GestionPage)=> {
+        if(gestionPage===GestionPage.VILLES){
+          this.router.navigate(['/gestion/villes/new'])
+        }
+        return gestionPage
+      })
+    ).subscribe()
   }
 
   export=()=>{
@@ -92,5 +103,6 @@ export class GestionTemplateComponent implements OnInit {
   constructor(
     private store:Store<AppState>,
     private gestionService:GestionService,
+    private router:Router
     ) { }
 }
