@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getAffectationsStart } from '../../state/gestion.actions';
+import { gestionPageChange, getAffectationsStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getAffectationsSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -36,7 +36,7 @@ export class GestionAffectationsComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getAffectationsStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.AFFECTATIONS}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getAffectations()
   }

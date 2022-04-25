@@ -5,7 +5,7 @@ import { LayoutState } from 'src/app/shared/components/layout/state/layout.inter
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getFonctionsStart} from '../../state/gestion.actions';
+import { gestionPageChange, getFonctionsStart, isSpinnerChange} from '../../state/gestion.actions';
 import { getFonctionsSuccessSelector} from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 import { filter,map } from 'rxjs/operators';
@@ -39,7 +39,7 @@ export class GestionFonctionsComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getFonctionsStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.FONCTIONS}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFonctions()
   }

@@ -70,3 +70,7 @@ export const filtersSelector =createSelector(getGestionState,state=>{
 export const pageSelector =createSelector(getGestionState,state=>{
     return state.page
 })
+
+export const isSpinnerSelector =createSelector(getGestionState,state=>{
+    return state.isSpinner
+})

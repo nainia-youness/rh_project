@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { VilleModel } from 'src/app/shared/models/ville.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getVillesStart } from '../../state/gestion.actions';
+import { gestionPageChange, getVillesStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getVillesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -36,7 +36,7 @@ export class GestionVillesComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getVillesStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.VILLES}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getVilles()
   }

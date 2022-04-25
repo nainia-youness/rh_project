@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { ContratModel } from 'src/app/shared/models/contrat.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getContratsStart } from '../../state/gestion.actions';
+import { gestionPageChange, getContratsStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getContratsSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -37,7 +37,7 @@ export class GestionContratsComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getContratsStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.CONTRATS}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getContrats()
   }

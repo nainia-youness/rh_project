@@ -126,7 +126,6 @@ export class EmployeBuilderService {
           affectation,
           entite,
           delegue)
-        console.log(employe)
         result.push(employe)
     });
     return result

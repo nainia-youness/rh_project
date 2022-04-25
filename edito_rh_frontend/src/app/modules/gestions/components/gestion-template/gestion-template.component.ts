@@ -4,7 +4,7 @@ import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageSelector, getFonctionsSuccessSelector, getMetadataSelector, pageSelector } from '../../state/gestion.selectors';
+import { gestionPageSelector, getFonctionsSuccessSelector, getMetadataSelector, isSpinnerSelector, pageSelector } from '../../state/gestion.selectors';
 import { Observable } from 'rxjs';
 import { GestionService } from '../../services/gestion.service';
 import { gestionPageChange, getFonctionsStart, pageChange } from '../../state/gestion.actions';
@@ -24,6 +24,7 @@ export class GestionTemplateComponent implements OnInit,AfterViewChecked {
   @Input()
   dataSource$?:Observable<any[] | undefined>;
   metadata$!:Observable<any>
+  isSpinner$!:Observable<boolean>
   page$!:Observable<Page>
   gestionPage$!:Observable<string>
   columns:any[]=[]
@@ -45,6 +46,13 @@ export class GestionTemplateComponent implements OnInit,AfterViewChecked {
         this.columns=this.gestionService.getColumns(gestionPage)
         this.displayedColumns = this.columns.map(c => c.columnDef);
         return gestionPage
+      })
+    )
+
+    this.isSpinner$=this.store.pipe(
+      select(isSpinnerSelector),
+      map((isSpinner)=> {
+        return isSpinner
       })
     )
 

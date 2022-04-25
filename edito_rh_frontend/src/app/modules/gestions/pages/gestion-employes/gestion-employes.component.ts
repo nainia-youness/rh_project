@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getEmployesStart } from '../../state/gestion.actions';
+import { gestionPageChange, getEmployesStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getEmployesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -36,7 +36,7 @@ export class GestionEmployesComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getEmployesStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.EMPLOYES}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getEmployes()
   }

@@ -1,10 +1,10 @@
 
-<div fxLayout="column" style="height: 100% !important;" >
+<div fxLayout="column" style="height: 100% !important; width:100% !important" >
   <app-sub-header [create]="create" [page$]="gestionPage$" [export_all]="export_all"></app-sub-header>
 
   <app-filters [filterApiCall]="filterApiCall" [metadata$]="metadata$"></app-filters>
   
- <div *ngIf="(dataSource$ | async) && (page$ | async) as page" fxFlex="10" >
+  <div *ngIf="(dataSource$ | async) && (page$ | async) as page" fxFlex="10" >
     <mat-paginator *ngIf="page.maxPages && page.maxRowsPerPage && page.count" #paginator
     [length]="(page.count)!.toString()"
     [pageSize]="page.maxRowsPerPage.toString()"
@@ -13,6 +13,13 @@
     aria-label="Select page">
     </mat-paginator>
   </div>
-  <app-table fxFlex="70"  [dataSource$]="dataSource$" [displayedColumns]="displayedColumns" [columns]="columns"></app-table>
+  <app-table fxFlex  [dataSource$]="dataSource$" [displayedColumns]="displayedColumns" [columns]="columns"></app-table>
+  <div  fxFlex fxLayoutAlign="center center" fxLayout="row" *ngIf="(isSpinner$ | async) as isSpinner">
+    <div fxFlex="20" *ngIf="isSpinner"></div>
+    <div fxFlex="60" *ngIf="isSpinner" fxLayout="row" fxLayoutAlign="space-around center" style="height:100%;color:red !important">
+      <mat-spinner diameter="80"></mat-spinner>
+    </div>
+    <div fxFlex="20" *ngIf="isSpinner"></div>
+  </div>
   
 </div>

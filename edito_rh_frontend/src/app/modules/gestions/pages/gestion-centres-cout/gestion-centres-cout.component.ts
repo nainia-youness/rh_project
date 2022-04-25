@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getCentresCoutStart } from '../../state/gestion.actions';
+import { gestionPageChange, getCentresCoutStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getCentresCoutSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -35,6 +35,7 @@ export class GestionCentresCoutComponent implements OnInit {
   dataSource$?:Observable<CentreCoutModel[] | undefined>;
   ngOnInit(): void {
     this.store.dispatch(getCentresCoutStart())
+    this.store.dispatch(isSpinnerChange())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.CENTRES_COUT}))
     
     this.Layout.initializeLayout(this.layoutConfig)

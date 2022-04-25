@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { EntiteModel } from 'src/app/shared/models/entite.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getEntitesStart } from '../../state/gestion.actions';
+import { gestionPageChange, getEntitesStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getEntitesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -36,7 +36,7 @@ export class GestionEntitesComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getEntitesStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.ENTITES}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getEntites()
   }

@@ -52,11 +52,12 @@ enum ActionTypes {
 
     FILTERS_CHANGE = '[Gestion Page] Filters change',
     PAGE_CHANGE = '[Gestion Page] Page change',
+    IS_SPINNER_CHANGE = '[Gestion Page] Is Spinner change',
     GET_METADATA = '[Gestion Pages] Get Metadata',
 }
 
 export const gestionPageChange=createAction(ActionTypes.GESTION_PAGE_CHANGE,props<{gestionPage:string}>())
-
+export const isSpinnerChange=createAction(ActionTypes.IS_SPINNER_CHANGE)
 //start
 export const getFonctionsStart=createAction(ActionTypes.GET_FONCTIONS_START)
 export const getCentresCoutStart=createAction(ActionTypes.GET_CENTRES_COUT_START)

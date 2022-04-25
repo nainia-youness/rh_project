@@ -88,6 +88,7 @@ export interface gestionState {
     formules?:FormuleModel[],
     variables?:VariableModel[],
     error?:string,
+    isSpinner:boolean,
 }
 
 
@@ -107,5 +108,6 @@ export const initialState: gestionState={
     rubriques:undefined,
     formules:undefined,
     variables:undefined,
-    error:undefined
+    error:undefined,
+    isSpinner:false
 }

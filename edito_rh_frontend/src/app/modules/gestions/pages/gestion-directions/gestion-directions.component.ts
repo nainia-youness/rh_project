@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getDirectionsStart } from '../../state/gestion.actions';
+import { gestionPageChange, getDirectionsStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getDirectionsSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -35,6 +35,7 @@ export class GestionDirectionsComponent implements OnInit {
   dataSource$?:Observable<DirectionModel[] | undefined>;
   ngOnInit(): void {
     this.store.dispatch(getDirectionsStart())
+    this.store.dispatch(isSpinnerChange())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.DIRECTIONS}))
     
     this.Layout.initializeLayout(this.layoutConfig)

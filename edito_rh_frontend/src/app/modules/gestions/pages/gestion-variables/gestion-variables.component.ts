@@ -4,7 +4,7 @@ import { filter, map, Observable } from 'rxjs';
 import { VariableModel } from 'src/app/shared/models/variable.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getVariablesStart } from '../../state/gestion.actions';
+import { gestionPageChange, getVariablesStart, isSpinnerChange } from '../../state/gestion.actions';
 import { getVariablesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
@@ -36,7 +36,7 @@ export class GestionVariablesComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(getVariablesStart())
     this.store.dispatch(gestionPageChange({gestionPage:GestionPage.VARIABLES}))
-    
+    this.store.dispatch(isSpinnerChange())
     this.Layout.initializeLayout(this.layoutConfig)
     this.getVariables()
   }

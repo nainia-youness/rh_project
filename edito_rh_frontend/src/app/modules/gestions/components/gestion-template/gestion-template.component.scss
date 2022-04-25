@@ -1,0 +1,6 @@
+@import "../../../../../styles/variables.scss";
+
+//spinner
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {   
+    stroke: $light_green;
+}

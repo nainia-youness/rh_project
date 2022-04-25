@@ -1,6 +1,6 @@
 <mat-card class="header" style="height: 100%" fxLayoutGap.xs="15px"  fxLayout.gt-xs="row" fxLayout.xs="column"  fxLayoutAlign="start center">
-    <div fxFlex="30" class="title" *ngIf="(page$ | async) as page">{{page}}</div>
-    <div fxFlex="70" class="export" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign.gt-xs="end center" fxLayoutGap.gt-xs="5px" fxLayoutGap.xs="10px">
+    <div fxFlex.gt-xs="30" fxFlex.xs="100" class="title" *ngIf="(page$ | async) as page">{{page}}</div>
+    <div fxFlex.gt-xs="70" fxFlex.xs="100" class="export" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign.gt-xs="end center" fxLayoutGap.gt-xs="5px" fxLayoutGap.xs="10px">
       <div fxFlex.gt-xs="70" fxFlex.xs="0"></div>
       <div fxFlex.gt-xs="15" fxFlex.xs="50" *ngIf="create">
         <button mat-stroked-button  class="create" (click)="create()">Creer</button>
