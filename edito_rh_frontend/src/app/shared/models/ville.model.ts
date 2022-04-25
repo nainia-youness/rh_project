@@ -7,8 +7,8 @@ export interface Ville {
 
 export class VilleModel implements Ville{
 
-    private  _id=0
-    private  _nom=""
+    private  _id
+    private  _nom
 
     constructor(id:number,nom:string){
         this._id=id

@@ -7,9 +7,9 @@ export interface CentreCout {
 
 export class CentreCoutModel implements CentreCout{
 
-    private  _id=0
-    private  _designation=""
-    private  _description=""
+    private  _id
+    private  _designation
+    private  _description
 
     constructor(id:number,designation:string,description:string){
         this._id=id

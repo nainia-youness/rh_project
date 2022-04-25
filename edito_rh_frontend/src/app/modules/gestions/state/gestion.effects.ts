@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, of } from "rxjs";
 import {catchError} from 'rxjs/operators'; 
 import { ErrorHandlerService } from "src/app/core/services/error/error-handler.service";
-import {  getAffectationsStart, getAffectationsSuccess, getCentresCoutStart, getCentresCoutSuccess, getContratsStart, getContratsSuccess, getDirectionsStart, getDirectionsSuccess, getEmployesStart, getEmployesSuccess, getEntitesStart, getEntitesSuccess, getFonctionsStart, getFonctionsSuccess, getMetadata, getModelsFailure, getVillesStart, getVillesSuccess, pageChange } from "./gestion.actions";
+import {  getAffectationsStart, getAffectationsSuccess, getCentresCoutStart, getCentresCoutSuccess, getContratsStart, getContratsSuccess, getDirectionsStart, getDirectionsSuccess, getEmployesStart, getEmployesSuccess, getEntitesStart, getEntitesSuccess, getFonctionsStart, getFonctionsSuccess, getFormulesStart, getFormulesSuccess, getMetadata, getModelsFailure, getRubriquesStart, getRubriquesSuccess, getVariablesStart, getVariablesSuccess, getVillesStart, getVillesSuccess, pageChange } from "./gestion.actions";
 import { FonctionService } from "src/app/core/services/http/fonctions/fonction.service";
 import { FonctionBuilderService } from "src/app/core/services/utils/builders/fonction_builder/fonction-builder.service";
 import { Store,select } from "@ngrx/store";
@@ -28,6 +28,12 @@ import { AffectationService } from "src/app/core/services/http/affectations/affe
 import { EmployeService } from "src/app/core/services/http/employes/employe.service";
 import { EmployeBuilderService } from "src/app/core/services/utils/builders/employe_builder/employe-builder.service";
 import { AffectationBuilderService } from "src/app/core/services/utils/builders/affectation_builder/affectation-builder.service";
+import { RubriqueService } from "src/app/core/services/http/rubriques/rubrique.service";
+import { FormuleService } from "src/app/core/services/http/formules/formule.service";
+import { VariableService } from "src/app/core/services/http/variables/variable.service";
+import { RubriqueBuilderService } from "src/app/core/services/utils/builders/rubrique_builder/rubrique-builder.service";
+import { FormuleBuilderService } from "src/app/core/services/utils/builders/formule_builder/formule-builder.service";
+import { VariableBuilderService } from "src/app/core/services/utils/builders/variable_builder/variable-builder.service";
 
 
 
@@ -95,6 +101,87 @@ export class GestionsEffects{
             )
     )
     
+    getRubriques$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(getRubriquesStart),
+            exhaustMap(
+                ()=> this.rubriqueService.getRubriques()
+                .pipe(
+                    map((res):any=>{
+                        const rubriquesModels=this.rubriqueBuilder.buildRubriques(res.data)
+
+                        this.store.dispatch(getMetadata({metadata:res.metadata}))
+
+                        this.changePage(res)
+
+                        return getRubriquesSuccess({rubriques:rubriquesModels})
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        //error.error.message
+                        return of(getModelsFailure({error:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
+    getFormules$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(getFormulesStart),
+            exhaustMap(
+                ()=> this.formuleService.getFormules()
+                .pipe(
+                    map((res):any=>{
+                        const formulesModels=this.formuleBuilder.buildFormules(res.data)
+
+                        this.store.dispatch(getMetadata({metadata:res.metadata}))
+
+                        this.changePage(res)
+
+                        return getFormulesSuccess({formules:formulesModels})
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        //error.error.message
+                        return of(getModelsFailure({error:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
+    getVariables$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(getVariablesStart),
+            exhaustMap(
+                ()=> this.variableService.getVariables()
+                .pipe(
+                    map((res):any=>{
+                        const variablesModels=this.variableBuilder.buildVariables(res.data)
+
+                        this.store.dispatch(getMetadata({metadata:res.metadata}))
+
+                        this.changePage(res)
+
+                        return getVariablesSuccess({variables:variablesModels})
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        //error.error.message
+                        return of(getModelsFailure({error:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
     getEntites$:any=createEffect(():any=>
         this.actions$.pipe(
             ofType(getEntitesStart),
@@ -286,6 +373,9 @@ export class GestionsEffects{
         private centreCoutService: CentreCoutService,
         private affectationService: AffectationService,
         private employeService: EmployeService,
+        private rubriqueService: RubriqueService,
+        private formuleService: FormuleService,
+        private variableService: VariableService,
 
         private errorHandler:ErrorHandlerService,
         private fonctionBuilder:FonctionBuilderService,
@@ -296,6 +386,9 @@ export class GestionsEffects{
         private centreCoutBuilder:CentreCoutBuilderService,
         private affectationBuilder:AffectationBuilderService,
         private employeBuilder:EmployeBuilderService,
+        private rubriqueBuilder:RubriqueBuilderService,
+        private formuleBuilder:FormuleBuilderService,
+        private variableBuilder:VariableBuilderService,
         private store:Store<AppState>
         ){}
 }

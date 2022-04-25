@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
-import { VilleModel } from 'src/app/shared/models/ville.model';
+import { FormuleModel } from 'src/app/shared/models/formule.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getVillesStart } from '../../state/gestion.actions';
-import { getVillesSuccessSelector } from '../../state/gestion.selectors';
+import { gestionPageChange, getFormulesStart } from '../../state/gestion.actions';
+import { getFormulesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
 @Component({
-  selector: 'app-gestion-villes',
-  templateUrl: './gestion-villes.component.html',
-  styleUrls: ['./gestion-villes.component.scss']
+  selector: 'app-gestion-formules',
+  templateUrl: './gestion-formules.component.html',
+  styleUrls: ['./gestion-formules.component.scss']
 })
-export class GestionVillesComponent implements OnInit {
-  
+export class GestionFormulesComponent implements OnInit {
+
   layoutConfig={
     sideNavItems:[
       {title:'Gestion des fonctions',path:'/gestion/fonctions'},
@@ -32,25 +32,25 @@ export class GestionVillesComponent implements OnInit {
     showSideNav:true,
     showFooter:false,
   }
-  dataSource$?:Observable<VilleModel[] | undefined>;
+  dataSource$?:Observable<FormuleModel[] | undefined>;
   ngOnInit(): void {
-    this.store.dispatch(getVillesStart())
-    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.VILLES}))
+    this.store.dispatch(getFormulesStart())
+    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.FORMULES}))
     
     this.Layout.initializeLayout(this.layoutConfig)
-    this.getVilles()
+    this.getFormules()
   }
 
-  getVilles=()=>{
+  getFormules=()=>{
     this.dataSource$=this.store.pipe(
-      select(getVillesSuccessSelector),
+      select(getFormulesSuccessSelector),
       filter( val=> val !== undefined),
-      map((villes)=> villes)
+      map((formules)=> formules)
     )
   }
 
   filterApiCall():void{
-    this.store.dispatch(getVillesStart())
+    this.store.dispatch(getFormulesStart())
   }
 
 

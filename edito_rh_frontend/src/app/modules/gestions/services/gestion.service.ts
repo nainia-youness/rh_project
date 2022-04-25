@@ -15,6 +15,9 @@ import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { DelegueModel } from 'src/app/shared/models/delegue.model';
+import { RubriqueModel } from 'src/app/shared/models/rubrique.model';
+import { FormuleModel } from 'src/app/shared/models/formule.model';
+import { VariableModel } from 'src/app/shared/models/variable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +53,77 @@ export class GestionService {
     else if(gestionPage===GestionPage.EMPLOYES){
       result = this.getEmployesColumns()
     }
+    else if(gestionPage===GestionPage.RUBRIQUES){
+      result = this.getRubriquesColumns()
+    }
+    else if(gestionPage===GestionPage.FORMULES){
+      result = this.getFormulesColumns()
+    }
+    else if(gestionPage===GestionPage.VARIABLES){
+      result = this.getVariablesColumns()
+    }
     return result
   }
 
+  private getVariablesColumns=()=>{
+    return [
+      {
+        columnDef: 'ID',
+        header: 'ID',
+        cell: (element: VariableModel) => `${element.id ? element.id: ''}`,
+      },
+      {
+        columnDef: 'Designation',
+        header: 'Designation',
+        cell: (element: VariableModel) => `${element.designation ? element.designation :''}`,
+      },
+      {
+        columnDef: 'Description',
+        header: 'description',
+        cell: (element: VariableModel) => `${element.valeur ? element.valeur :''}`,
+      },
+    ];
+  }
+
+  private getRubriquesColumns=()=>{
+    return [
+      {
+        columnDef: 'ID',
+        header: 'ID',
+        cell: (element: RubriqueModel) => `${element.id ? element.id: ''}`,
+      },
+      {
+        columnDef: 'Designation',
+        header: 'Designation',
+        cell: (element: RubriqueModel) => `${element.designation ? element.designation :''}`,
+      },
+      {
+        columnDef: 'Description',
+        header: 'description',
+        cell: (element: RubriqueModel) => `${element.description ? element.description :''}`,
+      },
+    ];
+  }
+
+  private getFormulesColumns=()=>{
+    return [
+      {
+        columnDef: 'ID',
+        header: 'ID',
+        cell: (element: FormuleModel) => `${element.id ? element.id: ''}`,
+      },
+      {
+        columnDef: 'Designation',
+        header: 'Designation',
+        cell: (element: FormuleModel) => `${element.designation ? element.designation :''}`,
+      },
+      {
+        columnDef: 'Formule',
+        header: 'formule',
+        cell: (element: FormuleModel) => `${element.formule ? element.formule :''}`,
+      },
+    ];
+  }
 
   private getAffectationsColumns=()=>{
     return [
@@ -74,6 +145,7 @@ export class GestionService {
     ];
   }
 
+  
   private getEmployesColumns=()=>{
     return [
       {

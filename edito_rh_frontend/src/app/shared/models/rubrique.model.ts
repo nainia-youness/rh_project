@@ -1,11 +1,12 @@
-export interface Direction {
+
+export interface Rubrique {
     id:number,
     designation:string,
     description:string
 }
 
 
-export class DirectionModel implements Direction{
+export class RubriqueModel implements Rubrique{
 
     private  _id
     private  _designation

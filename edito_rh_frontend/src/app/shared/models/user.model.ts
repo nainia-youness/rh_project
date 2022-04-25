@@ -10,10 +10,10 @@ export interface User {
 
 export class UserModel implements User{
 
-    private  _email=""
-    private  _prenom=""
-    private  _nom=""
-    private  _id=0
+    private  _email
+    private  _prenom
+    private  _nom
+    private  _id
 
     constructor(email:string,nom:string,prenom:string,id:number){
         this._email=email

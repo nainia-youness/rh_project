@@ -42,7 +42,18 @@ export const getEmployesSuccessSelector =createSelector(getGestionState,state=>{
 export const getAffectationsSuccessSelector =createSelector(getGestionState,state=>{
     return state.affectations
 })
-
+//rubriques
+export const getRubriquesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.rubriques
+})
+//formules
+export const getFormulesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.formules
+})
+//variables
+export const getVariablesSuccessSelector =createSelector(getGestionState,state=>{
+    return state.variables
+})
 
 export const gestionPageSelector =createSelector(getGestionState,state=>{
     return state.gestionPage

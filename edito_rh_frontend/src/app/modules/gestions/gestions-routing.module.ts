@@ -7,6 +7,9 @@ import { GestionDirectionsComponent } from './pages/gestion-directions/gestion-d
 import { GestionEmployesComponent } from './pages/gestion-employes/gestion-employes.component';
 import { GestionEntitesComponent } from './pages/gestion-entites/gestion-entites.component';
 import { GestionFonctionsComponent } from './pages/gestion-fonctions/gestion-fonctions.component';
+import { GestionFormulesComponent } from './pages/gestion-formules/gestion-formules.component';
+import { GestionRubriquesComponent } from './pages/gestion-rubriques/gestion-rubriques.component';
+import { GestionVariablesComponent } from './pages/gestion-variables/gestion-variables.component';
 import { GestionVillesComponent } from './pages/gestion-villes/gestion-villes.component';
 import { GestionComponent } from './pages/gestion/gestion.component';
 
@@ -19,6 +22,9 @@ const routes: Routes = [
   {path:"centres-cout",component:GestionCentresCoutComponent},
   {path:"affectations",component:GestionAffectationsComponent},
   {path:"employés",component:GestionEmployesComponent},
+  {path:"rubriques",component:GestionRubriquesComponent},
+  {path:"formules",component:GestionFormulesComponent},
+  {path:"variables",component:GestionVariablesComponent},
   {path:"",component:GestionComponent}
 ];
 

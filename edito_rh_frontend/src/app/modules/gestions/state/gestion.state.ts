@@ -5,6 +5,9 @@ import { DirectionModel } from "src/app/shared/models/direction.model"
 import { EmployeModel } from "src/app/shared/models/employe.model"
 import { EntiteModel } from "src/app/shared/models/entite.model"
 import { FonctionModel } from "src/app/shared/models/fonction.model"
+import { FormuleModel } from "src/app/shared/models/formule.model"
+import { RubriqueModel } from "src/app/shared/models/rubrique.model"
+import { VariableModel } from "src/app/shared/models/variable.model"
 import { VilleModel } from "src/app/shared/models/ville.model"
 
 
@@ -18,6 +21,9 @@ export enum GestionPage {
     CENTRES_COUT = "Centres Cout",
     AFFECTATIONS = "Affectations",
     EMPLOYES = "Employés",
+    RUBRIQUES = "Rubriques",
+    FORMULES = "Formules",
+    VARIABLES = "Variables",
 }
 
 export enum FieldType {
@@ -78,6 +84,9 @@ export interface gestionState {
     directions?:DirectionModel[],
     affectations?:AffectationModel[],
     employes?:EmployeModel[],
+    rubriques?:RubriqueModel[],
+    formules?:FormuleModel[],
+    variables?:VariableModel[],
     error?:string,
 }
 
@@ -95,5 +104,8 @@ export const initialState: gestionState={
     directions:undefined,
     affectations:undefined,
     employes:undefined,
+    rubriques:undefined,
+    formules:undefined,
+    variables:undefined,
     error:undefined
 }

@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import {  filtersChange, gestionPageChange, getAffectationsSuccess, getCentresCoutSuccess, getContratsSuccess, getDirectionsSuccess, getEmployesSuccess, getEntitesSuccess, getFonctionsSuccess, getMetadata, getModelsFailure, getVillesSuccess, pageChange } from "./gestion.actions"
+import {  filtersChange, gestionPageChange, getAffectationsSuccess, getCentresCoutSuccess, getContratsSuccess, getDirectionsSuccess, getEmployesSuccess, getEntitesSuccess, getFonctionsSuccess,getFormulesSuccess,getMetadata, getModelsFailure, getRubriquesSuccess, getVariablesSuccess, getVillesSuccess, pageChange } from "./gestion.actions"
 import { initialState } from "./gestion.state"
 
 
@@ -57,6 +57,24 @@ const _gestionReducer= createReducer(
         return {
             ...state,
             employes:action.employes,
+        }
+    }),
+    on(getRubriquesSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            rubriques:action.rubriques,
+        }
+    }),
+    on(getFormulesSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            formules:action.formules,
+        }
+    }),
+    on(getVariablesSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            variables:action.variables,
         }
     }),
     on(getModelsFailure,(state:any,action:any)=>{

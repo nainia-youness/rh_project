@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
-import { VilleModel } from 'src/app/shared/models/ville.model';
+import { RubriqueModel } from 'src/app/shared/models/rubrique.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { gestionPageChange, getVillesStart } from '../../state/gestion.actions';
-import { getVillesSuccessSelector } from '../../state/gestion.selectors';
+import { gestionPageChange, getRubriquesStart } from '../../state/gestion.actions';
+import { getRubriquesSuccessSelector } from '../../state/gestion.selectors';
 import { GestionPage } from '../../state/gestion.state';
 
 @Component({
-  selector: 'app-gestion-villes',
-  templateUrl: './gestion-villes.component.html',
-  styleUrls: ['./gestion-villes.component.scss']
+  selector: 'app-gestion-rubriques',
+  templateUrl: './gestion-rubriques.component.html',
+  styleUrls: ['./gestion-rubriques.component.scss']
 })
-export class GestionVillesComponent implements OnInit {
-  
+export class GestionRubriquesComponent implements OnInit {
+
   layoutConfig={
     sideNavItems:[
       {title:'Gestion des fonctions',path:'/gestion/fonctions'},
@@ -32,25 +32,25 @@ export class GestionVillesComponent implements OnInit {
     showSideNav:true,
     showFooter:false,
   }
-  dataSource$?:Observable<VilleModel[] | undefined>;
+  dataSource$?:Observable<RubriqueModel[] | undefined>;
   ngOnInit(): void {
-    this.store.dispatch(getVillesStart())
-    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.VILLES}))
+    this.store.dispatch(getRubriquesStart())
+    this.store.dispatch(gestionPageChange({gestionPage:GestionPage.RUBRIQUES}))
     
     this.Layout.initializeLayout(this.layoutConfig)
-    this.getVilles()
+    this.getRubriques()
   }
 
-  getVilles=()=>{
+  getRubriques=()=>{
     this.dataSource$=this.store.pipe(
-      select(getVillesSuccessSelector),
+      select(getRubriquesSuccessSelector),
       filter( val=> val !== undefined),
-      map((villes)=> villes)
+      map((rubriques)=> rubriques)
     )
   }
 
   filterApiCall():void{
-    this.store.dispatch(getVillesStart())
+    this.store.dispatch(getRubriquesStart())
   }
 
 
@@ -58,4 +58,5 @@ export class GestionVillesComponent implements OnInit {
     private Layout:LayoutService,
     private store:Store<AppState>,
     ) { }
+
 }

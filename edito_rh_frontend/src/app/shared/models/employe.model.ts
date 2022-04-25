@@ -1,3 +1,4 @@
+import { RubriqueService } from "src/app/core/services/http/rubriques/rubrique.service"
 import { AffectationModel } from "./affectation.model"
 import { CentreCoutModel } from "./centre_cout.model"
 import { ContratModel } from "./contrat.model"
@@ -5,6 +6,7 @@ import { DelegueModel } from "./delegue.model"
 import { DirectionModel } from "./direction.model"
 import { EntiteModel } from "./entite.model"
 import { Fonction, FonctionModel } from "./fonction.model"
+import { RubriqueModel } from "./rubrique.model"
 import { VilleModel } from "./ville.model"
 
 export interface Employe {
@@ -33,7 +35,7 @@ export interface Employe {
     contrat:ContratModel,
     affectation:AffectationModel,
     entite:EntiteModel,
-    delegue:DelegueModel
+    delegue:DelegueModel,
 }
 
 
@@ -66,7 +68,6 @@ export class EmployeModel implements Employe{
     private _entite
     private _delegue
 
-
     constructor(
         id:number,
         matricule:string,
@@ -93,7 +94,9 @@ export class EmployeModel implements Employe{
         contrat:ContratModel,
         affectation:AffectationModel,
         entite:EntiteModel,
-        delegue:DelegueModel){
+        delegue:DelegueModel,
+        rubriques?:RubriqueModel[]
+        ){
         this._id=id
         this._matricule=matricule
         this._nom=nom
