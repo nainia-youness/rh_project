@@ -31,5 +31,6 @@ urlpatterns = [
     path(base_url, include('apps.employes.urls')),
     path(base_url, include('apps.rubriques.urls')),
     path(base_url, include('apps.variables.urls')),
+    path(base_url, include('apps.formules.urls')),
     path('admin/', admin.site.urls),
 ]

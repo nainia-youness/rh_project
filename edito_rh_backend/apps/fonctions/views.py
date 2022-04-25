@@ -32,6 +32,7 @@ from ..variables.models import Variable
 from ..employes.models import Employe,EmployesRubriques
 from ..entites.models import Entite
 from ..villes.models import Ville
+from ..formules.models import Formule
 from ..rubriques.models import Rubrique
 from .models import Fonction
 
@@ -56,6 +57,8 @@ def initialize():
     # r2.save()
     # v=Variable(designation='var1', valeur=5,user_id=1)
     # v.save()
+    # f=Formule(designation='formule1', formule="if(var1==5){var1}",user_id=1)
+    # f.save()
     # e=Employe(matricule=484, nom='Chakir', prenom='Mohamed', date_naissance='1994-01-01', sexe='M', 
     # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
     # adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
