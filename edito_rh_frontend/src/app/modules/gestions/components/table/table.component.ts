@@ -24,11 +24,10 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
   goToModel=(row:any)=>{
     const id=row.id
     this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
-    this.store.pipe(
+    const obs=this.store.pipe(
       select(gestionPageSelector),
       map((gestionPage:GestionPage)=> {
         if(gestionPage===GestionPage.VILLES){
@@ -37,6 +36,7 @@ export class TableComponent implements OnInit {
         return gestionPage
       })
     ).subscribe()
+    obs.unsubscribe()
   }
 
   constructor(

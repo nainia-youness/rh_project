@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
-import { modelPageTypeSelector } from '../../state/model.selectors';
-import { ModelPageType } from '../../state/model.state';
+import { modelPageSelector, modelPageTypeSelector } from '../../state/model.selectors';
+import { ModelPage, ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-model-template',
@@ -13,10 +13,15 @@ import { ModelPageType } from '../../state/model.state';
 export class ModelTemplateComponent implements OnInit {
 
   modelPageType$!:Observable<ModelPageType>
+  modelPage$!:Observable<ModelPage>
 
   ngOnInit(): void {
     this.modelPageType$=this.store.pipe(
       select(modelPageTypeSelector),
+      map((modelPage)=>modelPage)
+    )
+    this.modelPage$=this.store.pipe(
+      select(modelPageSelector),
       map((modelPage)=>modelPage)
     )
   }
@@ -24,4 +29,12 @@ export class ModelTemplateComponent implements OnInit {
   constructor(
     private store:Store<AppState>,
     ) { }
+
+  create(){
+    console.log('creer')
+  }
+
+  update(){
+    console.log('update')
+  }
 }

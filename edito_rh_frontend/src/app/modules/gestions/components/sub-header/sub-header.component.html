@@ -1,0 +1,17 @@
+<mat-card class="header" style="height: 100%" fxLayoutGap.xs="15px"  fxLayout.gt-xs="row" fxLayout.xs="column"  fxLayoutAlign="start center">
+    <div fxFlex="30" class="title" *ngIf="(page$ | async) as page">{{page}}</div>
+    <div fxFlex="70" class="export" fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutAlign.gt-xs="end center" fxLayoutGap.gt-xs="5px" fxLayoutGap.xs="10px">
+      <div fxFlex.gt-xs="70" fxFlex.xs="0"></div>
+      <div fxFlex.gt-xs="15" fxFlex.xs="50" *ngIf="create">
+        <button mat-stroked-button  class="create" (click)="create()">Creer</button>
+      </div>
+      <div fxFlex.gt-xs="10" fxFlex.xs="50" *ngIf="update">
+        <button mat-stroked-button class="update" (click)="update()">Update</button>
+      </div>
+      <div fxFlex.gt-xs="5" fxFlex.xs="50" *ngIf="export_all">
+        <button mat-icon-button class="export_all" aria-label="Export all" (click)="export_all()">
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+    </div>
+</mat-card>

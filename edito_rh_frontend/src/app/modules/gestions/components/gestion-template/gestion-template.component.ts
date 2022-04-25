@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { filter,map } from 'rxjs/operators';
@@ -19,7 +19,7 @@ import { ModelPage, ModelPageType } from '../../modules/models/state/model.state
   templateUrl: './gestion-template.component.html',
   styleUrls: ['./gestion-template.component.scss']
 })
-export class GestionTemplateComponent implements OnInit {
+export class GestionTemplateComponent implements OnInit,AfterViewChecked {
   
   @Input()
   dataSource$?:Observable<any[] | undefined>;
@@ -30,6 +30,11 @@ export class GestionTemplateComponent implements OnInit {
   displayedColumns:any
   selectedFilter:string=""
   pageEvent!: PageEvent;
+
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
   ngOnInit(): void {
 
 
@@ -103,6 +108,7 @@ export class GestionTemplateComponent implements OnInit {
   constructor(
     private store:Store<AppState>,
     private gestionService:GestionService,
-    private router:Router
+    private router:Router,
+    private cdRef : ChangeDetectorRef
     ) { }
 }

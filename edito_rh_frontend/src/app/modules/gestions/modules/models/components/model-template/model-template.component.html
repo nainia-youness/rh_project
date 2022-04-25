@@ -1,11 +1,14 @@
+
+<app-sub-header [create]="create" [page$]="modelPage$" [update]="update"></app-sub-header>
+
 <div *ngIf="(modelPageType$ | async) as pageType">
     <div *ngIf="pageType==='creer'">
-        <h1>Creer</h1>
+        <app-creer-model></app-creer-model>
     </div>
     <div *ngIf="pageType==='modifier'">
-        <h1>Modifier</h1>
+        <app-update-model></app-update-model>
     </div>
     <div *ngIf="pageType==='list'">
-        <h1>List</h1>
+        <app-list-model></app-list-model>
     </div>
 </div>

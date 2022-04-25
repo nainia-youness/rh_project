@@ -20,6 +20,7 @@ import { GestionEmployesComponent } from './pages/gestion-employes/gestion-emplo
 import { GestionRubriquesComponent } from './pages/gestion-rubriques/gestion-rubriques.component';
 import { GestionFormulesComponent } from './pages/gestion-formules/gestion-formules.component';
 import { GestionVariablesComponent } from './pages/gestion-variables/gestion-variables.component';
+import { SubHeaderComponent } from './components/sub-header/sub-header.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { GestionVariablesComponent } from './pages/gestion-variables/gestion-var
     GestionRubriquesComponent,
     GestionFormulesComponent,
     GestionVariablesComponent,
+    SubHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,9 @@ import { GestionVariablesComponent } from './pages/gestion-variables/gestion-var
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
+  ],
+  exports:[
+    SubHeaderComponent
   ]
 })
 export class GestionsModule { }

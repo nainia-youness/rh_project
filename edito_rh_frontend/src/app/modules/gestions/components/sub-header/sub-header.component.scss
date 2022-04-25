@@ -1,0 +1,27 @@
+@import "../../../../../styles/variables.scss";
+
+.header {
+  background-color: $light_green;
+  box-shadow: $lighter_color !important;
+}
+
+.header .title {
+  color: $darker_color;
+  font-size: 40px;
+}
+
+.header .export {
+  text-align: right !important;
+}
+
+.create {
+  font-size: 18px;
+}
+
+.update {
+  font-size: 18px;
+}
+
+.export_all {
+  color: $darker_color;
+}

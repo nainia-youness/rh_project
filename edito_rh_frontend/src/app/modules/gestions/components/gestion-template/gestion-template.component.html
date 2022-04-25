@@ -1,23 +1,6 @@
 
 <div fxLayout="column" style="height: 100% !important;" >
-
-  <mat-card class="header" ngStyle.gt-xs="height: 60px;" fxLayoutGap.xs="15px" ngStyle.xs="height: 100px;" fxLayout.gt-xs="row" fxLayout.xs="column"  fxLayoutAlign="start center">
-    <div fxFlex="30" class="title" *ngIf="(gestionPage$ | async) as page">{{page}}</div>
-    <div fxFlex="70" class="export" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
-      <div fxFlex.gt-xs="70" fxFlex.xs="0"></div>
-      <div fxFlex>
-        <button mat-stroked-button  (click)="create()">Creer</button>
-      </div>
-      <!--<div fxFlex>
-        <button mat-stroked-button (click)="export()">Exporter</button>
-      </div>-->
-      <div fxFlex="5">
-        <button mat-icon-button class="export_all" aria-label="Export all" (click)="export_all()">
-          <mat-icon>download</mat-icon>
-        </button>
-      </div>
-    </div>
-  </mat-card>
+  <app-sub-header [create]="create" [page$]="gestionPage$" [export_all]="export_all"></app-sub-header>
 
   <app-filters [filterApiCall]="filterApiCall" [metadata$]="metadata$"></app-filters>
   
