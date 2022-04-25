@@ -12,34 +12,7 @@ from apps.contrats.models import Contrat
 from apps.directions.models import Direction
 from apps.affectations.models import Affectation
 from apps.entites.models import Entite
-
-class APIMetadata(SimpleMetadata):
-    """Extended metadata generator."""
-
-    def get_field_info(self, field):
-        field_info = super().get_field_info(field)
-
-        # Add extra validators using the OpenAPI schema generator
-        validators = {}
-        AutoSchema()._map_field_validators(field, validators)
-        extra_validators = ['format', 'pattern']
-        for validator in extra_validators:
-            if validators.get(validator, None):
-                field_info[validator] = validators[validator]
-
-        # Add additional data from serializer
-        field_info['initial'] = field.initial
-        field_info['field_name'] = field.field_name
-        field_info['write_only'] = field.write_only
-
-        return field_info
-
-    def change_metadata_format(self, fields):
-        result = []
-        for key in fields:
-            result.append(fields[key])
-        return result
-
+from apps.variables.models import Variable
 
 def get_metadata(model, query):
     result = {}
@@ -62,6 +35,10 @@ def get_metadata(model, query):
         fields = employe_metadata(query)
     elif(model == 'rubrique'):
         fields = rubrique_metadata(query)
+    elif(model == 'formule'):
+        fields = formule_metadata(query)
+    elif(model == 'variable'):
+        fields = variable_metadata(query)
     if(fields is not None):
         result['fields'] = fields
     return result
@@ -71,7 +48,16 @@ number = 'number'
 string = 'string'
 date = 'date'
 boolean = 'boolean'
-object = 'object' 
+text='text'
+
+
+def variable_metadata(query):
+    variable_values =get_distinct_values(query,'designation') 
+    return [
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': variable_values},
+        {'type': number, 'label': 'valeur'}
+    ]
 
 def rubrique_metadata(query):
     rubrique_values =get_distinct_values(query,'rubrique') 
@@ -79,6 +65,17 @@ def rubrique_metadata(query):
         {'type': number, 'label': 'id'},
         {'type': string, 'label': 'designation', 'values': rubrique_values},
         {'type': string, 'label': 'description'}
+    ]
+
+def formule_metadata(query):
+    q_variable=Variable.objects.all()
+    variable_values=get_distinct_values(q_variable,'designation')
+    formule_values =get_distinct_values(query,'designation') 
+    return [
+        {'type': number, 'label': 'id'},
+        {'type': string, 'label': 'designation', 'values': formule_values},
+        {'type': text, 'label': 'formule'},
+        {'type': string, 'label': 'variable','values':variable_values},
     ]
 
 def employe_metadata(query):

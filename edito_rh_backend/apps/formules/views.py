@@ -11,6 +11,7 @@ from common.response_handler import handle_error, handle_successful_response
 from django.http import Http404
 from ..users.models import User
 from ..variables.models import Variable
+from ..variables.serializer import VariableSerializer
 sys.path.insert(1, '../../common')
 
 
@@ -63,11 +64,25 @@ class FormuleAPIView(APIView):
         except Formule.DoesNotExist:
             raise Http404
 
+    def get_variable(self,variable_id):
+        try:
+            return Variable.objects.get(id=variable_id)
+        except Variable.DoesNotExist:
+            raise Http404       
+
     def get(self, request, id):
         user_id = is_authenticated(request)
         formule = self.get_object(id)
         serializer = FormuleSerializer(formule)
-        key_values = [{'key': 'data', 'value': serializer.data}]
+        data=serializer.data
+        #add variables
+        variables=[]
+        for variable_id in data['variables']:
+            ser_data=VariableSerializer(self.get_variable(variable_id)).data
+            variables.append(ser_data)
+        data['variables']=variables
+
+        key_values = [{'key': 'data', 'value': data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):

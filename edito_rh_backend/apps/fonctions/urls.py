@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FonctionAPIView, FonctionsAPIView, FonctionsView, fonctions_list, fonction_details
+from .views import FonctionAPIView, FonctionsAPIView
 
 
 urlpatterns = [
