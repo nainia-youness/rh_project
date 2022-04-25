@@ -14,7 +14,7 @@ const routes: Routes = [
         loadChildren:()=>import('./modules/gestions/gestions.module')
           .then(mod=>mod.GestionsModule),
       canActivate:[AuthGuard]
-    },
+    }
 ];
 
 @NgModule({

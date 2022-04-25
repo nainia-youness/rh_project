@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { GestionAffectationsComponent } from './pages/gestion-affectations/gestion-affectations.component';
 import { GestionCentresCoutComponent } from './pages/gestion-centres-cout/gestion-centres-cout.component';
 import { GestionContratsComponent } from './pages/gestion-contrats/gestion-contrats.component';
@@ -25,7 +26,13 @@ const routes: Routes = [
   {path:"rubriques",component:GestionRubriquesComponent},
   {path:"formules",component:GestionFormulesComponent},
   {path:"variables",component:GestionVariablesComponent},
-  {path:"",component:GestionComponent}
+  {path:"",component:GestionComponent},
+  {
+    path:"",
+      loadChildren:()=>import('./modules/entites/entites.module')
+        .then(mod=>mod.EntitesModule),
+    canActivate:[AuthGuard]
+  }
 ];
 
 @NgModule({
