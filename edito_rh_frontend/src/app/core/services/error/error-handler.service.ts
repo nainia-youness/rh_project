@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService {
-
-  constructor() { }
   
   handleError(error:any) {
-    switch (error.statusText) {
-      case 'Unknown Error':
-        return 'Erreur inconnu';
-      default:
-        return error.error.message;
+    if(error.statusText==='Unknown Error') return 'Erreur inconnu'
+    if(error.status===404){
+      this.router.navigate(['/page404'])
     }
+    return error.statusText;
   }
+
+  constructor(
+    private router:Router,
+  ) { }
 }

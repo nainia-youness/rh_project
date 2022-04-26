@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ChooseEntiteDialogComponent } from './shared/components/layout/choose-entite-dialog/choose-entite-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
+import { Page404Component } from './core/components/page404/page404.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
     SidenavComponent,
     FooterComponent,
     ChooseEntiteDialogComponent,
+    Page404Component
   ],
   imports: [
     HttpClientModule,

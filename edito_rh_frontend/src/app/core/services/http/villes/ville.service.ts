@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VilleService {
 
-  
-  
   villes_url=`${environment.apiUrl}/villes`
 
   getVilles():Observable<any>{
@@ -25,8 +23,17 @@ export class VilleService {
   }
 
   getVille(action:any):Observable<any>{
-    const id=action[0]
+    const id=this.getId(action)
     return this.http.get<any>(`${this.villes_url}/${id}`)
+  }
+
+  getId(action:any){
+    let result=''
+    for (const [key, value] of Object.entries(action)) {
+      if(key!=='type')
+        result+=value
+    }
+    return result
   }
 
   constructor(

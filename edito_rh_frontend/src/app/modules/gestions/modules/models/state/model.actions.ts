@@ -19,7 +19,7 @@ export const getModelFailure=createAction(ActionTypes.GET_MODEL_FAILURE,props<{e
 export const isModelProgressBarChange=createAction(ActionTypes.IS_MODEL_PROGRESS_BAR)
 
 //start
-export const getVilleStart=createAction(ActionTypes.GET_VILLE_START,props<{id:number | undefined}>())
+export const getVilleStart=createAction(ActionTypes.GET_VILLE_START,props<{id:string | undefined}>())
 
 //success
 export const getVilleSuccess=createAction(ActionTypes.GET_VILLE_SUCCESS,props<{ville:VilleModel | undefined}>())
