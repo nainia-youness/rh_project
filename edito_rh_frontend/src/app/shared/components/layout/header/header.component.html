@@ -6,7 +6,10 @@
              <!-- <button mat-icon-button color="warn" *ngIf="showSideNav$ | async" (click)="openSideNav()">
                 <mat-icon>more_vert</mat-icon>
               </button>-->
-            <app-sidenav></app-sidenav>
+            <div *ngIf="showSideNav$ | async" >
+              <app-sidenav></app-sidenav>
+            </div>
+            
             <span fxFlex.xs="20">
                   My App
             </span>
@@ -39,7 +42,7 @@
               </mat-menu>
             </div>
             
-            <button *ngIf="!(isLoggedIn)" mat-flat-button style="width:20px" id="login" (click)="goToLogin()">Login</button>
+            <button *ngIf="!(isLoggedIn)" mat-flat-button id="login" (click)="goToLogin()">Login</button>
             
             
             <button mat-flat-button fxShow.xs="true" fxShow.gt-xs="false" (click)="openMenu()" *ngIf="isLoggedIn"><mat-icon>menu</mat-icon></button>
@@ -47,11 +50,10 @@
         </div>
     </mat-toolbar-row>
   
-    <mat-toolbar-row  fxShow.xs="true" fxShow.gt-xs="false" *ngIf="showMenu" fxLayoutAlign="center center" fxFlexFill>
+    <mat-toolbar-row fxShow.xs="true" fxShow.gt-xs="false" *ngIf="showMenu && isLoggedIn" fxLayoutAlign="center center" fxFlexFill>
         <div fxLayout="column" fxFlex="100" >
   
         <div >
-  
             <button mat-flat-button  (click)="goToTraitement()">Traitement</button>
   
         </div>

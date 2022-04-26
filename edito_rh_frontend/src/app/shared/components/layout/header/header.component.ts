@@ -1,6 +1,6 @@
 import { Component, OnInit,AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { filter, map, Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { getShowSideNav } from '../state/layout.selector';
 import { Router } from '@angular/router';
@@ -40,7 +40,12 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
         this.user=this.storageService.getItem('user')
       }
     })
-    this.showSideNav$= this.store.select(getShowSideNav)
+    //this.showSideNav$= this.store.select(getShowSideNav)
+    this.showSideNav$=this.store.pipe(
+      select(getShowSideNav),
+      filter( val=> val !== undefined),
+      map((affectation)=> affectation)
+    )
     this.isLoggedIn=this.storageService.isLoggedIn()
   }
 

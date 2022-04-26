@@ -23,8 +23,12 @@ button:hover {
 }
 
 #login {
+  margin-top:10px;
+  margin-bottom:10px;
   background-color: $darker_color !important;
   border-radius: 20px;
+  width:90px !important;
+  color:red;
 }
 
 .user_nav_but {
