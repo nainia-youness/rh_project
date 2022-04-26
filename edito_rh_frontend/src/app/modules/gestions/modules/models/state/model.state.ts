@@ -1,3 +1,4 @@
+import { VilleModel } from "src/app/shared/models/ville.model";
 
 
 
@@ -26,10 +27,18 @@ export enum ModelPage {
 export interface modelState {
     modelPageType:ModelPageType,
     modelPage:ModelPage,
+    id?:string,
+    isModelProgressBar:boolean,
+    error?:string,
+    ville?:VilleModel,
 }
 
 
 export const initialState: modelState={
     modelPageType:ModelPageType.LIST,
-    modelPage:ModelPage.NO_PAGE
+    modelPage:ModelPage.NO_PAGE,
+    error:undefined,
+    id:undefined,
+    ville:undefined,
+    isModelProgressBar:false,
 }

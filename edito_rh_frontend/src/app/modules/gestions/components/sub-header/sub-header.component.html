@@ -8,6 +8,9 @@
       <div fxFlex.gt-xs="10" fxFlex.xs="50" *ngIf="update">
         <button mat-stroked-button class="update" (click)="update()">Update</button>
       </div>
+      <div fxFlex.gt-xs="10" fxFlex.xs="50" *ngIf="delete">
+        <button mat-stroked-button class="delete" (click)="delete()">Delete</button>
+      </div>
       <div fxFlex.gt-xs="5" fxFlex.xs="50" *ngIf="export_all">
         <button mat-icon-button class="export_all" aria-label="Export all" (click)="export_all()">
           <mat-icon>download</mat-icon>

@@ -1,14 +1,14 @@
 
-<app-sub-header [create]="create" [page$]="modelPage$" [update]="update"></app-sub-header>
-
+<app-sub-header [create]="create" [page$]="modelPage$" [update]="update" [delete]="delete"></app-sub-header>
+<mat-progress-bar *ngIf="isModelProgressBar$ | async" mode="indeterminate"></mat-progress-bar>
 <div *ngIf="(modelPageType$ | async) as pageType">
     <div *ngIf="pageType==='creer'">
-        <app-creer-model></app-creer-model>
+        <app-creer-model [modelData$]="modelData$"></app-creer-model>
     </div>
     <div *ngIf="pageType==='modifier'">
-        <app-update-model></app-update-model>
+        <app-update-model [modelData$]="modelData$"></app-update-model>
     </div>
     <div *ngIf="pageType==='list'">
-        <app-list-model></app-list-model>
+        <app-list-model [modelData$]="modelData$"></app-list-model>
     </div>
 </div>

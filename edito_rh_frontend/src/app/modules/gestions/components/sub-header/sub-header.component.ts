@@ -11,6 +11,7 @@ export class SubHeaderComponent implements OnInit{
 
   @Input() create!: () => void;
   @Input() update!: () => void;
+  @Input() delete!: () => void;
   @Input() export_all!: () => void;
   @Input() page$!:Observable<string>
 

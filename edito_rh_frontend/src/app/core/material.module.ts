@@ -75,6 +75,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatNativeDateModule,
     ],
     exports: [
+        MatProgressBarModule,
         MatProgressSpinnerModule,
         MatCheckboxModule,
         MatExpansionModule,

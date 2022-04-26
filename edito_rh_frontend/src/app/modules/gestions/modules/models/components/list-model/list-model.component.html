@@ -1,1 +1,31 @@
-<p>list-model works!</p>
+<div style="height:50px"></div>
+<div *ngIf="(metadata$ | async) as metadata" >
+    <div *ngIf="(modelData$ | async) as modelData">
+        <div *ngFor="let field of metadata.fields; let i = index; let even = even">
+            <div *ngIf="even" fxLayout.gt-xs="row" fxLayout.xs="column" style="height: 100% !important; width:100% !important;padding:10px" fxLayoutGap="20px" >
+                <div *ngIf="metadata.fields[i]" fxFlex.gt-xs="50" fxFlex.xs="100">
+                    <mat-card>
+                        <div class="label">
+                            {{metadata.fields[i].label}}
+                        </div>
+                        <div class="value">
+                            {{modelData[metadata.fields[i].label]}}
+                        </div>
+                    </mat-card>
+                </div>
+                <div *ngIf="metadata.fields[i+1]" fxFlex.gt-xs="50" fxFlex.xs="100">
+                    <mat-card>
+                        <div class="label">
+                            {{metadata.fields[i+1].label}}
+                        </div>
+                        <div class="value">
+                            {{modelData[metadata.fields[i+1].label]}}
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <div style="height:20px"></div>
+</div>
+
+

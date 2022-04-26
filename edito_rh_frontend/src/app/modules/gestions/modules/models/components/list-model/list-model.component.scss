@@ -1,0 +1,11 @@
+@import "../../../../../../../styles/variables.scss";
+
+.label{
+    text-align: left;
+    color:$base_color
+}
+
+.value{
+    text-align: center;
+    font-weight: 200;
+}

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-creer-model',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./creer-model.component.scss']
 })
 export class CreerModelComponent implements OnInit {
+
+  @Input()
+  modelData$?:Observable<any>;
 
   constructor() { }
 

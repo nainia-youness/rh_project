@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { filter, map, Observable } from 'rxjs';
 import { SideNavItem } from 'src/app/shared/components/layout/state/layout.interface';
 import { getSideNavItems } from 'src/app/shared/components/layout/state/layout.selector';
+import { VilleModel } from 'src/app/shared/models/ville.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { modelPageChange } from '../../state/model.actions';
+import { getVilleStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getVilleSuccessSelector } from '../../state/model.selectors';
 import { ModelPage } from '../../state/model.state';
 
 @Component({
@@ -31,19 +33,33 @@ export class VilleComponent implements OnInit {
       {title:'Gestion des variables',path:'/gestion/variables'},
     ],
     showSideNav:true,
-    showFooter:false,
+    showFooter:true,
   }
   sideNavItems$!:Observable<SideNavItem[]>
-  
+  modelData$?:Observable<VilleModel | undefined>;
+
   ngOnInit(): void {
+
+    let id =this.actRoute.snapshot.params['id'];
+    this.store.dispatch(isModelProgressBarChange())
+    this.store.dispatch(getVilleStart(id))
     this.store.dispatch(modelPageChange({modelPage:ModelPage.VILLE}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.sideNavItems$= this.store.select(getSideNavItems)
+    this.getVille()
   }
 
+  getVille=()=>{
+    this.modelData$=this.store.pipe(
+      select(getVilleSuccessSelector),
+      filter( val=> val !== undefined),
+      map((ville)=> ville)
+    )
+  }
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,
     private router :Router,
+    private actRoute: ActivatedRoute
     ) { }
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { filter, map, Observable } from 'rxjs';
+import { getMetadataSelector } from 'src/app/modules/gestions/state/gestion.selectors';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-list-model',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListModelComponent implements OnInit {
 
-  constructor() { }
-
+  @Input()
+  modelData$?:Observable<any>;
+  metadata$!:Observable<any>
   ngOnInit(): void {
+    this.metadata$=this.store.pipe(
+      select(getMetadataSelector),
+      filter( val=> val !== undefined),
+      map((metadata)=> {
+        return metadata
+      })
+    )
   }
-
+  constructor(
+    private store:Store<AppState>,
+  ) { }
 }

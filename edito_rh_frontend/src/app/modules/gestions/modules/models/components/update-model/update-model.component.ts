@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update-model',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class UpdateModelComponent implements OnInit {
 
   constructor() { }
+  @Input()
+  modelData$?:Observable<any>;
 
   ngOnInit(): void {
   }

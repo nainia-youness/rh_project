@@ -5,6 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import { ParamsService } from '../helpers/params/params.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,14 @@ export class VilleService {
     return this.http.get<any>(this.villes_url,{params})
   }
 
-  constructor(private http:HttpClient,private store:Store<AppState>,private paramsService:ParamsService){}
+  getVille(action:any):Observable<any>{
+    const id=action[0]
+    return this.http.get<any>(`${this.villes_url}/${id}`)
+  }
+
+  constructor(
+    private http:HttpClient,private store:Store<AppState>,
+    private paramsService:ParamsService,
+    private actRoute: ActivatedRoute
+    ){}
 }

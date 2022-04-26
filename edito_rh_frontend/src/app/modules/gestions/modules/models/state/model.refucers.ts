@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { modelPageChange, modelPageTypeChange } from "./model.actions"
+import { getModelFailure, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from "./model.actions"
 import { initialState } from "./model.state"
 
 
@@ -16,7 +16,26 @@ const _modelReducer= createReducer(
             ...state,
             modelPageType:action.modelPageType,
         }
-    })
+    }),
+    on(getModelFailure,(state:any,action:any)=>{
+        return {
+            ...state,
+            error:action.error,
+        }
+    }),
+    on(getVilleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            ville:action.ville,
+            isModelProgressBar:false,
+        }
+    }),
+    on(isModelProgressBarChange,(state:any,action:any)=>{
+        return {
+            ...state,
+            isModelProgressBar:!state.isModelProgressBar
+        }
+    }),
 )
 
 

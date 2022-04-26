@@ -1,6 +1,7 @@
 import { AuthEffects } from "../modules/auth/state/auth.effects";
 import { authReducer } from "../modules/auth/state/auth.reducer";
 import { authState } from "../modules/auth/state/auth.state";
+import { ModelEffects } from "../modules/gestions/modules/models/state/model.effects";
 import { modelReducer } from "../modules/gestions/modules/models/state/model.refucers";
 import { modelState } from "../modules/gestions/modules/models/state/model.state";
 import { GestionsEffects } from "../modules/gestions/state/gestion.effects";
@@ -31,4 +32,5 @@ export const appReducers={
 export const appEffects=[
     AuthEffects,
     GestionsEffects,
+    ModelEffects,
 ]
