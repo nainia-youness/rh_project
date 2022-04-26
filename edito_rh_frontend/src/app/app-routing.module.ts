@@ -17,7 +17,7 @@ const routes: Routes = [
       canActivate:[AuthGuard]
     },
     {
-      path: '**',
+      path:'**',
       component:Page404Component
     }
 ];

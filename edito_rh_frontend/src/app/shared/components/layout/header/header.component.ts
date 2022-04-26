@@ -35,9 +35,8 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
   ngOnInit(): void {
 
     this.storageService.watchStorage().subscribe((data:any) => {
-      if(data.key==='user'){
+      if(data.key==='refresh_token' || data.key==='user'){
         this.isLoggedIn=this.storageService.isLoggedIn()
-        
         this.user=this.storageService.getItem('user')
       }
     })
@@ -74,7 +73,7 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
   }
 
   onLogout=()=>{
-    this.storageService.removeItem('user')
+    this.storageService.removeItem('refresh_token')
     this.storageService.clear()
     this.router.navigate(['/login']);
   }
