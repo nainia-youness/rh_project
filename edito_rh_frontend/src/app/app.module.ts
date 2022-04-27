@@ -31,7 +31,7 @@ import { Page404Component } from './core/components/page404/page404.component';
     SidenavComponent,
     FooterComponent,
     ChooseEntiteDialogComponent,
-    Page404Component
+    Page404Component,
   ],
   imports: [
     HttpClientModule,

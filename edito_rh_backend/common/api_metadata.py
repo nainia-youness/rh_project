@@ -14,31 +14,31 @@ from apps.affectations.models import Affectation
 from apps.entites.models import Entite
 from apps.variables.models import Variable
 
-def get_metadata(model, query):
+def get_metadata(model, query,is_one=False):
     result = {}
     fields = None
     if(model == 'fonction'):
-        fields = fonction_metadata(query)
+        fields = fonction_metadata(query,is_one)
     elif(model == 'ville'):
-        fields = ville_metadata(query)
+        fields = ville_metadata(query,is_one)
     elif(model == 'entite'):
-        fields = entite_metadata(query)
+        fields = entite_metadata(query,is_one)
     elif(model == 'direction'):
-        fields = direction_metadata(query)
+        fields = direction_metadata(query,is_one)
     elif(model == 'contrat'):
-        fields = contrat_metadata(query)
+        fields = contrat_metadata(query,is_one)
     elif(model == 'centre_cout'):
-        fields = centre_cout_metadata(query)
+        fields = centre_cout_metadata(query,is_one)
     elif(model == 'affectation'):
-        fields = affectation_metadata(query)
+        fields = affectation_metadata(query,is_one)
     elif(model == 'employe'):
         fields = employe_metadata(query)
     elif(model == 'rubrique'):
-        fields = rubrique_metadata(query)
+        fields = rubrique_metadata(query,is_one)
     elif(model == 'formule'):
-        fields = formule_metadata(query)
+        fields = formule_metadata(query,is_one)
     elif(model == 'variable'):
-        fields = variable_metadata(query)
+        fields = variable_metadata(query,is_one)
     if(fields is not None):
         result['fields'] = fields
     return result
@@ -49,34 +49,51 @@ string = 'string'
 date = 'date'
 boolean = 'boolean'
 text='text'
+object='object'
 
-
-def variable_metadata(query):
-    variable_values =get_distinct_values(query,'designation') 
-    return [
+def variable_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': variable_values},
         {'type': number, 'label': 'valeur'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        variable_values =get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': variable_values},)
+    
+    return result
 
-def rubrique_metadata(query):
-    rubrique_values =get_distinct_values(query,'rubrique') 
-    return [
+def rubrique_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': rubrique_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        rubrique_values =get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': rubrique_values})
+    
+    return result
 
-def formule_metadata(query):
-    q_variable=Variable.objects.all()
-    variable_values=get_distinct_values(q_variable,'designation')
-    formule_values =get_distinct_values(query,'designation') 
-    return [
+def formule_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': formule_values},
-        {'type': text, 'label': 'formule'},
-        {'type': string, 'label': 'variable','values':variable_values},
+        {'type': string, 'label': 'formule'},
     ]
+    if(is_one):
+        variables_metadata=variable_metadata(query,is_one)
+        result.append({'type': string, 'label': 'designation'})
+        result.append({'type': object, 'label': 'variables','children_metadata':variables_metadata})
+    else:
+        q_variable=Variable.objects.all()
+        variable_values=get_distinct_values(q_variable,'designation')
+        formule_values =get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': formule_values})
+        result.append({'type': string, 'label': 'variables','values':variable_values})
+    
+    return result
 
 def employe_metadata(query):
     q_fonction=Fonction.objects.all()
@@ -123,13 +140,18 @@ def employe_metadata(query):
         {'type': string, 'label': 'delegue'},
     ]
 
-def fonction_metadata(query):
-    designation_values =get_distinct_values(query,'designation') 
-    return [
+def fonction_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': designation_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        designation_values =get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': designation_values},)
+    
+    return result
 
 def get_distinct_values(query,model):
     distinct_values_dict=list(query.values(model).distinct())
@@ -137,53 +159,85 @@ def get_distinct_values(query,model):
     return distinct_values_list
 
 
-def ville_metadata(query):
-    return [
+def ville_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'nom'},
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'nom'})
+    else:
+        ville_values =get_distinct_values(query,'nom') 
+        result.append({'type': string, 'label': 'nom', 'values': ville_values})
+    
+    return result
 
 
-def entite_metadata(query):
-    entite_values = get_distinct_values(query,'designation') 
-    return [
+def entite_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': entite_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        entite_values = get_distinct_values(query,'designation')  
+        result.append({'type': string, 'label': 'designation', 'values': entite_values})
+    
+    return result
 
 
-def direction_metadata(query):
-    direction_values = list(query.values('designation').distinct())
-    return [
+def direction_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': direction_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append( {'type': string, 'label': 'designation'})
+    else:
+        direction_values = get_distinct_values(query,'designation')  
+        #direction_values = list(query.values('designation').distinct()) 
+        result.append({'type': string, 'label': 'designation', 'values': direction_values})
+    
+    return result
 
 
-def contrat_metadata(query):
-    contrat_values = get_distinct_values(query,'designation') 
-    return [
+def contrat_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': contrat_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append( {'type': string, 'label': 'designation'})
+    else:
+        contrat_values = get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': contrat_values})
+    
+    return result
 
 
-def centre_cout_metadata(query):
-    centre_cout_values = get_distinct_values(query,'designation') 
-    return [
+def centre_cout_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': centre_cout_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        centre_cout_values = get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': centre_cout_values})
+    
+    return result
 
 
-def affectation_metadata(query):
-    affectation_values = get_distinct_values(query,'designation') 
-    return [
+def affectation_metadata(query,is_one):
+    result=[
         {'type': number, 'label': 'id'},
-        {'type': string, 'label': 'designation', 'values': affectation_values},
         {'type': string, 'label': 'description'}
     ]
+    if(is_one):
+        result.append({'type': string, 'label': 'designation'})
+    else:
+        affectation_values = get_distinct_values(query,'designation') 
+        result.append({'type': string, 'label': 'designation', 'values': affectation_values})
+    
+    return result

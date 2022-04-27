@@ -1,5 +1,7 @@
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Injectable } from '@angular/core';
 import { FormuleModel } from 'src/app/shared/models/formule.model';
+import { VariableModel } from 'src/app/shared/models/variable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +10,14 @@ export class FormuleBuilderService {
 
   constructor() { }
 
-  buildFormule(id:number,designation:string,formule:string):FormuleModel{
-    return new FormuleModel(id,designation,formule)
+  buildFormule(id:number,designation:string,formule:string,variables:VariableModel[] | undefined=undefined):FormuleModel{
+    if(variables===undefined){
+      return new FormuleModel(id,designation,formule,undefined)
+    }
+    else{
+      return new FormuleModel(id,designation,formule,variables)
+    }
+      
   }
 
   buildFormules(formules:any):FormuleModel[] | undefined{

@@ -79,7 +79,6 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatCheckboxModule,
-        MatExpansionModule,
         MatFormFieldModule,
         MatMenuModule,
         MatButtonModule,
@@ -103,7 +102,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ],
     providers: [
         //MatDatepickerModule,
-    ]
+    ],
 } )
 
 export class MaterialModule { }

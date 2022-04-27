@@ -63,8 +63,12 @@ class CentreCoutAPIView(APIView):
     def get(self, request, id):
         user_id = is_authenticated(request)
         centreCout = self.get_object(id)
+        metadata = get_metadata('centreCout', centreCout,is_one=True)
         serializer = CentreCoutSerializer(centreCout)
-        key_values = [{'key': 'data', 'value': serializer.data}]
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+            ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):

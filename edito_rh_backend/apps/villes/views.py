@@ -65,8 +65,12 @@ class VilleAPIView(APIView):
     def get(self, request, id):
         user_id = is_authenticated(request)
         ville = self.get_object(id)
+        metadata = get_metadata('ville', ville,is_one=True)
         serializer = VilleSerializer(ville)
-        key_values = [{'key': 'data', 'value': serializer.data}]
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+            ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):

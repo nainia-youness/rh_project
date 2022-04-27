@@ -13,12 +13,19 @@ export const getVilleSuccessSelector =createSelector(getModelState,state=>{
     return state.ville
 })
 
-export const isModelProgressBarSelector =createSelector(getModelState,state=>{
-    return state.isModelProgressBar
+export const getVariableSuccessSelector =createSelector(getModelState,state=>{
+    return state.variable
+})
+
+export const getFormuleSuccessSelector =createSelector(getModelState,state=>{
+    return state.formule
 })
 
 
 
+export const isModelProgressBarSelector =createSelector(getModelState,state=>{
+    return state.isModelProgressBar
+})
 
 export const modelPageTypeSelector =createSelector(getModelState,state=>{
     return state.modelPageType

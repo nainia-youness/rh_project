@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
 import { getMetadataSelector } from 'src/app/modules/gestions/state/gestion.selectors';
@@ -23,7 +24,12 @@ export class ListModelComponent implements OnInit {
       })
     )
   }
+
+  goToModel(label:string,id:string){
+    this.router.navigate([`/gestion/${label}/${id}/`])
+  }
   constructor(
     private store:Store<AppState>,
+    private router:Router,
   ) { }
 }

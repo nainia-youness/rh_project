@@ -24,7 +24,7 @@ export class VilleService {
 
   getVille(action:any):Observable<any>{
     const id=this.getId(action)
-    return this.http.get<any>(`${this.villes_url}/${id}`)
+    return this.http.get<any>(`${this.villes_url}/${id}/`)
   }
 
   getId(action:any){

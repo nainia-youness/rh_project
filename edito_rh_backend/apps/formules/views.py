@@ -73,16 +73,21 @@ class FormuleAPIView(APIView):
     def get(self, request, id):
         user_id = is_authenticated(request)
         formule = self.get_object(id)
+        metadata = get_metadata('formule', formule,is_one=True)
         serializer = FormuleSerializer(formule)
         data=serializer.data
         #add variables
         variables=[]
         for variable_id in data['variables']:
-            ser_data=VariableSerializer(self.get_variable(variable_id)).data
+            ser_data=VariableSerializer(self.get_variable(variable_id)).data     
+            #ser_data['path']='/variables/{id}/'.format(id=ser_data['id']) 
             variables.append(ser_data)
         data['variables']=variables
 
-        key_values = [{'key': 'data', 'value': data}]
+        key_values = [
+            {'key': 'data', 'value': data},
+            {'key': 'metadata', 'value': metadata},
+            ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):

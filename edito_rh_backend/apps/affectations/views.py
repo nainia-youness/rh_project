@@ -63,8 +63,12 @@ class AffectationAPIView(APIView):
     def get(self, request, id):
         user_id = is_authenticated(request)
         affectation = self.get_object(id)
+        metadata = get_metadata('affectation', affectation,is_one=True)
         serializer = AffectationSerializer(affectation)
-        key_values = [{'key': 'data', 'value': serializer.data}]
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+            ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):

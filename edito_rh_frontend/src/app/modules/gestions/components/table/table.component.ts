@@ -33,6 +33,12 @@ export class TableComponent implements OnInit {
         if(gestionPage===GestionPage.VILLES){
           this.router.navigate([`/gestion/villes/${id}`])
         }
+        if(gestionPage===GestionPage.VARIABLES){
+          this.router.navigate([`/gestion/variables/${id}`])
+        }
+        if(gestionPage===GestionPage.FORMULES){
+          this.router.navigate([`/gestion/formules/${id}`])
+        }
         return gestionPage
       })
     ).subscribe()

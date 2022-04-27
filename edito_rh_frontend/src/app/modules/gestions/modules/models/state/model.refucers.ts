@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { getModelFailure, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from "./model.actions"
+import { getFormuleSuccess, getModelFailure, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from "./model.actions"
 import { initialState } from "./model.state"
 
 
@@ -27,6 +27,20 @@ const _modelReducer= createReducer(
         return {
             ...state,
             ville:action.ville,
+            isModelProgressBar:false,
+        }
+    }),
+    on(getVariableSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            variable:action.variable,
+            isModelProgressBar:false,
+        }
+    }),
+    on(getFormuleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            formule:action.formule,
             isModelProgressBar:false,
         }
     }),

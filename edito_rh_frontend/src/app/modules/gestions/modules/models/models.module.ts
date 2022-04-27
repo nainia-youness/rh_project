@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/core/material.module';
 import { GestionsModule } from '../../gestions.module';
 import { SubHeaderComponent } from '../../components/sub-header/sub-header.component';
+import { VariableComponent } from './pages/variable/variable.component';
+import { FormuleComponent } from './pages/formule/formule.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { SubHeaderComponent } from '../../components/sub-header/sub-header.compo
     CreerModelComponent,
     UpdateModelComponent,
     ListModelComponent,
+    VariableComponent,
+    FormuleComponent,
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,5 @@
+import { FormuleModel } from "src/app/shared/models/formule.model";
+import { VariableModel } from "src/app/shared/models/variable.model";
 import { VilleModel } from "src/app/shared/models/ville.model";
 
 
@@ -30,12 +32,16 @@ export interface modelState {
     isModelProgressBar:boolean,
     error?:string,
     ville?:VilleModel,
+    variable?:VariableModel,
+    formule?:FormuleModel,
 }
 
 export const initialState: modelState={
     modelPageType:ModelPageType.LIST,
     modelPage:ModelPage.NO_PAGE,
+    isModelProgressBar:false,
     error:undefined,
     ville:undefined,
-    isModelProgressBar:false,
+    variable:undefined,
+    formule:undefined,
 }

@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
-import { SideNavItem } from 'src/app/shared/components/layout/state/layout.interface';
-import { getSideNavItems } from 'src/app/shared/components/layout/state/layout.selector';
-import { VilleModel } from 'src/app/shared/models/ville.model';
+import { VariableModel } from 'src/app/shared/models/variable.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getVilleStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
-import { getVilleSuccessSelector } from '../../state/model.selectors';
+import { getVariableStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getVariableSuccessSelector } from '../../state/model.selectors';
 import { ModelPage } from '../../state/model.state';
 
 @Component({
-  selector: 'app-ville',
-  templateUrl: './ville.component.html',
-  styleUrls: ['./ville.component.scss']
+  selector: 'app-variable',
+  templateUrl: './variable.component.html',
+  styleUrls: ['./variable.component.scss']
 })
-export class VilleComponent implements OnInit {
+export class VariableComponent implements OnInit {
 
   layoutConfig={
     sideNavItems:[
@@ -35,23 +33,23 @@ export class VilleComponent implements OnInit {
     showSideNav:true,
     showFooter:true,
   }
-  modelData$?:Observable<VilleModel | undefined>;
+  modelData$?:Observable<VariableModel | undefined>;
 
   ngOnInit(): void {
 
     let id =this.actRoute.snapshot.params['id'];
     this.store.dispatch(isModelProgressBarChange())
-    this.store.dispatch(getVilleStart(id))
-    this.store.dispatch(modelPageChange({modelPage:ModelPage.VILLE}))
+    this.store.dispatch(getVariableStart(id))
+    this.store.dispatch(modelPageChange({modelPage:ModelPage.VARIABLE}))
     this.Layout.initializeLayout(this.layoutConfig)
-    this.getVille()
+    this.getVariable()
   }
 
-  getVille=()=>{
+  getVariable=()=>{
     this.modelData$=this.store.pipe(
-      select(getVilleSuccessSelector),
+      select(getVariableSuccessSelector),
       filter( val=> val !== undefined),
-      map((ville)=> ville)
+      map((variable)=> variable)
     )
   }
   constructor(

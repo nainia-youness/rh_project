@@ -2,9 +2,44 @@
 <div *ngIf="(metadata$ | async) as metadata" >
     <div *ngIf="(modelData$ | async) as modelData">
         <div *ngFor="let field of metadata.fields; let i = index; let even = even">
+            <!--the model's children-->
+            <div *ngIf="metadata.fields[i].type==='object'">
+                <div fxLayout="row" style="height: 100% !important; width:100% !important;padding:10px" fxLayoutGap="20px" >
+                    <mat-card fxFlex="100">
+                            <!--main label-->
+                           <div  class="label">
+                                {{metadata.fields[i].label}}
+                           </div>
+                           <!--iterate through each model child value-->
+                           <div class="value" *ngFor="let child of modelData[metadata.fields[i].label]">
+                               <div *ngIf="metadata.fields[i]">
+                                   <!--go to model button-->
+                                   <div style="text-align: right;margin-top:10px" >
+                                        <button (click)="goToModel(metadata.fields[i].label,child.id)" class="go-to-model-but" mat-flat-button>
+                                            <mat-icon>subject</mat-icon>
+                                        </button> 
+                                   </div>
+                                   <mat-card class="child_class">
+                                    <!--iterate through metadata of the child model-->
+                                    <div class="value" fxLayout.gt-xs="row" style="width:100%" fxLayout.xs="column" *ngFor="let child_metadata of metadata.fields[i].children_metadata;let j = index;">
+                                            <div class="label" fxFlex>
+                                                {{child_metadata.label}}
+                                            </div>
+                                            <div class="value" fxFlex>
+                                                {{child[child_metadata.label]}}
+                                            </div>
+                                       
+                                    </div>
+                                </mat-card>
+                               </div>
+                           </div>
+                    </mat-card>
+                </div>
+            </div>
+            <!--normal fields-->
             <div *ngIf="even" fxLayout.gt-xs="row" fxLayout.xs="column" style="height: 100% !important; width:100% !important;padding:10px" fxLayoutGap="20px" >
-                <div *ngIf="metadata.fields[i]" fxFlex.gt-xs="50" fxFlex.xs="100">
-                    <mat-card>
+                <div *ngIf="(metadata.fields[i]) && (metadata.fields[i].type!=='object')" fxFlex.gt-xs="50" fxFlex.xs="100">
+                    <mat-card  class="container">
                         <div class="label">
                             {{metadata.fields[i].label}}
                         </div>
@@ -13,17 +48,18 @@
                         </div>
                     </mat-card>
                 </div>
-                <div *ngIf="metadata.fields[i+1]" fxFlex.gt-xs="50" fxFlex.xs="100">
+                <div *ngIf="(metadata.fields[i+1]) && (metadata.fields[i+1].type!=='object')" fxFlex.gt-xs="50" fxFlex.xs="100">
                     <mat-card>
                         <div class="label">
                             {{metadata.fields[i+1].label}}
                         </div>
-                        <div class="value">
+                        <div class="value" >
                             {{modelData[metadata.fields[i+1].label]}}
                         </div>
                     </mat-card>
                 </div>
             </div>
+
         </div>
         <div style="height:20px"></div>
 </div>

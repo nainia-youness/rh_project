@@ -126,8 +126,12 @@ class FonctionAPIView(APIView):
     def get(self, request, id):
         user_id = is_authenticated(request)
         fonction = self.get_object(id)
+        metadata = get_metadata('fonction', fonction,is_one=True)
         serializer = FonctionSerializer(fonction)
-        key_values = [{'key': 'data', 'value': serializer.data}]
+        key_values = [
+            {'key': 'data', 'value': serializer.data},
+            {'key': 'metadata', 'value': metadata},
+            ]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
     def put(self, request, id):
