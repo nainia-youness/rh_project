@@ -14,6 +14,14 @@ import { GestionsModule } from '../../gestions.module';
 import { SubHeaderComponent } from '../../components/sub-header/sub-header.component';
 import { VariableComponent } from './pages/variable/variable.component';
 import { FormuleComponent } from './pages/formule/formule.component';
+import { AffectationComponent } from './pages/affectation/affectation.component';
+import { CentreCoutComponent } from './pages/centre-cout/centre-cout.component';
+import { ContratComponent } from './pages/contrat/contrat.component';
+import { DirectionComponent } from './pages/direction/direction.component';
+import { EntiteComponent } from './pages/entite/entite.component';
+import { FonctionComponent } from './pages/fonction/fonction.component';
+import { RubriqueComponent } from './pages/rubrique/rubrique.component';
+import { EmployeComponent } from './pages/employe/employe.component';
 
 
 @NgModule({
@@ -25,6 +33,14 @@ import { FormuleComponent } from './pages/formule/formule.component';
     ListModelComponent,
     VariableComponent,
     FormuleComponent,
+    AffectationComponent,
+    CentreCoutComponent,
+    ContratComponent,
+    DirectionComponent,
+    EntiteComponent,
+    FonctionComponent,
+    RubriqueComponent,
+    EmployeComponent,
   ],
   imports: [
     CommonModule,

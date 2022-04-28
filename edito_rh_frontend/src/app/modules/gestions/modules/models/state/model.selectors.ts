@@ -23,6 +23,42 @@ export const getFormuleSuccessSelector =createSelector(getModelState,state=>{
 
 
 
+export const getAffectationSuccessSelector =createSelector(getModelState,state=>{
+    return state.affectation
+})
+
+export const getCentreCoutSuccessSelector =createSelector(getModelState,state=>{
+    return state.centreCout
+})
+
+export const getContratSuccessSelector =createSelector(getModelState,state=>{
+    return state.contrat
+})
+
+export const getDirectionSuccessSelector =createSelector(getModelState,state=>{
+    return state.direction
+})
+
+export const getEntiteSuccessSelector =createSelector(getModelState,state=>{
+    return state.entite
+})
+
+export const getFonctionSuccessSelector =createSelector(getModelState,state=>{
+    return state.fonction
+})
+
+export const getRubriqueSuccessSelector =createSelector(getModelState,state=>{
+    return state.rubrique
+})
+
+export const getEmployeSuccessSelector =createSelector(getModelState,state=>{
+    return state.employe
+})
+
+
+
+
+
 export const isModelProgressBarSelector =createSelector(getModelState,state=>{
     return state.isModelProgressBar
 })

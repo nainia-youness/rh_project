@@ -5,6 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import {select, Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 import { ParamsService } from '../helpers/params/params.service';
+import { HelperService } from '../helpers/helper/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class FonctionService {
     return this.http.get<any>(this.fonctions_url,{params})
   }
   
+  getFonction(action:any):Observable<any>{
+    const id=this.helper.getId(action)
+    return this.http.get<any>(`${this.fonctions_url}/${id}/`)
+  }
 
-  constructor(private http:HttpClient,private store:Store<AppState>,private paramsService:ParamsService){}
+  constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

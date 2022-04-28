@@ -6,6 +6,7 @@ import { ParamsService } from '../helpers/params/params.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { HelperService } from '../helpers/helper/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,22 +24,13 @@ export class VilleService {
   }
 
   getVille(action:any):Observable<any>{
-    const id=this.getId(action)
+    const id=this.helper.getId(action)
     return this.http.get<any>(`${this.villes_url}/${id}/`)
   }
 
-  getId(action:any){
-    let result=''
-    for (const [key, value] of Object.entries(action)) {
-      if(key!=='type')
-        result+=value
-    }
-    return result
-  }
-
   constructor(
-    private http:HttpClient,private store:Store<AppState>,
+    private http:HttpClient,
+    private helper:HelperService,
     private paramsService:ParamsService,
-    private actRoute: ActivatedRoute
     ){}
 }

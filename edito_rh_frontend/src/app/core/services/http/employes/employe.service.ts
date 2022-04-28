@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { environment } from 'src/environments/environment';
+import { HelperService } from '../helpers/helper/helper.service';
 import { ParamsService } from '../helpers/params/params.service';
 
 @Injectable({
@@ -21,5 +22,10 @@ export class EmployeService {
     return this.http.get<any>(this.employes_url,{params})
   }
 
-  constructor(private http:HttpClient,private store:Store<AppState>,private paramsService:ParamsService){}
+  getEmploye(action:any):Observable<any>{
+    const id=this.helper.getId(action)
+    return this.http.get<any>(`${this.employes_url}/${id}/`)
+  }
+
+  constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

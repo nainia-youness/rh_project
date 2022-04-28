@@ -39,6 +39,30 @@ export class TableComponent implements OnInit {
         if(gestionPage===GestionPage.FORMULES){
           this.router.navigate([`/gestion/formules/${id}`])
         }
+        if(gestionPage===GestionPage.AFFECTATIONS){
+          this.router.navigate([`/gestion/affectations/${id}`])
+        }
+        if(gestionPage===GestionPage.CENTRES_COUT){
+          this.router.navigate([`/gestion/centres-cout/${id}`])
+        }
+        if(gestionPage===GestionPage.CONTRATS){
+          this.router.navigate([`/gestion/contrats/${id}`])
+        }
+        if(gestionPage===GestionPage.DIRECTIONS){
+          this.router.navigate([`/gestion/directions/${id}`])
+        }
+        if(gestionPage===GestionPage.ENTITES){
+          this.router.navigate([`/gestion/entités/${id}`])
+        }
+        if(gestionPage===GestionPage.FONCTIONS){
+          this.router.navigate([`/gestion/fonctions/${id}`])
+        }
+        if(gestionPage===GestionPage.RUBRIQUES){
+          this.router.navigate([`/gestion/rubriques/${id}`])
+        }
+        if(gestionPage===GestionPage.EMPLOYES){
+          this.router.navigate([`/gestion/employés/${id}`])
+        }
         return gestionPage
       })
     ).subscribe()
