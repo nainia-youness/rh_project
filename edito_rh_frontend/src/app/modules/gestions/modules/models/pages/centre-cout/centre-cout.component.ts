@@ -36,10 +36,12 @@ export class CentreCoutComponent implements OnInit {
   modelData$?:Observable<CentreCoutModel | undefined>;
 
   ngOnInit(): void {
-
-    let id =this.actRoute.snapshot.params['id'];
+    let id:string | undefined=''
     this.store.dispatch(isModelProgressBarChange())
-    this.store.dispatch(getCentreCoutStart(id))
+    this.actRoute.paramMap.subscribe(params => {
+      id =<string | undefined>  params.get('id');
+      this.store.dispatch(getCentreCoutStart({id:id}))
+    });
     this.store.dispatch(modelPageChange({modelPage:ModelPage.CENTRE_COUT}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getCentreCout()

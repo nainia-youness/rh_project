@@ -23,6 +23,7 @@ class EmployeSerializer(serializers.ModelSerializer):
         response['contrat'] = ContratSerializer(instance.contrat).data
         response['affectation'] = AffectationSerializer(instance.affectation).data
         response['entite'] = EntiteSerializer(instance.entite).data
+        response['path']="/employés/"+str(response['id'])+'/'
         return response
 
     class Meta:

@@ -91,11 +91,25 @@ class EmployeAPIView(APIView):
             return Rubrique.objects.get(id=id)
         except Rubrique.DoesNotExist:
             raise Http404
+    
+    def get_employe_rubriques(self,employe_id, rubrique_id):
+        try:
+            employe=Employe.objects.get(id=employe_id)
+        except Employe.DoesNotExist:
+            raise Http404
+        try:
+            rubrique=Rubrique.objects.get(id=rubrique_id)
+        except Rubrique.DoesNotExist:
+            raise Http404
+        try:
+            return EmployesRubriques.objects.get(employe=employe,rubrique=rubrique)
+        except EmployesRubriques.DoesNotExist:
+            raise Http404
 
     def get(self, request, id):
         user_id = is_authenticated(request)
         employe = self.get_object(id)
-        metadata = get_metadata('employe', employe)
+        metadata = get_metadata('employe', employe,is_one=True)
         serializer = EmployeSerializer(employe)
         data=serializer.data
         #add delegue
@@ -105,7 +119,10 @@ class EmployeAPIView(APIView):
         rubriques=[]
         for rubrique_id in data['rubriques']:
             ser_data=RubriqueSerializer(self.get_rubrique(rubrique_id)).data
+            employeRubrique = self.get_employe_rubriques(data['id'], rubrique_id)
+            ser_data['montant']=employeRubrique.montant
             rubriques.append(ser_data)
+            
         data['rubriques']=rubriques
         key_values = [
             {'key': 'data', 'value': data},
@@ -139,10 +156,12 @@ def change_delegue_format(delegue):
         'id':delegue['id'],
         'nom':delegue['nom'],
         'prenom':delegue['prenom'],
-        'matricule':delegue['matricule']
+        'matricule':delegue['matricule'],
+        'path':'/employés/'+str(delegue['id'])+'/'
     }
 
 class EmployesRubriquesAPIView(APIView):
+
     def get_object(self,employe_id, rubrique_id):
         try:
             employe=Employe.objects.get(id=employe_id)

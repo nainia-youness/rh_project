@@ -2,6 +2,7 @@ import { AffectationModel } from "src/app/shared/models/affectation.model";
 import { CentreCoutModel } from "src/app/shared/models/centre_cout.model";
 import { ContratModel } from "src/app/shared/models/contrat.model";
 import { DirectionModel } from "src/app/shared/models/direction.model";
+import { EmployeModel } from "src/app/shared/models/employe.model";
 import { EntiteModel } from "src/app/shared/models/entite.model";
 import { FonctionModel } from "src/app/shared/models/fonction.model";
 import { FormuleModel } from "src/app/shared/models/formule.model";
@@ -48,7 +49,7 @@ export interface modelState {
     entite?:EntiteModel,
     fonction?:FonctionModel,
     rubrique?:RubriqueModel,
-    employe?:FonctionModel,
+    employe?:EmployeModel,
 }
 
 export const initialState: modelState={

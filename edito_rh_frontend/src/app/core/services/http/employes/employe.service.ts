@@ -13,7 +13,7 @@ import { ParamsService } from '../helpers/params/params.service';
 export class EmployeService {
 
   
-  employes_url=`${environment.apiUrl}/employes`
+  employes_url=`${environment.apiUrl}/employés`
 
   getEmployes():Observable<any>{
     let params = new HttpParams();

@@ -8,15 +8,15 @@ export class DirectionBuilderService {
 
   constructor() { }
 
-  buildDirection(id:number,label:string,description:string):DirectionModel{
-    return new DirectionModel(id,label,description)
+  buildDirection(id:number,label:string,description:string,path:string):DirectionModel{
+    return new DirectionModel(id,label,description,path)
   }
 
   buildDirections(directions:any):DirectionModel[] | undefined{
     if(!directions) return undefined
     let result:DirectionModel[]=[]
     directions.forEach((f:any)=> {
-        const direction=this.buildDirection(f.id,f.designation,f.description)
+        const direction=this.buildDirection(f.id,f.designation,f.description,f.path)
         result.push(direction);
     })
     return result

@@ -8,15 +8,15 @@ export class AffectationBuilderService {
 
   constructor() { }
 
-  buildAffectation(id:number,designation:string,description:string):AffectationModel{
-    return new AffectationModel(id,designation,description)
+  buildAffectation(id:number,designation:string,description:string,path:string):AffectationModel{
+    return new AffectationModel(id,designation,description,path)
   }
 
   buildAffectations(affectations:any):AffectationModel[] | undefined{
     if(!affectations) return undefined
     let result:AffectationModel[]=[]
     affectations.forEach((f:any)=> {
-        const affectation=this.buildAffectation(f.id,f.designation,f.description)
+        const affectation=this.buildAffectation(f.id,f.designation,f.description,f.path)
         result.push(affectation)
     });
     return result

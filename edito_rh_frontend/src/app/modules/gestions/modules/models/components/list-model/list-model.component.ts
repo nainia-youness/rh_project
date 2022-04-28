@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
 import { getMetadataSelector } from 'src/app/modules/gestions/state/gestion.selectors';
@@ -25,11 +25,21 @@ export class ListModelComponent implements OnInit {
     )
   }
 
-  goToModel(label:string,id:string){
-    this.router.navigate([`/gestion/${label}/${id}/`])
+  capitalizeFirstLetter(s:string) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  
+  handleLabel=(label:string)=>{
+    const s=label.replace('_',' ')
+    return this.capitalizeFirstLetter(s)
+  }
+
+  goToModel(path:string){
+    this.router.navigate([`/gestion${path}`])
   }
   constructor(
     private store:Store<AppState>,
     private router:Router,
+    private route:ActivatedRoute
   ) { }
 }

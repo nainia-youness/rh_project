@@ -13,7 +13,7 @@ import { HelperService } from '../helpers/helper/helper.service';
 export class EntiteService {
 
   
-  entites_url=`${environment.apiUrl}/entites`
+  entites_url=`${environment.apiUrl}/entités`
 
   getEntites():Observable<any>{
     

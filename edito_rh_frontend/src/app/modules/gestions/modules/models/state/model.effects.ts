@@ -4,7 +4,7 @@ import { exhaustMap, map, of } from "rxjs";
 import {catchError} from 'rxjs/operators'; 
 import { Store,select } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
-import { getAffectationStart, getAffectationSuccess, getCentreCoutStart, getCentreCoutSuccess, getContratStart, getContratSuccess, getDirectionStart, getDirectionSuccess, getEmployeStart, getEntiteStart, getEntiteSuccess, getFonctionStart, getFonctionSuccess, getFormuleStart, getFormuleSuccess, getModelFailure, getRubriqueStart, getRubriqueSuccess, getVariableStart, getVariableSuccess, getVilleStart, getVilleSuccess } from "./model.actions";
+import { getAffectationStart, getAffectationSuccess, getCentreCoutStart, getCentreCoutSuccess, getContratStart, getContratSuccess, getDirectionStart, getDirectionSuccess, getEmployeStart, getEmployeSuccess, getEntiteStart, getEntiteSuccess, getFonctionStart, getFonctionSuccess, getFormuleStart, getFormuleSuccess, getModelFailure, getRubriqueStart, getRubriqueSuccess, getVariableStart, getVariableSuccess, getVilleStart, getVilleSuccess } from "./model.actions";
 import { VilleService } from "src/app/core/services/http/villes/ville.service";
 import { VilleBuilderService } from "src/app/core/services/utils/builders/ville_builder/ville-builder.service";
 import { getLogs } from "src/app/shared/components/layout/state/layout.actions";
@@ -47,7 +47,7 @@ export class ModelEffects{
                     (action)=> this.villeService.getVille(action)
                     .pipe(
                         map((res):any=>{
-                            const villeModel=this.villeBuilder.buildVille(res.data.id,res.data.nom)
+                            const villeModel=this.villeBuilder.buildVilles([res.data])![0]
                             const logs:Logs={
                                 user_nom:res.data.user.nom,
                                 user_prenom:res.data.user.prenom,
@@ -76,7 +76,7 @@ export class ModelEffects{
                 (action)=> this.variableService.getVariable(action)
                 .pipe(
                     map((res):any=>{
-                        const variableModel=this.variableBuilder.buildVariable(res.data.id,res.data.designation,res.data.valeur)
+                        const variableModel=this.variableBuilder.buildVariables([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -106,8 +106,8 @@ export class ModelEffects{
                 (action)=> this.formuleService.getFormule(action)
                 .pipe(
                     map((res):any=>{
-                        const variables=this.variableBuilder.buildVariables(res.data.variables)
-                        const formuleModel=this.formuleBuilder.buildFormule(res.data.id,res.data.designation,res.data.formule,variables)
+
+                        const formuleModel=this.formuleBuilder.buildFormules(res.data,true)![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -137,7 +137,7 @@ export class ModelEffects{
                 (action)=> this.affectationService.getAffectation(action)
                 .pipe(
                     map((res):any=>{
-                        const affectationModel=this.affectationBuilder.buildAffectation(res.data.id,res.data.designation,res.data.description)
+                        const affectationModel=this.affectationBuilder.buildAffectations([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -166,7 +166,7 @@ export class ModelEffects{
                 (action)=> this.centreCoutService.getCentreCout(action)
                 .pipe(
                     map((res):any=>{
-                        const centreCoutModel=this.centreCoutBuilder.buildCentreCout(res.data.id,res.data.designation,res.data.description)
+                        const centreCoutModel=this.centreCoutBuilder.buildCentresCout([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -195,7 +195,7 @@ export class ModelEffects{
                 (action)=> this.contratService.getContrat(action)
                 .pipe(
                     map((res):any=>{
-                        const contratModel=this.contratBuilder.buildContrat(res.data.id,res.data.designation,res.data.description)
+                        const contratModel=this.contratBuilder.buildContrats([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -224,7 +224,7 @@ export class ModelEffects{
                 (action)=> this.directionService.getDirection(action)
                 .pipe(
                     map((res):any=>{
-                        const directionModel=this.directionBuilder.buildDirection(res.data.id,res.data.designation,res.data.description)
+                        const directionModel=this.directionBuilder.buildDirections([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -253,7 +253,7 @@ export class ModelEffects{
                 (action)=> this.entiteService.getEntite(action)
                 .pipe(
                     map((res):any=>{
-                        const entiteModel=this.entiteBuilder.buildEntite(res.data.id,res.data.designation,res.data.description)
+                        const entiteModel=this.entiteBuilder.buildEntites([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -282,7 +282,7 @@ export class ModelEffects{
                 (action)=> this.fonctionService.getFonction(action)
                 .pipe(
                     map((res):any=>{
-                        const fonctionModel=this.fonctionBuilder.buildFonction(res.data.id,res.data.designation,res.data.description)
+                        const fonctionModel=this.fonctionBuilder.buildFonctions([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -311,7 +311,7 @@ export class ModelEffects{
                 (action)=> this.rubriqueService.getRubrique(action)
                 .pipe(
                     map((res):any=>{
-                        const rubriqueModel=this.rubriqueBuilder.buildRubrique(res.data.id,res.data.designation,res.data.description)
+                        const rubriqueModel=this.rubriqueBuilder.buildRubriques([res.data])![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -340,7 +340,7 @@ export class ModelEffects{
                 (action)=> this.employeService.getEmploye(action)
                 .pipe(
                     map((res):any=>{
-                        const rubriqueModel=this.rubriqueBuilder.buildRubrique(res.data.id,res.data.designation,res.data.description)
+                        const employeModel=this.employeBuilder.buildEmployes([res.data],true)![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -349,7 +349,7 @@ export class ModelEffects{
                         }
                         this.store.dispatch(getLogs({logs:logs}))
                         this.store.dispatch(getMetadata({metadata:res.metadata}))
-                        return getRubriqueSuccess({rubrique:rubriqueModel})
+                        return getEmployeSuccess({employe:employeModel})
                     }),
                     catchError((error):any=>{
                         const errorMessage = this.errorHandler.handleError(error)

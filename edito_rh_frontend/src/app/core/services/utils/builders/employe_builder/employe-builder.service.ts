@@ -7,6 +7,7 @@ import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { EntiteModel } from 'src/app/shared/models/entite.model';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
+import { RubriqueModel } from 'src/app/shared/models/rubrique.model';
 import { VilleModel } from 'src/app/shared/models/ville.model';
 import { AffectationBuilderService } from '../affectation_builder/affectation-builder.service';
 import { CentreCoutBuilderService } from '../centre_cout_builder/centre-cout-builder.service';
@@ -14,6 +15,7 @@ import { ContratBuilderService } from '../contrat_builder/contrat-builder.servic
 import { DirectionBuilderService } from '../direction_builder/direction-builder.service';
 import { EntiteBuilderService } from '../entite_builder/entite-builder.service';
 import { FonctionBuilderService } from '../fonction_builder/fonction-builder.service';
+import { RubriqueBuilderService } from '../rubrique_builder/rubrique-builder.service';
 import { VilleBuilderService } from '../ville_builder/ville-builder.service';
 
 @Injectable({
@@ -47,7 +49,9 @@ export class EmployeBuilderService {
     contrat:ContratModel,
     affectation:AffectationModel,
     entite:EntiteModel,
-    delegue:DelegueModel
+    path:string,
+    delegue:DelegueModel | undefined=undefined,
+    rubriques:RubriqueModel[] | undefined=undefined
   ):EmployeModel{
     return new EmployeModel(    
       id,
@@ -75,31 +79,26 @@ export class EmployeBuilderService {
       contrat,
       affectation,
       entite,
-      delegue)
-  }
+      path,
+      delegue,
+      rubriques
+      )
+  } 
 
-  buildEmployes(employes:any):EmployeModel[] | undefined{
+
+  buildEmployes(employes:any,is_one:boolean=false):EmployeModel[] | undefined{
     if(!employes) return undefined
+
     let result:EmployeModel[]=[]
     employes.forEach((f:any)=> {
-        const fonction=this.fonctionBuilder.buildFonction(f.fonction.id,f.fonction.designation,f.fonction.description)
-        const centre_cout=this.centreCoutBuilder.buildCentreCout(f.centre_cout.id,f.centre_cout.designation,f.centre_cout.description)
-        const direction=this.directionBuilder.buildDirection(f.direction.id,f.direction.designation,f.direction.description)
-        const ville=this.villeBuilder.buildVille(f.ville.id,f.ville.nom)
-        const contrat=this.contratBuilder.buildContrat(f.contrat.id,f.contrat.designation,f.contrat.description)
-        const affectation=this.affectationBuilder.buildAffectation(f.affectation.id,f.affectation.designation,f.affectation.description)
-        const entite=this.entiteBuilder.buildEntite(f.entite.id,f.entite.designation,f.entite.description)
-        let delegue:any={}
-        if(f.delegue){
-          /*delegue=this.buildEmploye(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.date_naissance,f.delegue.sexe,f.delegue.cin,f.delegue.date_entree,
-            f.delegue.situation_familiale,f.delegue.nombre_enfant,f.delegue.charge_familiale,f.delegue.adresse,f.delegue.nationalite,f.delegue.cnss,f.delegue.salaire,
-            f.delegue.numero_compte,f.delegue.participation,f.delegue.date_sortie,f.delegue.fonction,f.delegue.centre_cout,f.delegue.direction,f.delegue.ville,f.delegue.contrat,
-            f.delegue.affectation,f.delegue.entite,f.delegue.delegue)*/
-            delegue=new DelegueModel(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom)
-            //console.log(delegue)
-        }
-
-        const employe=this.buildEmploye(      
+        const fonction=this.fonctionBuilder.buildFonction(f.fonction.id,f.fonction.designation,f.fonction.description,f.fonction.path)
+        const centre_cout=this.centreCoutBuilder.buildCentreCout(f.centre_cout.id,f.centre_cout.designation,f.centre_cout.description,f.centre_cout.path)
+        const direction=this.directionBuilder.buildDirection(f.direction.id,f.direction.designation,f.direction.description,f.direction.path)
+        const ville=this.villeBuilder.buildVille(f.ville.id,f.ville.nom,f.ville.path)
+        const contrat=this.contratBuilder.buildContrat(f.contrat.id,f.contrat.designation,f.contrat.description,f.contrat.path)
+        const affectation=this.affectationBuilder.buildAffectation(f.affectation.id,f.affectation.designation,f.affectation.description,f.affectation.path)
+        const entite=this.entiteBuilder.buildEntite(f.entite.id,f.entite.designation,f.entite.description,f.entite.path)
+        let employe=this.buildEmploye(      
           f.id,
           f.matricule,
           f.nom,
@@ -125,7 +124,18 @@ export class EmployeBuilderService {
           contrat,
           affectation,
           entite,
-          delegue)
+          f.path,
+          undefined,
+          undefined,
+          )
+        if(is_one){
+          const rubriques=this.rubriqueBuilder.buildRubriques(f.rubriques)
+          employe.rubriques=rubriques
+        }
+        if(f.delegue){
+          const delegue=new DelegueModel(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.path)
+          employe.delegue=delegue
+        }
         result.push(employe)
     });
     return result
@@ -139,5 +149,6 @@ export class EmployeBuilderService {
     private contratBuilder:ContratBuilderService,
     private centreCoutBuilder:CentreCoutBuilderService,
     private affectationBuilder:AffectationBuilderService,
+    private rubriqueBuilder:RubriqueBuilderService
     ) { }
 }

@@ -8,15 +8,15 @@ export class VilleBuilderService {
 
   constructor() { }
 
-  buildVille(id:number,nom:string):VilleModel{
-    return new VilleModel(id,nom)
+  buildVille(id:number,nom:string,path:string):VilleModel{
+    return new VilleModel(id,nom,path)
   }
 
   buildVilles(villes:any):VilleModel[] | undefined{
     if(!villes) return undefined
     let result:VilleModel[]=[]
     villes.forEach((f:any)=> {
-        const ville=this.buildVille(f.id,f.nom)
+        const ville=this.buildVille(f.id,f.nom,f.path)
         result.push(ville)
     });
     return result

@@ -37,9 +37,12 @@ export class FonctionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let id =this.actRoute.snapshot.params['id'];
+    let id:string | undefined=''
     this.store.dispatch(isModelProgressBarChange())
-    this.store.dispatch(getFonctionStart(id))
+    this.actRoute.paramMap.subscribe(params => {
+      id =<string | undefined>  params.get('id');
+      this.store.dispatch(getFonctionStart({id:id}))
+    });
     this.store.dispatch(modelPageChange({modelPage:ModelPage.FONCTION}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFonction()

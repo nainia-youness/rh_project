@@ -35,7 +35,9 @@ export interface Employe {
     contrat:ContratModel,
     affectation:AffectationModel,
     entite:EntiteModel,
-    delegue:DelegueModel,
+    delegue?:DelegueModel
+    rubriques?:RubriqueModel[],
+    path:string,
 }
 
 
@@ -67,6 +69,8 @@ export class EmployeModel implements Employe{
     private _affectation
     private _entite
     private _delegue
+    private _rubriques
+    private _path
 
     constructor(
         id:number,
@@ -94,8 +98,9 @@ export class EmployeModel implements Employe{
         contrat:ContratModel,
         affectation:AffectationModel,
         entite:EntiteModel,
-        delegue:DelegueModel,
-        rubriques?:RubriqueModel[]
+        path:string,
+        delegue?:DelegueModel,
+        rubriques:RubriqueModel[] | undefined=undefined,
         ){
         this._id=id
         this._matricule=matricule
@@ -123,6 +128,20 @@ export class EmployeModel implements Employe{
         this._affectation=affectation
         this._entite=entite
         this._delegue=delegue
+        this._rubriques=rubriques
+        this._path=path
+    }
+
+    get path() {
+        return this._path;
+    }
+
+    get rubriques() {
+        return this._rubriques;
+    }
+
+    set rubriques(rubriques:RubriqueModel[] | undefined) {
+        this._rubriques=rubriques;
     }
 
     get id() {
@@ -227,5 +246,9 @@ export class EmployeModel implements Employe{
 
     get delegue() {
         return this._delegue;
+    }
+
+    set delegue(delegue:DelegueModel | undefined) {
+        this._delegue=delegue;
     }
 }

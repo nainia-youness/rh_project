@@ -266,7 +266,7 @@ export class GestionService {
       {
         columnDef: 'delegue',
         header: 'delegue',
-        cell: (element: EmployeModel) => `${element.delegue.id ? `${element.delegue.prenom} ${element.delegue.nom}` :''}`
+        cell: (element: EmployeModel) => `${element.delegue && element.delegue.id ? `${element.delegue.prenom} ${element.delegue.nom}` :''}`
       },
     ];
   }

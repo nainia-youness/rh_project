@@ -37,9 +37,12 @@ export class FormuleComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let id =this.actRoute.snapshot.params['id'];
+    let id:string | undefined=''
     this.store.dispatch(isModelProgressBarChange())
-    this.store.dispatch(getFormuleStart(id))
+    this.actRoute.paramMap.subscribe(params => {
+      id =<string | undefined>  params.get('id');
+      this.store.dispatch(getFormuleStart({id:id}))
+    });
     this.store.dispatch(modelPageChange({modelPage:ModelPage.FORMULE}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFormule()

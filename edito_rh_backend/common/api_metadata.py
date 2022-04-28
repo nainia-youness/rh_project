@@ -32,7 +32,7 @@ def get_metadata(model, query,is_one=False):
     elif(model == 'affectation'):
         fields = affectation_metadata(query,is_one)
     elif(model == 'employe'):
-        fields = employe_metadata(query)
+        fields = employe_metadata(query,is_one)
     elif(model == 'rubrique'):
         fields = rubrique_metadata(query,is_one)
     elif(model == 'formule'):
@@ -50,6 +50,7 @@ date = 'date'
 boolean = 'boolean'
 text='text'
 object='object'
+objects='objects'
 
 def variable_metadata(query,is_one):
     result=[
@@ -71,6 +72,7 @@ def rubrique_metadata(query,is_one):
     ]
     if(is_one):
         result.append({'type': string, 'label': 'designation'})
+        result.append({'type': number, 'label': 'montant'})
     else:
         rubrique_values =get_distinct_values(query,'designation') 
         result.append({'type': string, 'label': 'designation', 'values': rubrique_values})
@@ -85,7 +87,7 @@ def formule_metadata(query,is_one):
     if(is_one):
         variables_metadata=variable_metadata(query,is_one)
         result.append({'type': string, 'label': 'designation'})
-        result.append({'type': object, 'label': 'variables','children_metadata':variables_metadata})
+        result.append({'type': objects, 'label': 'variables','children_metadata':variables_metadata})
     else:
         q_variable=Variable.objects.all()
         variable_values=get_distinct_values(q_variable,'designation')
@@ -95,32 +97,15 @@ def formule_metadata(query,is_one):
     
     return result
 
-def employe_metadata(query):
-    q_fonction=Fonction.objects.all()
-    fonction_values=get_distinct_values(q_fonction,'designation')
-    q_centre_cout=CentreCout.objects.all()
-    centre_cout_values=get_distinct_values(q_centre_cout,'designation')
-    q_direction=Direction.objects.all()
-    direction_values=get_distinct_values(q_direction,'designation')
-    q_ville=Ville.objects.all()
-    ville_values=get_distinct_values(q_ville,'nom')
-    q_contrat=Contrat.objects.all()
-    contrat_values=get_distinct_values(q_contrat,'designation')
-    q_direction=Direction.objects.all()
-    direction_values=get_distinct_values(q_direction,'designation')
-    q_affectation=Affectation.objects.all()
-    affectation_values=get_distinct_values(q_affectation,'designation')
-    q_entite=Entite.objects.all()
-    entite_values=get_distinct_values(q_entite,'designation')
-    return [
+def employe_metadata(query,is_one):
+    result=[
+        {'type': number, 'label': 'id'},
         {'type': number, 'label': 'matricule'},
         {'type': string, 'label': 'nom'},
         {'type': string, 'label': 'prenom'},
         {'type': date, 'label': 'date_naissance'},
-        {'type': string, 'label': 'sexe','values':['M','F']},
         {'type': string, 'label': 'cin'},
         {'type': date, 'label': 'date_entree'},
-        {'type': string, 'label': 'situation_familiale','values':['Marié(e)','Célibataire']},
         {'type': number, 'label': 'nombre_enfant'},
         {'type': number, 'label': 'charge_familiale'},
         {'type': string, 'label': 'adresse'},
@@ -130,15 +115,57 @@ def employe_metadata(query):
         {'type': number, 'label': 'numero_compte'},
         {'type': number, 'label': 'participation'},
         {'type': date, 'label': 'date_sortie'},
-        {'type': string, 'label': 'fonction','values':fonction_values},
-        {'type': string, 'label': 'centre_cout','values':centre_cout_values},
-        {'type': string, 'label': 'direction','values':direction_values},
-        {'type': string, 'label': 'ville','values':ville_values},
-        {'type': string, 'label': 'contrat','values':contrat_values},
-        {'type': string, 'label': 'affectation','values':affectation_values},
-        {'type': string, 'label': 'entite','values':entite_values},
-        {'type': string, 'label': 'delegue'},
     ]
+    if(is_one):
+        fonctions_metadata=fonction_metadata(query,is_one)
+        centres_cout_metadata=centre_cout_metadata(query,is_one)
+        directions_metadata=direction_metadata(query,is_one)
+        villes_metadata=ville_metadata(query,is_one)
+        contrats_metadata=contrat_metadata(query,is_one)
+        affectations_metadata=affectation_metadata(query,is_one)
+        entites_metadata=entite_metadata(query,is_one)
+        rubriques_metadata=rubrique_metadata(query,is_one)
+        delegue_metadata=[{'type':number,'label':'id'},{'type':string,'label':'nom'},
+        {'type':string,'label':'prenom'},{'type':number,'label':'matricule'}]
+        result.append({'type': string, 'label': 'situation_familiale'})
+        result.append({'type': string, 'label': 'sexe'})
+        result.append({'type': object, 'label': 'delegue','children_metadata':delegue_metadata})
+        result.append({'type': object, 'label': 'fonction','children_metadata':fonctions_metadata})
+        result.append({'type': object, 'label': 'centre_cout','children_metadata':centres_cout_metadata})
+        result.append({'type': object, 'label': 'direction','children_metadata':directions_metadata})
+        result.append({'type': object, 'label': 'ville','children_metadata':villes_metadata})
+        result.append({'type': object, 'label': 'contrat','children_metadata':contrats_metadata})
+        result.append({'type': object, 'label': 'affectation','children_metadata':affectations_metadata})
+        result.append({'type': object, 'label': 'entite','children_metadata':entites_metadata})
+        result.append({'type': objects, 'label': 'rubriques','children_metadata':rubriques_metadata})
+    else:
+        q_fonction=Fonction.objects.all()
+        fonction_values=get_distinct_values(q_fonction,'designation')
+        q_centre_cout=CentreCout.objects.all()
+        centre_cout_values=get_distinct_values(q_centre_cout,'designation')
+        q_direction=Direction.objects.all()
+        direction_values=get_distinct_values(q_direction,'designation')
+        q_ville=Ville.objects.all()
+        ville_values=get_distinct_values(q_ville,'nom')
+        q_contrat=Contrat.objects.all()
+        contrat_values=get_distinct_values(q_contrat,'designation')
+        q_direction=Direction.objects.all()
+        direction_values=get_distinct_values(q_direction,'designation')
+        q_affectation=Affectation.objects.all()
+        affectation_values=get_distinct_values(q_affectation,'designation')
+        q_entite=Entite.objects.all()
+        entite_values=get_distinct_values(q_entite,'designation')
+        result.append({'type': string, 'label': 'situation_familiale','values':['Marié(e)','Célibataire']})
+        result.append({'type': string, 'label': 'sexe','values':['M','F']})
+        result.append({'type': string, 'label': 'fonction','values':fonction_values})
+        result.append({'type': string, 'label': 'centre_cout','values':centre_cout_values})
+        result.append({'type': string, 'label': 'direction','values':direction_values})
+        result.append({'type': string, 'label': 'ville','values':ville_values})
+        result.append({'type': string, 'label': 'contrat','values':contrat_values})
+        result.append({'type': string, 'label': 'affectation','values':affectation_values})
+        result.append({'type': string, 'label': 'entite','values':entite_values})
+        result.append({'type': string, 'label': 'delegue'})
+    return result
 
 def fonction_metadata(query,is_one):
     result=[

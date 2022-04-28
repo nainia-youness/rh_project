@@ -8,15 +8,15 @@ export class FonctionBuilderService {
 
   constructor() { }
 
-  buildFonction(id:number,label:string,description:string):FonctionModel{
-    return new FonctionModel(id,label,description)
+  buildFonction(id:number,label:string,description:string,path:string):FonctionModel{
+    return new FonctionModel(id,label,description,path)
   }
 
   buildFonctions(fonctions:any):FonctionModel[] | undefined{
     if(!fonctions) return undefined
     let result:FonctionModel[]=[]
     fonctions.forEach((f:any)=> {
-        const fonction=this.buildFonction(f.id,f.designation,f.description)
+        const fonction=this.buildFonction(f.id,f.designation,f.description,f.path)
         result.push(fonction)
     });
     return result
