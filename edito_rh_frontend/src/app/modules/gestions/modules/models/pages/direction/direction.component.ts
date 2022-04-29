@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
+import { DirectionBuilderService } from 'src/app/core/services/utils/builders/direction_builder/direction-builder.service';
 import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getDirectionStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getDirectionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
 import { getDirectionSuccessSelector } from '../../state/model.selectors';
-import { ModelPage } from '../../state/model.state';
+import { ModelPage, ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-direction',
@@ -43,6 +44,7 @@ export class DirectionComponent implements OnInit {
       id =<string | undefined>  params.get('id');
       this.store.dispatch(getDirectionStart({id:id}))
     });
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
     this.store.dispatch(modelPageChange({modelPage:ModelPage.DIRECTION}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getDirection()
@@ -55,10 +57,16 @@ export class DirectionComponent implements OnInit {
       map((direction)=> direction)
     )
   }
+
+  buildModelFromTempObj=(tempObj:any)=>{
+    return this.directionBuilder.buildDirections([tempObj])![0]
+  }
+
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private directionBuilder:DirectionBuilderService,
     ) { }
 
 }

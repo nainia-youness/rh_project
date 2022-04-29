@@ -22,6 +22,7 @@ import { EntiteComponent } from './pages/entite/entite.component';
 import { FonctionComponent } from './pages/fonction/fonction.component';
 import { RubriqueComponent } from './pages/rubrique/rubrique.component';
 import { EmployeComponent } from './pages/employe/employe.component';
+import { UpdateNormalFieldComponent } from './components/update-normal-field/update-normal-field.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { EmployeComponent } from './pages/employe/employe.component';
     FonctionComponent,
     RubriqueComponent,
     EmployeComponent,
+    UpdateNormalFieldComponent,
   ],
   imports: [
     CommonModule,

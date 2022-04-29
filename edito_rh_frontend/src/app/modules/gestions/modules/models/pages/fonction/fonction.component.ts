@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
+import { FonctionBuilderService } from 'src/app/core/services/utils/builders/fonction_builder/fonction-builder.service';
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getFonctionStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getFonctionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
 import { getFonctionSuccessSelector } from '../../state/model.selectors';
-import { ModelPage } from '../../state/model.state';
+import { ModelPage, ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-fonction',
@@ -43,6 +44,7 @@ export class FonctionComponent implements OnInit {
       id =<string | undefined>  params.get('id');
       this.store.dispatch(getFonctionStart({id:id}))
     });
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
     this.store.dispatch(modelPageChange({modelPage:ModelPage.FONCTION}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFonction()
@@ -55,10 +57,16 @@ export class FonctionComponent implements OnInit {
       map((fonction)=> fonction)
     )
   }
+
+  buildModelFromTempObj=(tempObj:any)=>{
+    return this.fonctionBuilder.buildFonctions([tempObj])![0]
+  }
+
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private fonctionBuilder:FonctionBuilderService
     ) { }
 
 }

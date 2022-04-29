@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
+import { RubriqueBuilderService } from 'src/app/core/services/utils/builders/rubrique_builder/rubrique-builder.service';
 import { RubriqueModel } from 'src/app/shared/models/rubrique.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getRubriqueStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getRubriqueStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
 import { getRubriqueSuccessSelector } from '../../state/model.selectors';
-import { ModelPage } from '../../state/model.state';
+import { ModelPage, ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-rubrique',
@@ -43,6 +44,7 @@ export class RubriqueComponent implements OnInit {
       id =<string | undefined>  params.get('id');
       this.store.dispatch(getRubriqueStart({id:id}))
     });
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
     this.store.dispatch(modelPageChange({modelPage:ModelPage.RUBRIQUE}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getRubrique()
@@ -55,9 +57,15 @@ export class RubriqueComponent implements OnInit {
       map((ville)=> ville)
     )
   }
+
+  buildModelFromTempObj=(tempObj:any)=>{
+    return this.rubriqueBuilder.buildRubriques([tempObj])![0]
+  }
+
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private rubriqueBuilder:RubriqueBuilderService
     ) { }
 }

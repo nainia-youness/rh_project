@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
+import { modelPageTypeChange } from '../../state/model.actions';
 import { isModelProgressBarSelector, modelPageSelector, modelPageTypeSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -17,6 +18,7 @@ export class ModelTemplateComponent implements OnInit {
   isModelProgressBar$!:Observable<boolean>
   @Input()
   modelData$?:Observable<any>;
+  @Input() buildModelFromTempObj!: (tempObj:any) => any;
 
   ngOnInit(): void {
     this.modelPageType$=this.store.pipe(
@@ -33,19 +35,19 @@ export class ModelTemplateComponent implements OnInit {
     )
   }
 
+  create=()=>{
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.CREER}))
+  }
+
+  update=()=>{
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.MODIFIER}))
+  }
+
+  delete=()=>{
+  }
+
   constructor(
     private store:Store<AppState>,
     ) { }
 
-  create(){
-    console.log('creer')
-  }
-
-  update(){
-    console.log('update')
-  }
-
-  delete(){
-    console.log('delete')
-  }
 }

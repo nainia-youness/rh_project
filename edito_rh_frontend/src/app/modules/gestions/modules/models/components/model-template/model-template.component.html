@@ -6,7 +6,7 @@
         <app-creer-model [modelData$]="modelData$"></app-creer-model>
     </div>
     <div *ngIf="pageType==='modifier'">
-        <app-update-model [modelData$]="modelData$"></app-update-model>
+        <app-update-model [buildModelFromTempObj]="buildModelFromTempObj" [modelData$]="modelData$"></app-update-model>
     </div>
     <div *ngIf="pageType==='list'">
         <app-list-model [modelData$]="modelData$"></app-list-model>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
+import { FormuleBuilderService } from 'src/app/core/services/utils/builders/formule_builder/formule-builder.service';
 import { FormuleModel } from 'src/app/shared/models/formule.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getFormuleStart, isModelProgressBarChange, modelPageChange } from '../../state/model.actions';
+import { getFormuleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
 import { getFormuleSuccessSelector } from '../../state/model.selectors';
-import { ModelPage } from '../../state/model.state';
+import { ModelPage, ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-formule',
@@ -43,6 +44,7 @@ export class FormuleComponent implements OnInit {
       id =<string | undefined>  params.get('id');
       this.store.dispatch(getFormuleStart({id:id}))
     });
+    this.store.dispatch(modelPageTypeChange({modelPageType:ModelPageType.LIST}))
     this.store.dispatch(modelPageChange({modelPage:ModelPage.FORMULE}))
     this.Layout.initializeLayout(this.layoutConfig)
     this.getFormule()
@@ -55,9 +57,15 @@ export class FormuleComponent implements OnInit {
       map((formule)=> formule)
     )
   }
+
+  buildModelFromTempObj=(tempObj:any)=>{
+    return this.formuleBuilder.buildFormules([tempObj])![0]
+  }
+
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,
-    private actRoute: ActivatedRoute
+    private actRoute: ActivatedRoute,
+    private formuleBuilder:FormuleBuilderService
     ) { }
 }

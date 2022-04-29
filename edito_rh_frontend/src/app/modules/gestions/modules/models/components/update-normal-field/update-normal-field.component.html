@@ -1,0 +1,49 @@
+<mat-card>
+    <form [formGroup]="normalFieldsForm">  
+        <div class="label">
+            {{handleLabel(modelMetadata.label)}}
+        </div>
+        <div class="value" >
+            <div *ngIf="modelMetadata.label==='id'">
+                {{model[modelMetadata.label]}}
+            </div>
+
+            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label!=='formule'">
+
+                <mat-form-field appearance="fill" >
+                    <mat-label>{{modelMetadata.label}}</mat-label>
+                    <input formControlName="stringField" (ngModelChange)="updateStringField($event)" matInput>
+                </mat-form-field>
+
+            </div>
+
+            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label==='formule'">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{modelMetadata.label}}</mat-label>
+                    <textarea formControlName="stringField" (ngModelChange)="updateStringField($event)" matInput></textarea>
+                </mat-form-field>
+
+            </div>
+
+            <div *ngIf="modelMetadata.type==='number' && modelMetadata.label!=='id'">
+
+                <mat-form-field appearance="fill" >
+                    <mat-label>{{modelMetadata.label}}</mat-label>
+                    <input formControlName="numberField" (ngModelChange)="updateNumberField($event)" matInput>
+                </mat-form-field>
+
+            </div>
+            <div *ngIf="modelMetadata.type==='date'">
+                <mat-form-field>
+                    <mat-label>
+                      input
+                    </mat-label>
+                    <input matInput (ngModelChange)="updateDateField($event)" [matDatepicker]="picker" formControlName="dateField">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker  #picker></mat-datepicker>
+                  </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-card>

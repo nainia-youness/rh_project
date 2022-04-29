@@ -1,0 +1,35 @@
+@import "../../../../../../../styles/variables.scss";
+
+mat-card{
+    background-color:$light_green_with_opacity ;
+}
+
+.label{
+    text-align: left;
+    color:$base_color
+}
+
+.value{
+    text-align: center;
+    font-weight: 200;
+}
+
+//color forms
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: $base_color !important;
+  }
+  
+  ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: $lighter_color !important;
+  }
+  
+  ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: $lighter_color !important;
+  }
+  
+  mat-form-field {
+    width: 100% !important;
+  }
