@@ -34,6 +34,11 @@ export class ListModelComponent implements OnInit {
     return this.capitalizeFirstLetter(s)
   }
 
+  is_ignore(label:string){
+    if(label==='montant') return true
+    return false
+  }
+
   goToModel(path:string){
     this.router.navigate([`/gestion${path}`])
   }
