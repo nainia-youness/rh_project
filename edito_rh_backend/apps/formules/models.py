@@ -5,7 +5,7 @@ from ..variables.models import Variable
 
 
 class Formule(models.Model):
-    designation = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255,unique=True)
     formule = models.TextField()
     derniere_operation = models.CharField(max_length=255,default="Aucune Operation")
     date_derniere_operation = models.DateTimeField(auto_now=True)

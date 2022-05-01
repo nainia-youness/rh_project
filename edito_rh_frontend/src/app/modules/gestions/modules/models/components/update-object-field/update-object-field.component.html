@@ -1,0 +1,20 @@
+<mat-card>
+<div  class="label">
+    {{handleLabel(modelMetadata.label)}}
+</div>
+
+<div  class="value">
+    <form [formGroup]="objectFieldsForm">
+        <!--iterate through metadata of the child model-->
+        <div class="value" fxLayout.gt-xs="row" style="width:100%" fxLayout.xs="column">
+            <mat-form-field appearance="fill" >
+                <mat-label>{{modelMetadata.label}}</mat-label>
+                <mat-select  formControlName="objectField">
+                  <mat-option *ngFor="let value of modelMetadata.values" [value]="value">{{value}}</mat-option>
+                </mat-select> 
+            </mat-form-field>
+            
+        </div>
+    </form>
+</div>
+</mat-card>

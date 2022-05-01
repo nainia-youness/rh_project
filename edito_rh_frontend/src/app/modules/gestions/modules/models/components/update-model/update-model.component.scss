@@ -17,8 +17,6 @@ button {
   }
   
 button:disabled {
-    background-color: $lighter_color !important;
-    pointer-events: none !important;
     opacity: 0.8;
   }
   

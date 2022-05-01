@@ -5,25 +5,43 @@
         </div>
         <div class="value" >
             <div *ngIf="modelMetadata.label==='id'">
-                {{model[modelMetadata.label]}}
+                {{fieldValue}}
             </div>
+            <!--string with choices-->
+            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label!=='formule' && modelMetadata.values">
 
-            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label!=='formule'">
+                <mat-form-field appearance="fill" >
+                    <mat-label>{{modelMetadata.label}}</mat-label>
+                    <mat-select  formControlName="stringField">
+                      <mat-option *ngFor="let value of modelMetadata.values" [value]="value">{{value}}</mat-option>
+                    </mat-select> 
+                    <mat-error>
+                        {{showStringFieldError()}}
+                    </mat-error>
+                  </mat-form-field>
+
+            </div>
+            <!--string with no choices-->
+            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label!=='formule' && !modelMetadata.values">
 
                 <mat-form-field appearance="fill" >
                     <mat-label>{{modelMetadata.label}}</mat-label>
                     <input formControlName="stringField" (ngModelChange)="updateStringField($event)" matInput>
+                    <mat-error>
+                        {{showStringFieldError()}}
+                    </mat-error>
                 </mat-form-field>
 
             </div>
-
-            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label==='formule'">
-
+            <!--string with no choices field=formule-->
+            <div *ngIf="modelMetadata.type==='string' && modelMetadata.label==='formule'  && !modelMetadata.values">
                 <mat-form-field appearance="fill">
                     <mat-label>{{modelMetadata.label}}</mat-label>
                     <textarea formControlName="stringField" (ngModelChange)="updateStringField($event)" matInput></textarea>
+                    <mat-error>
+                        {{showStringFieldError()}}
+                    </mat-error>
                 </mat-form-field>
-
             </div>
 
             <div *ngIf="modelMetadata.type==='number' && modelMetadata.label!=='id'">
@@ -31,6 +49,9 @@
                 <mat-form-field appearance="fill" >
                     <mat-label>{{modelMetadata.label}}</mat-label>
                     <input formControlName="numberField" (ngModelChange)="updateNumberField($event)" matInput>
+                    <mat-error>
+                        {{showNumberFieldError()}}
+                    </mat-error>
                 </mat-form-field>
 
             </div>
@@ -42,6 +63,9 @@
                     <input matInput (ngModelChange)="updateDateField($event)" [matDatepicker]="picker" formControlName="dateField">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker  #picker></mat-datepicker>
+                    <mat-error>
+                        {{showDateFieldError()}}
+                    </mat-error>
                   </mat-form-field>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit,AfterViewChecked, Output, ChangeDetectorRef } from '@angular/core';
 import { isSameMultiYearView } from '@angular/material/datepicker/multi-year-view';
 import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
@@ -11,13 +11,14 @@ import { AppState } from 'src/app/store/app.state';
   templateUrl: './update-model.component.html',
   styleUrls: ['./update-model.component.scss']
 })
-export class UpdateModelComponent implements OnInit {
+export class UpdateModelComponent implements OnInit,AfterViewChecked {
 
   @Input()
   modelData$?:Observable<any>;
   metadata$!:Observable<any>
   tempObj:any={}
-  error:string=''
+  errorObj:any={}
+  is_error:boolean=false
   @Input() buildModelFromTempObj!: (tempObj:any) => any;
 
   ngOnInit(): void {
@@ -26,11 +27,14 @@ export class UpdateModelComponent implements OnInit {
     //when enregistrer is clicked i create a new model from teh temp obj, then compare it with the inital one
     //if it s different i start the update by sending the new one with put request
     /*
-    intermediate{
-      'formule':"if(var1==5){var1}",
-      'designation':"formule1",
-      'fonction':Fonction1,
-      'rubriques':[rubrique1,rubique2]
+    temp_obj{
+      'formule':"",
+      'designation':"error",
+      'fonction':"",
+      'rubriques':""
+    }
+    error_obj{
+
     }
     */
     this.metadata$=this.store.pipe(
@@ -41,14 +45,25 @@ export class UpdateModelComponent implements OnInit {
         return metadata
       })
     )
+  }
 
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
+  updateIsError=(fieldError:any)=>{
+
+      this.errorObj[fieldError.label]=fieldError.error
+      let is_error=false
+      Object.keys(this.errorObj).forEach((key, index) => {
+        if(this.errorObj[key]!=='') is_error=true
+      }) 
+      this.is_error=is_error
   }
 
   submit(){
-    //validate the temp obj first
     //no value empty
     //if formule do the validatation
-    if(this.error!=='') return
     const newModel=this.buildModelFromTempObj(this.tempObj)
     let oldModel
     const obs=this.modelData$?.subscribe((modelData)=>{
@@ -118,7 +133,8 @@ export class UpdateModelComponent implements OnInit {
   }
 
   constructor(
-    private store:Store<AppState>
+    private store:Store<AppState>,
+    private cdRef : ChangeDetectorRef,
   ) { }
 
 }

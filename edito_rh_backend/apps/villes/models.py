@@ -4,7 +4,7 @@ from ..users.models import User
 
 
 class Ville(models.Model):
-    nom = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255,unique=True)
     derniere_operation = models.CharField(max_length=255,default="Aucune Operation")
     date_derniere_operation = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True, null=True)
