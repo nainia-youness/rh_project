@@ -144,8 +144,9 @@ def employe_metadata(query,is_one):
         entites_metadata=entite_metadata(query,is_one)
         rubriques_metadata=rubrique_metadata(query,is_one)
         delegue_metadata=[{'type':number,'label':'id'},{'type':string,'label':'nom'},
-        {'type':string,'label':'prenom'},{'type':number,'label':'matricule'}]
-        result.append({'type': object, 'label': 'delegue','children_metadata':delegue_metadata})
+        {'type':string,'label':'prenom'},{'type':number,'label':'matricule'}]#,
+        print(get_employe_name())
+        result.append({'type': object, 'label': 'delegue','children_metadata':delegue_metadata,'values':get_employe_name()})
         result.append({'type': object, 'label': 'fonction','children_metadata':fonctions_metadata,'values':fonction_values})
         result.append({'type': object, 'label': 'centre_cout','children_metadata':centres_cout_metadata,'values':centre_cout_values})
         result.append({'type': object, 'label': 'direction','children_metadata':directions_metadata,'values':direction_values})
@@ -155,7 +156,6 @@ def employe_metadata(query,is_one):
         result.append({'type': object, 'label': 'entite','children_metadata':entites_metadata,'values':entite_values})
         result.append({'type': objects, 'label': 'rubriques','children_metadata':rubriques_metadata})
     else:
-
         result.append({'type': string, 'label': 'fonction','values':fonction_values})
         result.append({'type': string, 'label': 'centre_cout','values':centre_cout_values})
         result.append({'type': string, 'label': 'direction','values':direction_values})
@@ -163,8 +163,17 @@ def employe_metadata(query,is_one):
         result.append({'type': string, 'label': 'contrat','values':contrat_values})
         result.append({'type': string, 'label': 'affectation','values':affectation_values})
         result.append({'type': string, 'label': 'entite','values':entite_values})
-        result.append({'type': string, 'label': 'delegue'})
+        result.append({'type': string, 'label': 'delegue id'})
     return result
+
+def get_employe_name():
+    employes = Employe.objects.all()
+    distinct_values_dict=list(employes.values('nom','prenom','id').distinct())
+    distinct_values_list=[{'value':i['prenom']+' '+i['nom'],'id':i['id']} for i in distinct_values_dict]
+    return distinct_values_list
+
+
+
 
 def fonction_metadata(query,is_one):
     result=[

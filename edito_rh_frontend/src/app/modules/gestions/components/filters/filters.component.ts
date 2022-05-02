@@ -74,7 +74,6 @@ export class FiltersComponent implements OnInit {
     let dateField2=this.filtersForm.controls['dateField2'].value
     const filterMode=this.filtersForm.controls['filterMode'].value
     //fill the filter (field,filteMode,value,gte,lte)
-    console.log(enumStringField)
     const filter:Filter={
       field:this.chosenField.label,
       filterMode:filterMode,
@@ -101,7 +100,6 @@ export class FiltersComponent implements OnInit {
       } 
       else filter.value=dateField
     }
-    //console.log(filter)
     //if the filter already ixist in selectedFilters, don't do anything
     if(this.isElemInArray(this.selectedFilters,filter)) return
     this.selectedFilters.push(filter)

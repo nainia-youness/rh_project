@@ -91,13 +91,48 @@ export class EmployeBuilderService {
 
     let result:EmployeModel[]=[]
     employes.forEach((f:any)=> {
-        const fonction=this.fonctionBuilder.buildFonction(f.fonction.id,f.fonction.designation,f.fonction.description,f.fonction.path)
-        const centre_cout=this.centreCoutBuilder.buildCentreCout(f.centre_cout.id,f.centre_cout.designation,f.centre_cout.description,f.centre_cout.path)
-        const direction=this.directionBuilder.buildDirection(f.direction.id,f.direction.designation,f.direction.description,f.direction.path)
-        const ville=this.villeBuilder.buildVille(f.ville.id,f.ville.nom,f.ville.path)
-        const contrat=this.contratBuilder.buildContrat(f.contrat.id,f.contrat.designation,f.contrat.description,f.contrat.path)
-        const affectation=this.affectationBuilder.buildAffectation(f.affectation.id,f.affectation.designation,f.affectation.description,f.affectation.path)
-        const entite=this.entiteBuilder.buildEntite(f.entite.id,f.entite.designation,f.entite.description,f.entite.path)
+        let fonction
+        let centre_cout
+        let direction
+        let ville
+        let contrat
+        let affectation
+        let entite
+        if(f.fonction.designation)
+          fonction=this.fonctionBuilder.buildFonction(f.fonction.id,f.fonction.designation,f.fonction.description,f.fonction.path)
+        else{
+          fonction=f.fonction
+        }
+        if(f.centre_cout.designation)
+        centre_cout=this.centreCoutBuilder.buildCentreCout(f.centre_cout.id,f.centre_cout.designation,f.centre_cout.description,f.centre_cout.path)
+        else{
+          centre_cout=f.centre_cout
+        }  
+        if(f.direction.designation)
+          direction=this.directionBuilder.buildDirection(f.direction.id,f.direction.designation,f.direction.description,f.direction.path)
+        else{
+          direction=f.direction
+        }
+        if(f.ville.nom)
+          ville=this.villeBuilder.buildVille(f.ville.id,f.ville.nom,f.ville.path)
+        else{
+          ville=f.ville
+        }
+        if(f.contrat.designation)
+          contrat=this.contratBuilder.buildContrat(f.contrat.id,f.contrat.designation,f.contrat.description,f.contrat.path)
+        else{
+          contrat=f.contrat
+        }
+        if(f.affectation.designation)
+        affectation=this.affectationBuilder.buildAffectation(f.affectation.id,f.affectation.designation,f.affectation.description,f.affectation.path)
+        else{
+          affectation=f.affectation
+        }
+        if(f.ville.designation)
+          entite=this.entiteBuilder.buildEntite(f.entite.id,f.entite.designation,f.entite.description,f.entite.path)
+        else{
+          entite=f.entite
+        }
         let employe=this.buildEmploye(      
           f.id,
           f.matricule,
@@ -133,7 +168,12 @@ export class EmployeBuilderService {
           employe.rubriques=rubriques
         }
         if(f.delegue){
-          const delegue=new DelegueModel(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.path)
+          let delegue
+          if(f.delegue.matricule)
+            delegue=new DelegueModel(f.delegue.id,f.delegue.matricule,f.delegue.nom,f.delegue.prenom,f.delegue.path)
+          else{
+            delegue=f.delegue
+          }
           employe.delegue=delegue
         }
         result.push(employe)

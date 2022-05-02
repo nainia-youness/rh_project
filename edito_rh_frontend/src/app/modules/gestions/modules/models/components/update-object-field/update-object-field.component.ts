@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
@@ -14,25 +14,35 @@ export class UpdateObjectFieldComponent implements OnInit {
   modelMetadata:any;
   @Input()
   model:any;
-  fieldValue!:string
+  fieldValue!:any
   objectFieldsForm!:FormGroup;
-
+  @Output() 
+  objectField: EventEmitter<{label:string,value:any}> = new EventEmitter();
+  @Output()
+  fieldError: EventEmitter<{label:string,error:string}> = new EventEmitter();
 
   ngOnInit(): void {
-
     if(this.model[this.modelMetadata.label].designation){
       this.fieldValue=this.model[this.modelMetadata.label].designation
     }
     else if(this.model[this.modelMetadata.label].nom && !this.model[this.modelMetadata.label].prenom ){
       this.fieldValue=this.model[this.modelMetadata.label].nom
     }
+    else if(this.model[this.modelMetadata.label].nom && this.model[this.modelMetadata.label].prenom ){
+      /*let a=this.model[this.modelMetadata.label].prenom+' '+this.model[this.modelMetadata.label].nom
+      let b=this.model[this.modelMetadata.label].id
+      
+      this.fieldValue={'id':b,'value':a}*/
+      this.fieldValue=this.model[this.modelMetadata.label].prenom+' '+this.model[this.modelMetadata.label].nom
+    }
     this.createNormalFieldsForm()
+    this.initializeControls()
   }
 
   
   initializeControls(){
-    /*this.objectField.emit({label:this.modelMetadata.label,value:this.normalFieldsForm.controls['dateField'].value});
-    this.fieldError.emit({label:this.modelMetadata.label,error:""})*/
+    this.objectField.emit({label:this.modelMetadata.label,value:this.model[this.modelMetadata.label].id});
+    this.fieldError.emit({label:this.modelMetadata.label,error:""})
   }
 
   createNormalFieldsForm=()=>{
@@ -41,10 +51,34 @@ export class UpdateObjectFieldComponent implements OnInit {
     })
   }
 
+  showObjectFieldError=()=>{
+    let error =''
+    const objectFieldForm=this.objectFieldsForm.controls['objectField']
+    if(objectFieldForm.value === '')
+      error="le champ est requis"
+    else if(objectFieldForm.touched && objectFieldForm.invalid){
+      error='le champ est invalide'
+    } 
+    const change={
+      label:this.modelMetadata.label,
+      error:error
+    }
+    this.fieldError.emit(change);
+    return error
+  }
+
+  updateId(value:any){
+    const change={
+      label:this.modelMetadata.label,
+      value:value.id
+    }
+    this.objectField.emit(change);
+  }
+  
   capitalizeFirstLetter(s:string) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
-  
+
   handleLabel=(label:string)=>{
     const s=label.replace('_',' ')
     return this.capitalizeFirstLetter(s)

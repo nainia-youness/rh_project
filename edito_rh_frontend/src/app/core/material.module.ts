@@ -99,6 +99,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatPaginatorModule,
         MatCardModule,
         MatNativeDateModule,
+        MatAutocompleteModule
     ],
     providers: [
         //MatDatepickerModule,

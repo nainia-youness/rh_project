@@ -6,14 +6,18 @@
 <div  class="value">
     <form [formGroup]="objectFieldsForm">
         <!--iterate through metadata of the child model-->
-        <div class="value" fxLayout.gt-xs="row" style="width:100%" fxLayout.xs="column">
+        <div class="value" fxLayout.gt-xs="row"  fxLayout.xs="column">
             <mat-form-field appearance="fill" >
                 <mat-label>{{modelMetadata.label}}</mat-label>
-                <mat-select  formControlName="objectField">
-                  <mat-option *ngFor="let value of modelMetadata.values" [value]="value">{{value}}</mat-option>
+                <mat-select formControlName="objectField">
+                    <div *ngFor="let value of modelMetadata.values">
+                        <mat-option  (click)="updateId(value)"#selectedValue [value]="value.value" >{{value.value}}</mat-option>
+                    </div>
                 </mat-select> 
             </mat-form-field>
-            
+            <mat-error>
+                {{showObjectFieldError()}}
+            </mat-error>
         </div>
     </form>
 </div>

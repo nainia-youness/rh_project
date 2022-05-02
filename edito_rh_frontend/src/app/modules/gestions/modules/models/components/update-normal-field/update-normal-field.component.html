@@ -12,8 +12,8 @@
 
                 <mat-form-field appearance="fill" >
                     <mat-label>{{modelMetadata.label}}</mat-label>
-                    <mat-select  formControlName="stringField">
-                      <mat-option *ngFor="let value of modelMetadata.values" [value]="value">{{value}}</mat-option>
+                    <mat-select  formControlName="stringField" (ngModelChange)="updateStringField($event)">
+                      <mat-option *ngFor="let value of modelMetadata.values"  [value]="value.value">{{value.value}}</mat-option>
                     </mat-select> 
                     <mat-error>
                         {{showStringFieldError()}}

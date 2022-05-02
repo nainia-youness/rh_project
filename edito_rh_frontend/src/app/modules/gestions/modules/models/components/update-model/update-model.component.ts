@@ -52,7 +52,6 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
   }
 
   updateIsError=(fieldError:any)=>{
-
       this.errorObj[fieldError.label]=fieldError.error
       let is_error=false
       Object.keys(this.errorObj).forEach((key, index) => {
@@ -64,7 +63,9 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
   submit(){
     //no value empty
     //if formule do the validatation
+    console.log(this.tempObj)
     const newModel=this.buildModelFromTempObj(this.tempObj)
+    console.log(newModel)
     let oldModel
     const obs=this.modelData$?.subscribe((modelData)=>{
       oldModel=modelData
@@ -80,9 +81,14 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
   }
 
   isSameModels(oldModel:any,newModel:any){
+    console.log()
     let result=true
     Object.keys(newModel).forEach((key, index) => {
       if(newModel[key]!==undefined){
+        if(typeof oldModel[key] === 'object'){//for example delegue or affectation
+          if(newModel[key]!==oldModel[key].id)
+            result=false
+        }
         if(oldModel[key]!==newModel[key])
           result=false
       }
@@ -113,7 +119,6 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
     obs?.unsubscribe()
     return result
   }
-
 
   updateTempObj(field:any){
     this.tempObj[field.label]=field.value

@@ -24,6 +24,7 @@ import { RubriqueComponent } from './pages/rubrique/rubrique.component';
 import { EmployeComponent } from './pages/employe/employe.component';
 import { UpdateNormalFieldComponent } from './components/update-normal-field/update-normal-field.component';
 import { UpdateObjectFieldComponent } from './components/update-object-field/update-object-field.component';
+import { UpdateObjectsFieldComponent } from './components/update-objects-field/update-objects-field.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { UpdateObjectFieldComponent } from './components/update-object-field/upd
     EmployeComponent,
     UpdateNormalFieldComponent,
     UpdateObjectFieldComponent,
+    UpdateObjectsFieldComponent,
   ],
   imports: [
     CommonModule,
