@@ -22,12 +22,11 @@ export class FiltersComponent implements OnInit {
 
   @Input() metadata$!:Observable<any>
   filtersForm!:FormGroup;
-  chosenField!:any
-  chosenFieldName!:string
-  isAdvancedNumberFilter:boolean=false
+  chosenField!:any//the field we chose 
+  isAdvancedNumberFilter:boolean=false//true if fieldmode=COMPRIS_ENTRE
   filters$!:Observable<Filter[] | undefined>
   selectedFilters:Filter[]=[]
-
+  filterModes:FilterMode[]=[FilterMode.EGAL]//list of all filterModes available for the field type
 
   allFilters:Filter[]=this.storageService.getItem('filters')
 
@@ -74,7 +73,8 @@ export class FiltersComponent implements OnInit {
     let dateField=this.filtersForm.controls['dateField'].value
     let dateField2=this.filtersForm.controls['dateField2'].value
     const filterMode=this.filtersForm.controls['filterMode'].value
-    
+    //fill the filter (field,filteMode,value,gte,lte)
+    console.log(enumStringField)
     const filter:Filter={
       field:this.chosenField.label,
       filterMode:filterMode,
@@ -101,9 +101,12 @@ export class FiltersComponent implements OnInit {
       } 
       else filter.value=dateField
     }
+    //console.log(filter)
+    //if the filter already ixist in selectedFilters, don't do anything
     if(this.isElemInArray(this.selectedFilters,filter)) return
     this.selectedFilters.push(filter)
     const deepCopy=JSON.parse(JSON.stringify(this.selectedFilters))
+    console.log(deepCopy)
     this.store.dispatch(filtersChange({filters:deepCopy}))
     this.filterApiCall()//does the action getFonctionsStart()
   }
@@ -182,18 +185,23 @@ export class FiltersComponent implements OnInit {
     return !!this.chosenField.values
   }
 
-  filterModes:FilterMode[]=[FilterMode.EGAL]
+
 
   updateChosenField=()=>{
-    this.initializeFields()
-    this.filtersForm.get( 'filterMode' )!.patchValue( FilterMode.EGAL, {emitEvent: false} );
+    //initialize fields=null and filtermode=egal and iadvanced false
+    this.initializeFields() 
+    this.filtersForm.get( 'filterMode' )!.patchValue( FilterMode.EGAL, {emitEvent: false} ); // make 
     this.isAdvancedNumberFilter=false
+    //get value of chooseField
     const chosenFieldName=this.filtersForm.controls['chooseField'].value
+    //make chosenField = corresponding field based on the fieldName by going throught all metadata fields
     this.metadata$.subscribe((metadata)=>{
       const fields= metadata.fields
       this.chosenField= this.getField(fields,chosenFieldName)
+      //assign the filtermode corresponding to the type of filter (string or number or ...
       this.updateFilterMode()
     })
+    //output: initialize, get chosenField and get  filterModes 
   }
 
   updateFilterMode(){

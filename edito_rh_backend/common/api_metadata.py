@@ -115,8 +115,8 @@ def employe_metadata(query,is_one):
         {'type': number, 'label': 'numero_compte'},
         {'type': number, 'label': 'participation'},
         {'type': date, 'label': 'date_sortie'},
-        {'type': string, 'label': 'situation_familiale','values':['Marié(e)','Célibataire']},
-        {'type': string, 'label': 'sexe','values':['M','F']}
+        {'type': string, 'label': 'situation_familiale','values':[{'value':'Marié(e)'},{'value':'Célibataire'}]},
+        {'type': string, 'label': 'sexe','values':[{'value':'M'},{'value':'F'}]}
     ]
     q_fonction=Fonction.objects.all()
     fonction_values=get_distinct_values(q_fonction,'designation')
@@ -179,9 +179,11 @@ def fonction_metadata(query,is_one):
     
     return result
 
+
+
 def get_distinct_values(query,model):
-    distinct_values_dict=list(query.values(model).distinct())
-    distinct_values_list=[i[model] for i in distinct_values_dict]
+    distinct_values_dict=list(query.values(model,'id').distinct())
+    distinct_values_list=[{'value':i[model],'id':i['id']} for i in distinct_values_dict]
     return distinct_values_list
 
 

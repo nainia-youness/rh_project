@@ -28,7 +28,7 @@
             <mat-form-field fxFlex="20" *ngIf="chosenField.type==='string' && isFieldEnum()" >
                 <mat-label>{{chosenField.label}}</mat-label>
                 <mat-select formControlName="enumStringField">
-                  <mat-option *ngFor="let value of chosenField.values" [value]="value">{{value}}</mat-option>
+                  <mat-option *ngFor="let value of chosenField.values" [value]="value.value">{{value.value}}</mat-option>
                 </mat-select>
             </mat-form-field>
 

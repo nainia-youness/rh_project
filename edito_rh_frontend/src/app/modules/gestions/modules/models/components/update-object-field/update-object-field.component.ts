@@ -26,7 +26,6 @@ export class UpdateObjectFieldComponent implements OnInit {
     else if(this.model[this.modelMetadata.label].nom && !this.model[this.modelMetadata.label].prenom ){
       this.fieldValue=this.model[this.modelMetadata.label].nom
     }
-    console.log(this.fieldValue)
     this.createNormalFieldsForm()
   }
 
