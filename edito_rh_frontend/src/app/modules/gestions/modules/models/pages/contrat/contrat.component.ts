@@ -6,7 +6,7 @@ import { ContratBuilderService } from 'src/app/core/services/utils/builders/cont
 import { ContratModel } from 'src/app/shared/models/contrat.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getContratStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutContratStart } from '../../state/model.actions';
+import { getContratStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostContratStart, PutContratStart } from '../../state/model.actions';
 import { getContratSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -63,6 +63,10 @@ export class ContratComponent implements OnInit {
 
   putModel=(newModel:any)=>{
     this.store.dispatch(PutContratStart({id:newModel.id,contrat:newModel}))
+  }
+
+  postModel=(newModel:any)=>{
+    this.store.dispatch(PostContratStart({contrat:newModel}))
   }
 
   constructor(

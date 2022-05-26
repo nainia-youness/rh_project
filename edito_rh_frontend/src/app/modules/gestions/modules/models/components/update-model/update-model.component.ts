@@ -80,8 +80,11 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
 
   submit(){
     //let tempObj=JSON.parse(JSON.stringify(this.tempObj))
+
     let tempObj={...this.tempObj}
+    console.log(this.tempObj)
     //check the page, it's better
+
     this.modelPage$.subscribe((p:string)=>{
       const rubriques=tempObj.rubriques
       const variables=tempObj.variables
@@ -106,6 +109,7 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
       }
     })
     const newModel=this.buildModelFromTempObj(tempObj)
+    console.log(newModel)
     let oldModel:any
     const obs=this.modelData$?.subscribe((modelData)=>{
       oldModel=modelData
@@ -122,7 +126,7 @@ export class UpdateModelComponent implements OnInit,AfterViewChecked {
           pageType=p
         })
         this.modelPage$.subscribe((modelPage:string)=>{
-          if(pageType===ModelPageType.MODIFIER || pageType==ModelPageType.CREER){
+          if(pageType===ModelPageType.MODIFIER){
             if(modelPage===ModelPage.EMPLOYE){
               const deletePutArr=this.getDeletePutList(oldModel.rubriques,this.tempObj.rubriques)
               const deleteArr=deletePutArr[0]

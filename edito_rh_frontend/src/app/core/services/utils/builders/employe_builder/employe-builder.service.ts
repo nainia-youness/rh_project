@@ -149,7 +149,7 @@ export class EmployeBuilderService {
           f.nationalite,
           f.cnss,
           f.salaire,
-          f.numero_compte,
+          f.numero_compte, 
           f.participation,
           f.date_sortie,
           fonction,

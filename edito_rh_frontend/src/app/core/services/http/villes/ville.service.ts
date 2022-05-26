@@ -32,7 +32,10 @@ export class VilleService {
     return this.http.put<any>(`${this.villes_url}/${action.id}/`,body)
   }
 
-
+  postVille(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.ville)
+    return this.http.post<any>(`${this.villes_url}/`,body)
+  }
 
   constructor(
     private http:HttpClient,

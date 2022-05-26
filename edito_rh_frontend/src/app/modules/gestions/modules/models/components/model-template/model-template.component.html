@@ -3,7 +3,7 @@
 <mat-progress-bar *ngIf="isModelProgressBar$ | async" mode="indeterminate"></mat-progress-bar>
 <div *ngIf="(modelPageType$ | async) as pageType">
     <div *ngIf="pageType==='creer'">
-        <app-creer-model [modelData$]="modelData$"></app-creer-model>
+        <app-creer-model [buildModelFromTempObj]="buildModelFromTempObj" [postModel]="postModel" [modelData$]="modelData$"></app-creer-model>
     </div>
     <div *ngIf="pageType==='modifier'">
         <app-update-model [buildModelFromTempObj]="buildModelFromTempObj" [putModel]="putModel" [modelData$]="modelData$"></app-update-model>

@@ -20,7 +20,7 @@ enum ActionTypes {
 
     GET_MODEL_FAILURE = '[Model Page] Get Model Failure',
     PUT_MODEL_FAILURE = '[Model Page] Put Model Failure',
-
+    POST_MODEL_FAILURE = '[Model Page] Post Model Failure',
 
     GET_VILLE_START = '[Ville Page] Get Ville Start',
     GET_VILLE_SUCCESS = '[Ville Page] Get Ville Success',
@@ -76,6 +76,31 @@ enum ActionTypes {
     DELETE_EMPLOYE_RUBRIQUE_SUCCESS = '[Employe Page] Delete Employe Rubrique Success',
     DELETE_FORMULE_VARIABLE_START = '[Formule Page] Delete Formule Variable Start',
     DELETE_FORMULE_VARIABLE_SUCCESS = '[Formule Page] Delete Formule Variable Success',
+
+
+
+    POST_VILLE_START = '[Ville Page] Post Ville Start',
+    POST_VILLE_SUCCESS = '[Ville Page] Post Ville Success',
+    POST_VARIABLE_START = '[Variable Page] Post Variable Start',
+    POST_VARIABLE_SUCCESS = '[Variable Page] Post Variable Success',
+    POST_FORMULE_START = '[Formule Page] Post Formule Start',
+    POST_FORMULE_SUCCESS = '[Formule Page] Post Formule Success',
+    POST_AFFECTATION_START = '[Affectation Page] Post Affectation Start',
+    POST_AFFECTATION_SUCCESS = '[Affectation Page] Post Affectation Success',
+    POST_CENTRE_COUT_START = '[Centre Cout Page] Post Centre Cout Start',
+    POST_CENTRE_COUT_SUCCESS = '[Centre Cout Page] Post Centre Cout Success',
+    POST_CONTRAT_START = '[Contrat Page] Post Contrat Start',
+    POST_CONTRAT_SUCCESS = '[Contrat Page] Post Contrat Success',
+    POST_DIRECTION_START = '[Direction Page] Post Direction Start',
+    POST_DIRECTION_SUCCESS = '[Direction Page] Post Direction Success',
+    POST_ENTITE_START = '[Entite Page] Post Entite Start',
+    POST_ENTITE_SUCCESS = '[Entite Page] Post Entite Success',
+    POST_FONCTION_START = '[Fonction Page] Post Fonction Start',
+    POST_FONCTION_SUCCESS = '[Fonction Page] Post Fonction Success',
+    POST_RUBRIQUE_START = '[Rubrique Page] Post Rubrique Start',
+    POST_RUBRIQUE_SUCCESS = '[Rubrique Page] Post Rubrique Success',
+    POST_EMPLOYE_START = '[Employe Page] Post Employe Start',
+    POST_EMPLOYE_SUCCESS = '[Employe Page] Post Employe Success',
 }
 
 
@@ -83,7 +108,35 @@ export const modelPageChange=createAction(ActionTypes.MODEL_PAGE_CHANGE,props<{m
 export const modelPageTypeChange=createAction(ActionTypes.MODEL_PAGE_TYPE_CHANGE,props<{modelPageType:ModelPageType}>())
 export const getModelFailure=createAction(ActionTypes.GET_MODEL_FAILURE,props<{error:string}>())
 export const putModelFailure=createAction(ActionTypes.PUT_MODEL_FAILURE,props<{putError:string}>())
+export const postModelFailure=createAction(ActionTypes.POST_MODEL_FAILURE,props<{postError:string}>())
 export const isModelProgressBarChange=createAction(ActionTypes.IS_MODEL_PROGRESS_BAR)
+
+// post start
+export const PostVilleStart=createAction(ActionTypes.POST_VILLE_START,props<{ville:VilleModel | undefined}>())
+export const PostVariableStart=createAction(ActionTypes.POST_VARIABLE_START,props<{variable:VariableModel | undefined}>())
+export const PostFormuleStart=createAction(ActionTypes.POST_FORMULE_START,props<{formule:FormuleModel | undefined}>())
+export const PostAffectationStart=createAction(ActionTypes.POST_AFFECTATION_START,props<{affectation:AffectationModel | undefined}>())
+export const PostCentreCoutStart=createAction(ActionTypes.POST_CENTRE_COUT_START,props<{centreCout:CentreCoutModel | undefined}>())
+export const PostContratStart=createAction(ActionTypes.POST_CONTRAT_START,props<{contrat:ContratModel | undefined}>())
+export const PostDirectionStart=createAction(ActionTypes.POST_DIRECTION_START,props<{direction:DirectionModel | undefined}>())
+export const PostEntiteStart=createAction(ActionTypes.POST_ENTITE_START,props<{entite:EntiteModel | undefined}>())
+export const PostFonctionStart=createAction(ActionTypes.POST_FONCTION_START,props<{fonction:FonctionModel | undefined}>())
+export const PostRubriqueStart=createAction(ActionTypes.POST_RUBRIQUE_START,props<{rubrique:RubriqueModel | undefined}>())
+export const PostEmployeStart=createAction(ActionTypes.POST_EMPLOYE_START,props<{employe:EmployeModel | undefined}>())
+//post success
+export const PostVilleSuccess=createAction(ActionTypes.POST_VILLE_SUCCESS,props<{ville:VilleModel | undefined}>())
+export const PostVariableSuccess=createAction(ActionTypes.POST_VARIABLE_SUCCESS,props<{variable:VariableModel | undefined}>())
+export const PostFormuleSuccess=createAction(ActionTypes.POST_FORMULE_SUCCESS,props<{formule:FormuleModel | undefined}>())
+export const PostAffectationSuccess=createAction(ActionTypes.POST_AFFECTATION_SUCCESS,props<{affectation:AffectationModel | undefined}>())
+export const PostCentreCoutSuccess=createAction(ActionTypes.POST_CENTRE_COUT_SUCCESS,props<{centreCout:CentreCoutModel | undefined}>())
+export const PostContratSuccess=createAction(ActionTypes.POST_CONTRAT_SUCCESS,props<{contrat:ContratModel | undefined}>())
+export const PostDirectionSuccess=createAction(ActionTypes.POST_DIRECTION_SUCCESS,props<{direction:DirectionModel | undefined}>())
+export const PostEntiteSuccess=createAction(ActionTypes.POST_ENTITE_SUCCESS,props<{entite:EntiteModel | undefined}>())
+export const PostFonctionSuccess=createAction(ActionTypes.POST_FONCTION_SUCCESS,props<{fonction:FonctionModel | undefined}>())
+export const PostRubriqueSuccess=createAction(ActionTypes.POST_RUBRIQUE_SUCCESS,props<{rubrique:RubriqueModel | undefined}>())
+export const PostEmployeSuccess=createAction(ActionTypes.POST_EMPLOYE_SUCCESS,props<{employe:EmployeModel | undefined}>())
+
+
 
 // get start
 export const getVilleStart=createAction(ActionTypes.GET_VILLE_START,props<{id:string | undefined}>())

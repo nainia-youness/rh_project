@@ -8,7 +8,7 @@ import { getSideNavItems } from 'src/app/shared/components/layout/state/layout.s
 import { VilleModel } from 'src/app/shared/models/ville.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getVilleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutVilleStart } from '../../state/model.actions';
+import { getVilleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostVilleStart, PutVilleStart } from '../../state/model.actions';
 import { getVilleSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -57,8 +57,6 @@ export class VilleComponent implements OnInit {
       select(getVilleSuccessSelector),
       filter( val=> val !== undefined),
       map((ville)=> {
-        console.log('yaaaaaaaaaaaaaaaaaaaaaaaaaay')
-        console.log(ville)
         return ville
       })
     )
@@ -70,6 +68,10 @@ export class VilleComponent implements OnInit {
 
   putModel=(newModel:any)=>{
     this.store.dispatch(PutVilleStart({id:newModel.id,ville:newModel}))
+  }
+
+  postModel=(newModel:any)=>{
+    this.store.dispatch(PostVilleStart({ville:newModel}))
   }
 
   constructor(

@@ -6,7 +6,7 @@ import { DirectionBuilderService } from 'src/app/core/services/utils/builders/di
 import { DirectionModel } from 'src/app/shared/models/direction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getDirectionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutDirectionStart } from '../../state/model.actions';
+import { getDirectionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostDirectionStart, PutDirectionStart } from '../../state/model.actions';
 import { getDirectionSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -64,6 +64,10 @@ export class DirectionComponent implements OnInit {
 
   putModel=(newModel:any)=>{
     this.store.dispatch(PutDirectionStart({id:newModel.id,direction:newModel}))
+  }
+
+  postModel=(newModel:any)=>{
+    this.store.dispatch(PostDirectionStart({direction:newModel}))
   }
 
   constructor(

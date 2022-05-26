@@ -1,7 +1,10 @@
 import { Component, Input, OnInit, Output,EventEmitter  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
+import { modelPageTypeSelector } from '../../state/model.selectors';
+import { ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-update-object-field',
@@ -22,15 +25,26 @@ export class UpdateObjectFieldComponent implements OnInit {
   fieldError: EventEmitter<{label:string,error:string}> = new EventEmitter();
 
   ngOnInit(): void {
-    if(this.model[this.modelMetadata.label].designation){
-      this.fieldValue=this.model[this.modelMetadata.label].designation
-    }
-    else if(this.model[this.modelMetadata.label].nom && !this.model[this.modelMetadata.label].prenom ){
-      this.fieldValue=this.model[this.modelMetadata.label].nom
-    }
-    else if(this.model[this.modelMetadata.label].nom && this.model[this.modelMetadata.label].prenom ){
-      this.fieldValue=this.model[this.modelMetadata.label].prenom+' '+this.model[this.modelMetadata.label].nom
-    }
+    this.store.pipe(
+      select(modelPageTypeSelector),
+      map((modelPage)=>{
+        if(modelPage===ModelPageType.MODIFIER){
+          if(this.model[this.modelMetadata.label].designation){
+            this.fieldValue=this.model[this.modelMetadata.label].designation
+          }
+          else if(this.model[this.modelMetadata.label].nom && !this.model[this.modelMetadata.label].prenom ){
+            this.fieldValue=this.model[this.modelMetadata.label].nom
+          }
+          else if(this.model[this.modelMetadata.label].nom && this.model[this.modelMetadata.label].prenom ){
+            this.fieldValue=this.model[this.modelMetadata.label].prenom+' '+this.model[this.modelMetadata.label].nom
+          }
+        }
+        else if(modelPage===ModelPageType.CREER){
+          this.fieldValue=""
+        }
+        return modelPage
+      })
+    ).subscribe()
     this.createNormalFieldsForm()
     this.initializeControls()
   }

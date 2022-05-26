@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutAffectationSuccess, PutCentreCoutSuccess, PutContratSuccess, PutDirectionSuccess, PutEmployeSuccess, PutEntiteSuccess, PutFonctionSuccess, PutFormuleSuccess, putModelFailure, PutRubriqueSuccess, PutVariableSuccess, PutVilleSuccess } from "./model.actions"
+import { getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostAffectationSuccess, PostCentreCoutSuccess, PostContratSuccess, PostDirectionSuccess, PostEmployeSuccess, PostEntiteSuccess, PostFonctionSuccess, PostFormuleSuccess, postModelFailure, PostRubriqueSuccess, PostVariableSuccess, PostVilleSuccess, PutAffectationSuccess, PutCentreCoutSuccess, PutContratSuccess, PutDirectionSuccess, PutEmployeSuccess, PutEntiteSuccess, PutFonctionSuccess, PutFormuleSuccess, putModelFailure, PutRubriqueSuccess, PutVariableSuccess, PutVilleSuccess } from "./model.actions"
 import { initialState } from "./model.state"
 
 
@@ -29,6 +29,91 @@ const _modelReducer= createReducer(
             putError:action.putError,
         }
     }),
+    on(postModelFailure,(state:any,action:any)=>{
+        return {
+            ...state,
+            postError:action.postError,
+        }
+    }),
+    //-----------------POST---------------------
+    on(PostVilleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            ville:action.ville,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostVariableSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            variable:action.variable,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostFormuleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            formule:action.formule,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostAffectationSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            affectation:action.affectation,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostCentreCoutSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            centreCout:action.centreCout,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostContratSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            contrat:action.contrat,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostDirectionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            direction:action.direction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostEntiteSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            entite:action.entite,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostFonctionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            fonction:action.fonction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostRubriqueSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            rubrique:action.rubrique,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PostEmployeSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            employe:action.employe,
+            isModelProgressBar:false,
+        }
+    }),
+    //-----------------GET------------------------
     on(getVilleSuccess,(state:any,action:any)=>{
         return {
             ...state,

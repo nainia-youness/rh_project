@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import { map } from 'rxjs';
+import { AppState } from 'src/app/store/app.state';
+import { modelPageTypeSelector } from '../../state/model.selectors';
+import { ModelPageType } from '../../state/model.state';
 
 @Component({
   selector: 'app-update-objects-field',
@@ -23,15 +28,28 @@ export class UpdateObjectsFieldComponent implements OnInit {
   listObjectFieldsThatCanBeAdded:{id: number, designation:string, montant?:number}[]=[]
 
   ngOnInit(): void {
-    this.fieldValues=this.model[this.modelMetadata.label]
-    this.fieldValues.forEach((e:any) => {
-        let a:any={
-          'id':e.id,
+
+
+    this.store.pipe(
+      select(modelPageTypeSelector),
+      map((modelPage)=>{
+        if(modelPage===ModelPageType.MODIFIER){
+          this.fieldValues=this.model[this.modelMetadata.label]
+          this.fieldValues.forEach((e:any) => {
+              let a:any={
+                'id':e.id,
+              }
+              if(e.montant!==undefined)
+                a.montant=e.montant
+              this.objectsFieldList.push(a)
+          });
         }
-        if(e.montant!==undefined)
-          a.montant=e.montant
-        this.objectsFieldList.push(a)
-    });
+        else if(modelPage===ModelPageType.CREER){
+          this.fieldValues=[]
+        }
+        return modelPage
+      })
+    ).subscribe()
     
     this.intializeListObjectFieldsThatCanBeAdded()
     this.createObjectsFieldsForm()
@@ -166,6 +184,9 @@ export class UpdateObjectsFieldComponent implements OnInit {
     });
     const designation=this.listObjectFieldsThatCanBeAdded[0] ? this.listObjectFieldsThatCanBeAdded[0].designation : ''
     initializeFormsObj['addedFieldName']=[designation,[Validators.required]]
+
+
+
     this.objectsFieldsForm=this.fb.group(initializeFormsObj)
   }
   
@@ -210,5 +231,8 @@ export class UpdateObjectsFieldComponent implements OnInit {
     return this.capitalizeFirstLetter(s)
   }
 
-  constructor(private fb:FormBuilder) { }
+  constructor(
+    private fb:FormBuilder,
+    private store:Store<AppState>,
+    ) { }
 }

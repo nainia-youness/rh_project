@@ -1,1 +1,66 @@
-<p>creer-model works!</p>
+<div style="height:50px !important" ></div>
+<div fxLayout="column">
+    <div fxLayout.gt-xs="row"  fxLayout.xs="column" fxFlex fxLayoutGap="20px">
+        <div fxFlex.gt-xs="30" fxFlex.xs="0"></div>
+        <button mat-raised-button  fxFlex.gt-xs="20" (click)="submit()" fxFlex.xs="100" [disabled]="is_error">Sauvegarder</button>
+        <button mat-raised-button  fxFlex.gt-xs="20" (click)="cancel()" fxFlex.xs="100">Annuler</button>
+        <div fxFlex.gt-xs="30" fxFlex.xs="0"></div>
+    </div>
+    <div fxFlex>&nbsp;</div>
+    <mat-card class="error" *ngIf="putError$ | async as putError" fxFlex>{{putError}}</mat-card>
+    <div fxFlex>&nbsp;</div>
+</div>
+
+
+<div *ngIf="(metadata$ | async) as metadata" >
+    <div *ngIf="(modelData$ | async) as modelData">
+        <div *ngFor="let field of metadata.fields; let i = index; let even = even">
+            <!--object field-->
+            <div *ngIf="metadata.fields[i].type==='object' && modelData[metadata.fields[i].label]" style="padding:10px" >
+                <app-update-object-field
+                [modelMetadata]="metadata.fields[i]" 
+                [model]="modelData"
+                (objectField)="updateTempObj($event)" 
+                (fieldError)="updateIsError($event)" 
+                >
+                </app-update-object-field>
+            </div>
+            <!--objects field-->    
+                <!--if objects iterate through each model child value-->
+            <div *ngIf="metadata.fields[i].type==='objects'" >
+                <!-- && modelData[metadata.fields[i].label]-->
+                <app-update-objects-field
+                    [modelMetadata]="metadata.fields[i]" 
+                    [model]="modelData"
+                    (objectsField)="updateTempObj($event)" 
+                    (fieldError)="updateIsError($event)" 
+                >
+                </app-update-objects-field>
+            </div>
+            <!--normal fields-->
+            <div *ngIf="even" fxLayout.gt-xs="row" fxLayout.xs="column" style="height: 100% !important; width:100% !important;padding:10px" fxLayoutGap="20px" >
+                <div *ngIf="(metadata.fields[i])  && modelData[metadata.fields[i].label] && !is_ignore(metadata.fields[i].label) && (metadata.fields[i].type!=='object') && (metadata.fields[i].type!=='objects')" fxFlex.gt-xs="50" fxFlex.xs="100">
+                    <app-update-normal-field 
+                        (stringField)="updateTempObj($event)" 
+                        (numberField)="updateTempObj($event)" 
+                        (dateField)="updateTempObj($event)" 
+                        (fieldError)="updateIsError($event)" 
+                        [modelMetadata]="metadata.fields[i]" 
+                        [model]="modelData">
+                    </app-update-normal-field>
+                </div>
+                <div *ngIf="(metadata.fields[i+1])  && modelData[metadata.fields[i+1].label] && !is_ignore(metadata.fields[i+1].label) && (metadata.fields[i+1].type!=='object') && (metadata.fields[i+1].type!=='objects')" fxFlex.gt-xs="50" fxFlex.xs="100">
+                    <app-update-normal-field 
+                        (stringField)="updateTempObj($event)" 
+                        (numberField)="updateTempObj($event)" 
+                        (dateField)="updateTempObj($event)" 
+                        (fieldError)="updateIsError($event)" 
+                        [modelMetadata]="metadata.fields[i+1]" 
+                        [model]="modelData">
+                    </app-update-normal-field>
+                </div>
+            </div>
+        </div>
+        <div style="height:20px"></div>
+    </div>
+</div>

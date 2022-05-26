@@ -6,7 +6,7 @@ import { FormuleBuilderService } from 'src/app/core/services/utils/builders/form
 import { FormuleModel } from 'src/app/shared/models/formule.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getFormuleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutFormuleStart } from '../../state/model.actions';
+import { getFormuleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostFormuleStart, PutFormuleStart } from '../../state/model.actions';
 import { getFormuleSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -64,6 +64,10 @@ export class FormuleComponent implements OnInit {
 
   putModel=(newModel:any)=>{
     this.store.dispatch(PutFormuleStart({id:newModel.id,formule:newModel}))
+  }
+
+  postModel=(newModel:any)=>{
+    this.store.dispatch(PostFormuleStart({formule:newModel}))
   }
 
   constructor(

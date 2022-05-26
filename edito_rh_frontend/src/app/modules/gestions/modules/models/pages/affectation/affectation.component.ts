@@ -6,7 +6,7 @@ import { AffectationBuilderService } from 'src/app/core/services/utils/builders/
 import { AffectationModel } from 'src/app/shared/models/affectation.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getAffectationStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutAffectationStart } from '../../state/model.actions';
+import { getAffectationStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostAffectationStart, PutAffectationStart } from '../../state/model.actions';
 import { getAffectationSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -62,6 +62,10 @@ export class AffectationComponent implements OnInit {
 
   putModel=(newModel:any)=>{
     this.store.dispatch(PutAffectationStart({id:newModel.id,affectation:newModel}))
+  }
+
+  postModel=(newModel:any)=>{
+    this.store.dispatch(PostAffectationStart({affectation:newModel}))
   }
 
   constructor(

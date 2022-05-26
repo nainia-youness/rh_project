@@ -20,6 +20,7 @@ export class ModelTemplateComponent implements OnInit {
   modelData$?:Observable<any>;
   @Input() buildModelFromTempObj!: (tempObj:any) => any;
   @Input() putModel!: (newModel:any) => any;
+  @Input() postModel!: (newModel:any) => any;
   
   ngOnInit(): void {
     this.modelPageType$=this.store.pipe(
