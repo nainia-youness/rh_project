@@ -27,5 +27,10 @@ export class AffectationService {
     return this.http.get<any>(`${this.affectations_url}/${id}/`)
   }
 
+  putAffectation(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.affectation)
+    return this.http.put<any>(`${this.affectations_url}/${action.id}/`,body)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

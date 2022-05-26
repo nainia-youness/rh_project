@@ -1,6 +1,7 @@
 <div style="height:50px"></div>
 <div *ngIf="(metadata$ | async) as metadata" >
-    <div *ngIf="(modelData$ | async) as modelData">
+   
+    <div *ngIf="(modelData$ | async) as modelData" fxLayout="column">
         <div *ngFor="let field of metadata.fields; let i = index; let even = even">
             <!--the model's children-->
             <div *ngIf="metadata.fields[i].type==='objects' || metadata.fields[i].type==='object'">

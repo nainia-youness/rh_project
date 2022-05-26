@@ -9,6 +9,10 @@ export const getModelFailureSelector =createSelector(getModelState,state=>{
     return state.error
 })
 
+export const putModelFailureSelector =createSelector(getModelState,state=>{
+    return state.putError
+})
+
 export const getVilleSuccessSelector =createSelector(getModelState,state=>{
     return state.ville
 })

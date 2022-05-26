@@ -6,7 +6,7 @@ import { RubriqueBuilderService } from 'src/app/core/services/utils/builders/rub
 import { RubriqueModel } from 'src/app/shared/models/rubrique.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getRubriqueStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getRubriqueStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutRubriqueStart, PutVariableStart } from '../../state/model.actions';
 import { getRubriqueSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -60,6 +60,10 @@ export class RubriqueComponent implements OnInit {
 
   buildModelFromTempObj=(tempObj:any)=>{
     return this.rubriqueBuilder.buildRubriques([tempObj])![0]
+  }
+
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutRubriqueStart({id:newModel.id,rubrique:newModel}))
   }
 
   constructor(

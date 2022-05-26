@@ -1,1 +1,46 @@
-<p>update-objects-field works!</p>
+<mat-card >
+    <div  class="label">
+        {{handleLabel(modelMetadata.label)}}
+    </div>
+    <div  class="value" >
+        <form [formGroup]="objectsFieldsForm">
+        <div fxLayout.gt-xs="row" *ngIf="listObjectFieldsThatCanBeAdded.length!==0">
+            <button fxFlex  mat-button (click)="addModelRelationship()" class="addBut" >
+                <mat-icon>playlist_add</mat-icon> Ajouter
+            </button>
+            <mat-form-field fxFlex >
+                <mat-label>{{modelMetadata.label}}</mat-label>
+                <mat-select formControlName="addedFieldName">
+                        <mat-option *ngFor="let value of listObjectFieldsThatCanBeAdded" [value]="value.designation">{{value.designation}}</mat-option>
+                </mat-select> 
+            </mat-form-field>
+        </div>
+
+        <div *ngFor="let fieldValue of fieldValues; let i = index; let even = even">
+            <div style="text-align: right;margin-top:10px">
+                <button class="delete_model" (click)="deleteModelRelationShip(fieldValue.id)" mat-flat-button>
+                    <mat-icon>delete</mat-icon>
+                </button> 
+            </div>
+           
+                <mat-card fxLayout.gt-xs="row" fxLayout.xs="column" fxLayout="center center" style="height: 100% !important; width:100% !important;padding:10px" fxLayoutGap="20px" >
+                    <!--add button remove in the right side-->
+                    <mat-card fxFlex>
+                        {{fieldValue.designation}}
+                    </mat-card>
+                    <mat-card fxFlex *ngIf="fieldValue.montant!==undefined">
+                        <mat-form-field appearance="fill" >
+                            <mat-label>Montant</mat-label>
+                            <input matInput [formControlName]="fieldValue.designation+'Montant'" (ngModelChange)="updateObjectsField($event,fieldValue.designation+'Montant',fieldValue.id)">
+                        </mat-form-field>
+                        <mat-error>
+                            {{showObjectsFieldError(fieldValue.designation+'Montant')}}
+                        </mat-error>
+                    </mat-card>
+                </mat-card>
+            
+            <div>&nbsp;</div>
+        </div>
+    </form>
+    </div>
+    </mat-card>

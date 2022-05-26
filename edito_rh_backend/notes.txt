@@ -116,3 +116,26 @@ ID: Something that will let your consumers contact you. Then you can reference y
 CODE: Even though the HTTP code comes back on the header, it’s good practice to add it to the body as well. This lets others see it and easily map it to a model.
 STATUS: This is the text of what your status code means. Don’t make your consumers look it up.
 TITLE: Let the consumer know what caused the client error here, but don’t share too much info about internal server errors.
+
+
+
+2wls  client  
+m2t client
+canvas n entre pas: il ont fait la mise a jour 
+APILIBODOO
+
+Libs@Sapress$2022
+
+cbi
+
+5 personne / anne demitionne   par defaut
+d ici 2028 est ce que le directeur c qui va demitionner
+utilise des taux?
+
+
+-est ce qu'on utilise des taux pour faire la pevision?
+ex:5% des employees demitionne chaque annee
+-c'est quoi l'utilite de la bbd pour faire les previsions?
+-est ce qu'on additionne les employes pour calculer le brut
+d'ou on trouve la charge patronale
+

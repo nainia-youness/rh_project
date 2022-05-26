@@ -29,5 +29,10 @@ export class FonctionService {
     return this.http.get<any>(`${this.fonctions_url}/${id}/`)
   }
 
+  putFonction(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.fonction)
+    return this.http.put<any>(`${this.fonctions_url}/${action.id}/`,body)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

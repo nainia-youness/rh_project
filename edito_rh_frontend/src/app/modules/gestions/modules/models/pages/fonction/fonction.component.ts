@@ -6,7 +6,7 @@ import { FonctionBuilderService } from 'src/app/core/services/utils/builders/fon
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getFonctionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getFonctionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutFonctionStart } from '../../state/model.actions';
 import { getFonctionSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -60,6 +60,10 @@ export class FonctionComponent implements OnInit {
 
   buildModelFromTempObj=(tempObj:any)=>{
     return this.fonctionBuilder.buildFonctions([tempObj])![0]
+  }
+
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutFonctionStart({id:newModel.id,fonction:newModel}))
   }
 
   constructor(

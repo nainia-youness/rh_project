@@ -153,3 +153,6 @@ contient => 1 input
 
 'contient'  'icontains' 
 
+amine zineb voir comment extracter
+chaque matin 
+2h extraction

@@ -16,7 +16,6 @@ export class VilleService {
   villes_url=`${environment.apiUrl}/villes`
 
   getVilles():Observable<any>{
-    
     let params = new HttpParams();
     params=this.paramsService.addFilterParams(params)
     params=this.paramsService.addPageParams(params)
@@ -27,6 +26,13 @@ export class VilleService {
     const id=this.helper.getId(action)
     return this.http.get<any>(`${this.villes_url}/${id}/`)
   }
+
+  putVille(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.ville)
+    return this.http.put<any>(`${this.villes_url}/${action.id}/`,body)
+  }
+
+
 
   constructor(
     private http:HttpClient,

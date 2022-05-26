@@ -138,7 +138,20 @@ class EmployeAPIView(APIView):
         serializer = EmployeSerializer(employe, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            key_values = [{'key': 'data', 'value': serializer.data}]
+            data=serializer.data
+            #add delegue
+            delegue=change_delegue_format(EmployeSerializer(employe.delegue).data)
+            data['delegue']=delegue
+            #add rubriques
+            rubriques=[]
+            for rubrique_id in data['rubriques']:
+                ser_data=RubriqueSerializer(self.get_rubrique(rubrique_id)).data
+                employeRubrique = self.get_employe_rubriques(data['id'], rubrique_id)
+                ser_data['montant']=employeRubrique.montant
+                rubriques.append(ser_data)
+                
+            data['rubriques']=rubriques
+            key_values = [{'key': 'data', 'value': data}]
             return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
@@ -172,6 +185,7 @@ class EmployesRubriquesAPIView(APIView):
         except Rubrique.DoesNotExist:
             raise Http404
         try:
+            
             return EmployesRubriques.objects.get(employe=employe,rubrique=rubrique)
         except EmployesRubriques.DoesNotExist:
             raise Http404
@@ -190,8 +204,12 @@ class EmployesRubriquesAPIView(APIView):
         request.data['derniere_operation'] = 'Modifier'
         request.data['employe']=employe_id
         request.data['rubrique']=rubrique_id
-        employeRubrique = self.get_object(employe_id, rubrique_id)
-        serializer = EmployesRubriquesSerializer(employeRubrique, data=request.data)
+    
+        try:#if exist do put 
+            employeRubrique = self.get_object(employe_id, rubrique_id)
+            serializer = EmployesRubriquesSerializer(employeRubrique, data=request.data)
+        except:#else do post
+            serializer = EmployesRubriquesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             key_values = [{'key': 'data', 'value': serializer.data}]

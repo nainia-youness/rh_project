@@ -27,5 +27,11 @@ export class VariableService {
     return this.http.get<any>(`${this.variables_url}/${id}/`)
   }
 
+  putVariable(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.variable)
+    return this.http.put<any>(`${this.variables_url}/${action.id}/`,body)
+  }
+  
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

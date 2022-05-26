@@ -98,7 +98,15 @@ class FormuleAPIView(APIView):
         serializer = FormuleSerializer(formule, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            key_values = [{'key': 'data', 'value': serializer.data}]
+            data=serializer.data
+            #add variables
+            variables=[]
+            for variable_id in data['variables']:
+                ser_data=VariableSerializer(self.get_variable(variable_id)).data     
+                variables.append(ser_data)
+
+            data['variables']=variables
+            key_values = [{'key': 'data', 'value': data}]
             return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
@@ -140,7 +148,7 @@ class FormulesVariablesAPIView(APIView):
         key_values = [{'key': 'data', 'value': data}]
         return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)
 
-    def post(self, request,formule_id, variable_id):
+    def put(self, request,formule_id, variable_id):
         user_id = is_authenticated(request)
         request.data['user'] = user_id
         request.data['derniere_operation'] = 'Ajouter'

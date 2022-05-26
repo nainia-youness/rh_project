@@ -29,5 +29,11 @@ export class RubriqueService {
     return this.http.get<any>(`${this.rubriques_url}/${id}/`)
   }
 
+  putRubrique(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.rubrique)
+    return this.http.put<any>(`${this.rubriques_url}/${action.id}/`,body)
+  }
+
+  
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

@@ -6,7 +6,7 @@ import { CentreCoutBuilderService } from 'src/app/core/services/utils/builders/c
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getCentreCoutStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getCentreCoutStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutCentreCoutStart } from '../../state/model.actions';
 import { getCentreCoutSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -59,6 +59,10 @@ export class CentreCoutComponent implements OnInit {
   
   buildModelFromTempObj=(tempObj:any)=>{
     return this.centreCoutBuilder.buildCentresCout([tempObj])![0]
+  }
+
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutCentreCoutStart({id:newModel.id,centreCout:newModel}))
   }
 
   constructor(

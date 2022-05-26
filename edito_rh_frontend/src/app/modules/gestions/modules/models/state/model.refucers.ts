@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from "./model.actions"
+import { getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutAffectationSuccess, PutCentreCoutSuccess, PutContratSuccess, PutDirectionSuccess, PutEmployeSuccess, PutEntiteSuccess, PutFonctionSuccess, PutFormuleSuccess, putModelFailure, PutRubriqueSuccess, PutVariableSuccess, PutVilleSuccess } from "./model.actions"
 import { initialState } from "./model.state"
 
 
@@ -21,6 +21,12 @@ const _modelReducer= createReducer(
         return {
             ...state,
             error:action.error,
+        }
+    }),
+    on(putModelFailure,(state:any,action:any)=>{
+        return {
+            ...state,
+            putError:action.putError,
         }
     }),
     on(getVilleSuccess,(state:any,action:any)=>{
@@ -94,6 +100,84 @@ const _modelReducer= createReducer(
         }
     }),
     on(getEmployeSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            employe:action.employe,
+            isModelProgressBar:false,
+        }
+    }),
+    //......................PUT...............................
+    on(PutVilleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            ville:action.ville,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutVariableSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            variable:action.variable,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutFormuleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            formule:action.formule,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutAffectationSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            affectation:action.affectation,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutCentreCoutSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            centreCout:action.centreCout,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutContratSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            contrat:action.contrat,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutDirectionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            direction:action.direction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutEntiteSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            entite:action.entite,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutFonctionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            fonction:action.fonction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutRubriqueSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            rubrique:action.rubrique,
+            isModelProgressBar:false,
+        }
+    }),
+    on(PutEmployeSuccess,(state:any,action:any)=>{
         return {
             ...state,
             employe:action.employe,

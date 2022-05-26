@@ -13,6 +13,8 @@ from apps.directions.models import Direction
 from apps.affectations.models import Affectation
 from apps.entites.models import Entite
 from apps.variables.models import Variable
+from apps.rubriques.models import Rubrique
+from apps.variables.models import Variable
 
 def get_metadata(model, query,is_one=False):
     result = {}
@@ -85,9 +87,11 @@ def formule_metadata(query,is_one):
         {'type': string, 'label': 'formule'},
     ]
     if(is_one):
+        q_variable=Variable.objects.all()
+        variable_values=get_distinct_values(q_variable,'designation')
         variables_metadata=variable_metadata(query,is_one)
         result.append({'type': string, 'label': 'designation'})
-        result.append({'type': objects, 'label': 'variables','children_metadata':variables_metadata})
+        result.append({'type': objects, 'label': 'variables','children_metadata':variables_metadata,'values':variable_values})
     else:
         q_variable=Variable.objects.all()
         variable_values=get_distinct_values(q_variable,'designation')
@@ -134,6 +138,8 @@ def employe_metadata(query,is_one):
     affectation_values=get_distinct_values(q_affectation,'designation')
     q_entite=Entite.objects.all()
     entite_values=get_distinct_values(q_entite,'designation')
+    q_rubrique=Rubrique.objects.all()
+    rubrique_values=get_distinct_values(q_rubrique,'designation')
     if(is_one):
         fonctions_metadata=fonction_metadata(query,is_one)
         centres_cout_metadata=centre_cout_metadata(query,is_one)
@@ -154,7 +160,7 @@ def employe_metadata(query,is_one):
         result.append({'type': object, 'label': 'contrat','children_metadata':contrats_metadata,'values':contrat_values})
         result.append({'type': object, 'label': 'affectation','children_metadata':affectations_metadata,'values':affectation_values})
         result.append({'type': object, 'label': 'entite','children_metadata':entites_metadata,'values':entite_values})
-        result.append({'type': objects, 'label': 'rubriques','children_metadata':rubriques_metadata})
+        result.append({'type': objects, 'label': 'rubriques','children_metadata':rubriques_metadata,'values':rubrique_values})
     else:
         result.append({'type': string, 'label': 'fonction','values':fonction_values})
         result.append({'type': string, 'label': 'centre_cout','values':centre_cout_values})
@@ -165,6 +171,7 @@ def employe_metadata(query,is_one):
         result.append({'type': string, 'label': 'entite','values':entite_values})
         result.append({'type': string, 'label': 'delegue id'})
     return result
+
 
 def get_employe_name():
     employes = Employe.objects.all()

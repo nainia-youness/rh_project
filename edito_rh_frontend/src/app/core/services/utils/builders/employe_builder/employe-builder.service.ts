@@ -164,7 +164,14 @@ export class EmployeBuilderService {
           undefined,
           )
         if(is_one){
-          const rubriques=this.rubriqueBuilder.buildRubriques(f.rubriques)
+          let rubriques:any[] | undefined=[]
+          if(f.rubriques.length!==0){
+            if(f.rubriques[0].designation)
+              rubriques=this.rubriqueBuilder.buildRubriques(f.rubriques)
+            else{
+              rubriques=f.rubriques
+            }
+          }
           employe.rubriques=rubriques
         }
         if(f.delegue){

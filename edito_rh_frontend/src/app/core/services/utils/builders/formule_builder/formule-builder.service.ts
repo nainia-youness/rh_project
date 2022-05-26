@@ -17,17 +17,23 @@ export class FormuleBuilderService {
   buildFormules(formules:any,is_one:boolean=false):FormuleModel[] | undefined{
     if(!formules) return undefined
     let result:FormuleModel[]=[]
-    if(is_one){
-        const variables=this.variableBuilder.buildVariables(formules.variables)
-        return [this.buildFormule(formules.id,formules.designation,formules.formule,formules.path,variables)]
-    }
-    else{
-      formules.forEach((f:any)=> {
-        const formule=this.buildFormule(f.id,f.designation,f.formule,f.path)
-        result.push(formule)
-      });
-      return result
-    } 
+    formules.forEach((f:any)=> {
+      let variables:any
+      if(is_one){
+        if(f.variables.length!==0){
+          if(f.variables[0].designation){
+            variables=this.variableBuilder.buildVariables(f.variables)
+          }
+          else{
+            variables=f.variables
+          }
+        }
+        else variables=[]
+      }
+      const formule=this.buildFormule(f.id,f.designation,f.formule,f.path,variables)
+      result.push(formule)
+    });
+    return result
   }
   constructor(private variableBuilder:VariableBuilderService) { }
 }

@@ -4,6 +4,8 @@ import { select, Store } from '@ngrx/store';
 import { filter, map, Observable } from 'rxjs';
 import { getMetadataSelector } from 'src/app/modules/gestions/state/gestion.selectors';
 import { AppState } from 'src/app/store/app.state';
+import { putModelFailure } from '../../state/model.actions';
+import { modelPageTypeSelector, putModelFailureSelector } from '../../state/model.selectors';
 
 @Component({
   selector: 'app-list-model',
@@ -23,6 +25,13 @@ export class ListModelComponent implements OnInit {
         return metadata
       })
     )
+    this.store.pipe(
+      select(modelPageTypeSelector),
+      map((modelPage)=>{
+        this.store.dispatch(putModelFailure({putError:""}))
+        return modelPage
+      })
+    ).subscribe()
   }
 
   capitalizeFirstLetter(s:string) {

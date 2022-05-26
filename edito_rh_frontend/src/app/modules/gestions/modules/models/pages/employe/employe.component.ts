@@ -6,7 +6,7 @@ import { EmployeBuilderService } from 'src/app/core/services/utils/builders/empl
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getEmployeStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getEmployeStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutDirectionStart, PutEmployeStart } from '../../state/model.actions';
 import { getEmployeSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -58,7 +58,11 @@ export class EmployeComponent implements OnInit {
   }
 
   buildModelFromTempObj=(tempObj:any)=>{
-    return this.employeBuilder.buildEmployes([tempObj])![0]
+    return this.employeBuilder.buildEmployes([tempObj],true)![0]
+  }
+
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutEmployeStart({id:newModel.id,employe:newModel}))
   }
 
   constructor(

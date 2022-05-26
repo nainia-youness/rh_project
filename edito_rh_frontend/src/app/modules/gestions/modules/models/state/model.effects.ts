@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType} from "@ngrx/effects";
-import { exhaustMap, map, of } from "rxjs";
+import { exhaustMap, map, of,concatMap,mergeMap  } from "rxjs";
 import {catchError} from 'rxjs/operators'; 
 import { Store,select } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
-import { getAffectationStart, getAffectationSuccess, getCentreCoutStart, getCentreCoutSuccess, getContratStart, getContratSuccess, getDirectionStart, getDirectionSuccess, getEmployeStart, getEmployeSuccess, getEntiteStart, getEntiteSuccess, getFonctionStart, getFonctionSuccess, getFormuleStart, getFormuleSuccess, getModelFailure, getRubriqueStart, getRubriqueSuccess, getVariableStart, getVariableSuccess, getVilleStart, getVilleSuccess } from "./model.actions";
+import { DeleteEmployeRubriqueStart, DeleteEmployeRubriqueSuccess, DeleteFormuleVariableStart, DeleteFormuleVariableSuccess, getAffectationStart, getAffectationSuccess, getCentreCoutStart, getCentreCoutSuccess, getContratStart, getContratSuccess, getDirectionStart, getDirectionSuccess,getEmployeStart, getEmployeSuccess, getEntiteStart, getEntiteSuccess, getFonctionStart, getFonctionSuccess, getFormuleStart, getFormuleSuccess, getModelFailure, getRubriqueStart, getRubriqueSuccess, getVariableStart, getVariableSuccess, getVilleStart, getVilleSuccess, PutAffectationStart, PutAffectationSuccess, PutCentreCoutStart, PutCentreCoutSuccess, PutContratStart, PutContratSuccess, PutDirectionStart, PutDirectionSuccess, PutEmployeRubriqueStart, PutEmployeRubriqueSuccess, PutEmployeStart, PutEmployeSuccess, PutEntiteStart, PutEntiteSuccess, PutFonctionStart, PutFonctionSuccess, PutFormuleStart, PutFormuleSuccess, PutFormuleVariableStart, PutFormuleVariableSuccess, putModelFailure, PutRubriqueStart, PutRubriqueSuccess, PutVariableStart, PutVariableSuccess, PutVilleStart, PutVilleSuccess } from "./model.actions";
 import { VilleService } from "src/app/core/services/http/villes/ville.service";
 import { VilleBuilderService } from "src/app/core/services/utils/builders/ville_builder/ville-builder.service";
 import { getLogs } from "src/app/shared/components/layout/state/layout.actions";
@@ -69,6 +69,397 @@ export class ModelEffects{
             )
     )
 
+    putVille$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutVilleStart),
+        exhaustMap(
+            (action)=> this.villeService.putVille(action)
+            .pipe(
+                map((res):any=>{
+                    const villeModel=this.villeBuilder.buildVilles([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutVilleSuccess({ville:villeModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putVariable$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutVariableStart),
+        exhaustMap(
+            (action)=> this.variableService.putVariable(action)
+            .pipe(
+                map((res):any=>{
+                    const variableModel=this.variableBuilder.buildVariables([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutVariableSuccess({variable:variableModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+    putRubrique$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutRubriqueStart),
+        exhaustMap(
+            (action)=> this.rubriqueService.putRubrique(action)
+            .pipe(
+                map((res):any=>{
+                    const RubriqueModel=this.rubriqueBuilder.buildRubriques([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutRubriqueSuccess({rubrique:RubriqueModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putFormule$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutFormuleStart),
+        exhaustMap(
+            (action)=> this.formuleService.putFormule(action)
+            .pipe(
+                map((res):any=>{
+                    const FormuleModel=this.formuleBuilder.buildFormules([res.data],true)![0]
+                    console.log(FormuleModel)
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutFormuleSuccess({formule:FormuleModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putFonction$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutFonctionStart),
+        exhaustMap(
+            (action)=> this.fonctionService.putFonction(action)
+            .pipe(
+                map((res):any=>{
+                    const FonctionModel=this.fonctionBuilder.buildFonctions([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutFonctionSuccess({fonction:FonctionModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putEntite$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutEntiteStart),
+        exhaustMap(
+            (action)=> this.entiteService.putEntite(action)
+            .pipe(
+                map((res):any=>{
+                    const EntiteModel=this.entiteBuilder.buildEntites([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutEntiteSuccess({entite:EntiteModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+    
+    putEmploye$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutEmployeStart),
+        exhaustMap(
+            (action)=> this.employeService.putEmploye(action)
+            .pipe(
+                map((res):any=>{
+                    const EmployeModel=this.employeBuilder.buildEmployes([res.data],true)![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutEmployeSuccess({employe:EmployeModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putDirection$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutDirectionStart),
+        exhaustMap(
+            (action)=> this.directionService.putDirection(action)
+            .pipe(
+                map((res):any=>{
+                    const DirectionModel=this.directionBuilder.buildDirections([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutDirectionSuccess({direction:DirectionModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putContrat$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutContratStart),
+        exhaustMap(
+            (action)=> this.contratService.putContrat(action)
+            .pipe(
+                map((res):any=>{
+                    const ContratModel=this.contratBuilder.buildContrats([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutContratSuccess({contrat:ContratModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putCentreCout$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutCentreCoutStart),
+        exhaustMap(
+            (action)=> this.centreCoutService.putCentreCout(action)
+            .pipe(
+                map((res):any=>{
+                    const CentreCoutModel=this.centreCoutBuilder.buildCentresCout([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutCentreCoutSuccess({centreCout:CentreCoutModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putAffectation$:any=createEffect(():any=>
+    this.actions$.pipe(
+        ofType(PutAffectationStart),
+        exhaustMap(
+            (action)=> this.affectationService.putAffectation(action)
+            .pipe(
+                map((res):any=>{
+                    const AffectationModel=this.affectationBuilder.buildAffectations([res.data])![0]
+                    const logs:Logs={
+                        user_nom:res.data.user.nom,
+                        user_prenom:res.data.user.prenom,
+                        date_derniere_operation:res.data.date_derniere_operation,
+                        derniere_operation:res.data.derniere_operation
+                    }
+                    this.store.dispatch(getLogs({logs:logs}))     
+                    return PutAffectationSuccess({affectation:AffectationModel})
+                }),
+                catchError((error):any=>{
+                    const errorMessage = this.errorHandler.handleError(error)
+                    console.log(error)
+                    return of(putModelFailure({putError:errorMessage}))
+                }
+                ) 
+            )
+        ),
+    )
+    )
+
+    putEmployeRubrique$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(PutEmployeRubriqueStart),
+            concatMap(
+                (action)=> this.employeService.putEmployeRubrique(action)
+                .pipe(
+                    map((res):any=>{
+                        this.store.dispatch(getEmployeStart({id:res.data.employe}))
+                        return PutEmployeRubriqueSuccess()
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        return of(putModelFailure({putError:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
+    deleteEmployeRubrique$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(DeleteEmployeRubriqueStart),
+            mergeMap(
+                (action)=> this.employeService.deleteEmployeRubrique(action)
+                .pipe(
+                    map((res):any=>{
+                        this.store.dispatch(getEmployeStart({id:res.data.employe}))
+                        return DeleteEmployeRubriqueSuccess()
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        return of(putModelFailure({putError:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
+    putFormuleVariable$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(PutFormuleVariableStart),
+            concatMap(
+                (action)=> this.formuleService.putFormuleVariable(action)
+                .pipe(
+                    map((res):any=>{
+                        this.store.dispatch(getFormuleStart({id:res.data.formule}))
+                        return PutFormuleVariableSuccess()
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        return of(putModelFailure({putError:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
+    deleteFormuleVariable$:any=createEffect(():any=>
+        this.actions$.pipe(
+            ofType(DeleteFormuleVariableStart),
+            mergeMap(
+                (action)=> this.formuleService.deleteFormuleVariable(action)
+                .pipe(
+                    map((res):any=>{
+                        return DeleteFormuleVariableSuccess()
+                    }),
+                    catchError((error):any=>{
+                        const errorMessage = this.errorHandler.handleError(error)
+                        console.log(error)
+                        return of(putModelFailure({putError:errorMessage}))
+                    }
+                    ) 
+                )
+            ),
+        )
+    )
+
     getVariable$:any=createEffect(():any=>
         this.actions$.pipe(
             ofType(getVariableStart),
@@ -106,8 +497,7 @@ export class ModelEffects{
                 (action)=> this.formuleService.getFormule(action)
                 .pipe(
                     map((res):any=>{
-
-                        const formuleModel=this.formuleBuilder.buildFormules(res.data,true)![0]
+                        const formuleModel=this.formuleBuilder.buildFormules([res.data],true)![0]
                         const logs:Logs={
                             user_nom:res.data.user.nom,
                             user_prenom:res.data.user.prenom,
@@ -361,6 +751,7 @@ export class ModelEffects{
             ),
         )
     )
+    
     constructor(
         private actions$: Actions,
         private errorHandler:ErrorHandlerService,

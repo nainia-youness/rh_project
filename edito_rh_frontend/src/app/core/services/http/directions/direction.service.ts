@@ -28,5 +28,10 @@ export class DirectionService {
     return this.http.get<any>(`${this.directions_url}/${id}/`)
   }
 
+  putDirection(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.direction)
+    return this.http.put<any>(`${this.directions_url}/${action.id}/`,body)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

@@ -15,7 +15,6 @@ export class FormuleService {
 
 
   getFormules():Observable<any>{
-    
     let params = new HttpParams();
     params=this.paramsService.addFilterParams(params)
     params=this.paramsService.addPageParams(params)
@@ -25,6 +24,24 @@ export class FormuleService {
   getFormule(action:any):Observable<any>{
     const id=this.helper.getId(action)
     return this.http.get<any>(`${this.formules_url}/${id}/`)
+  }
+
+  putFormule(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.formule)
+    return this.http.put<any>(`${this.formules_url}/${action.id}/`,body)
+  }
+
+  putFormuleVariable(action:any):Observable<any>{
+    const variableId:String=action.variableId
+    const formuleId:String=action.formuleId
+    const body={}
+    return this.http.put<any>(`${this.formules_url}/${formuleId}/variables/${variableId}`,body)
+  }
+
+  deleteFormuleVariable(action:any):Observable<any>{
+    const variableId:String=action.variableId
+    const formuleId:String=action.formuleId
+    return this.http.delete<any>(`${this.formules_url}/${formuleId}/variables/${variableId}`)
   }
 
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}

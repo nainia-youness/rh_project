@@ -6,7 +6,7 @@ import { VariableBuilderService } from 'src/app/core/services/utils/builders/var
 import { VariableModel } from 'src/app/shared/models/variable.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getVariableStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getVariableStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutVariableStart } from '../../state/model.actions';
 import { getVariableSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -62,6 +62,10 @@ export class VariableComponent implements OnInit {
     return this.variableBuilder.buildVariables([tempObj])![0]
   }
 
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutVariableStart({id:newModel.id,variable:newModel}))
+  }
+  
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,

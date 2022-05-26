@@ -11,7 +11,7 @@
                 <mat-label>{{modelMetadata.label}}</mat-label>
                 <mat-select formControlName="objectField">
                     <div *ngFor="let value of modelMetadata.values">
-                        <mat-option  (click)="updateId(value)"#selectedValue [value]="value.value" >{{value.value}}</mat-option>
+                        <mat-option  (click)="updateId(value)" #selectedValue [value]="value.value" >{{value.value}}</mat-option>
                     </div>
                 </mat-select> 
             </mat-form-field>

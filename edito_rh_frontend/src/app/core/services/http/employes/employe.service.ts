@@ -27,5 +27,22 @@ export class EmployeService {
     return this.http.get<any>(`${this.employes_url}/${id}/`)
   }
 
+  putEmploye(action:any):Observable<any>{
+    let body=this.helper.removeUnderscores(action.employe)
+    body=this.helper.formatDates(body)
+    return this.http.put<any>(`${this.employes_url}/${action.id}/`,body)
+  }
+
+  putEmployeRubrique(action:any):Observable<any>{
+    const body={
+      'montant':action.montant
+    }
+    return this.http.put<any>(`${this.employes_url}/${action.employeId}/rubriques/${action.rubriqueId}`,body)
+  }
+
+  deleteEmployeRubrique(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.employes_url}/${action.employeId}/rubriques/${action.rubriqueId}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

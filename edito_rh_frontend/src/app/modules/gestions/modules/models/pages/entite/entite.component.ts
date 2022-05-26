@@ -6,7 +6,7 @@ import { EntiteBuilderService } from 'src/app/core/services/utils/builders/entit
 import { EntiteModel } from 'src/app/shared/models/entite.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getEntiteStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange } from '../../state/model.actions';
+import { getEntiteStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PutEntiteStart } from '../../state/model.actions';
 import { getEntiteSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -59,6 +59,10 @@ export class EntiteComponent implements OnInit {
 
   buildModelFromTempObj=(tempObj:any)=>{
     return this.entiteBuilder.buildEntites([tempObj])![0]
+  }
+
+  putModel=(newModel:any)=>{
+    this.store.dispatch(PutEntiteStart({id:newModel.id,entite:newModel}))
   }
 
   constructor(

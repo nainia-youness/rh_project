@@ -1,13 +1,5 @@
 @import "../../../../../../../styles/variables.scss";
 
-.error {
-    color: white !important;
-    background-color: $error_color;
-    text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
 
 button {
     background-color: $base_color !important;
@@ -22,4 +14,12 @@ button:disabled {
   
  button:hover {
     background-color: $darker_color !important;
+  }
+
+  .error {
+    color: white !important;
+    background-color: $error_color;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
   }
