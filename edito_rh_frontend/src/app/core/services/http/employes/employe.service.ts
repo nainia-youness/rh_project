@@ -33,6 +33,16 @@ export class EmployeService {
     return this.http.put<any>(`${this.employes_url}/${action.id}/`,body)
   }
 
+  postEmploye(action:any):Observable<any>{
+    let body=this.helper.removeUnderscores(action.employe)
+    body=this.helper.formatDates(body)
+    return this.http.post<any>(`${this.employes_url}/`,body)
+  }
+
+  deleteEmploye(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.employes_url}/${action.id}`)
+  }
+
   putEmployeRubrique(action:any):Observable<any>{
     const body={
       'montant':action.montant

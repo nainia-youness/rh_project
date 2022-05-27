@@ -6,7 +6,7 @@ import { EntiteBuilderService } from 'src/app/core/services/utils/builders/entit
 import { EntiteModel } from 'src/app/shared/models/entite.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getEntiteStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostEntiteStart, PutEntiteStart } from '../../state/model.actions';
+import { DeleteEntiteStart, getEntiteStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostEntiteStart, PutEntiteStart } from '../../state/model.actions';
 import { getEntiteSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -67,6 +67,10 @@ export class EntiteComponent implements OnInit {
 
   postModel=(newModel:any)=>{
     this.store.dispatch(PostEntiteStart({entite:newModel}))
+  }
+
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteEntiteStart({id:id}))
   }
 
   constructor(

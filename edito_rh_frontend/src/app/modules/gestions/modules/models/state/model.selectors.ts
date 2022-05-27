@@ -17,6 +17,10 @@ export const postModelFailureSelector =createSelector(getModelState,state=>{
     return state.postError
 })
 
+export const deleteModelFailureSelector =createSelector(getModelState,state=>{
+    return state.deleteError
+})
+
 export const getVilleSuccessSelector =createSelector(getModelState,state=>{
     return state.ville
 })

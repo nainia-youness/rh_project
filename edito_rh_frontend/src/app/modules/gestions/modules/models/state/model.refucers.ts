@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostAffectationSuccess, PostCentreCoutSuccess, PostContratSuccess, PostDirectionSuccess, PostEmployeSuccess, PostEntiteSuccess, PostFonctionSuccess, PostFormuleSuccess, postModelFailure, PostRubriqueSuccess, PostVariableSuccess, PostVilleSuccess, PutAffectationSuccess, PutCentreCoutSuccess, PutContratSuccess, PutDirectionSuccess, PutEmployeSuccess, PutEntiteSuccess, PutFonctionSuccess, PutFormuleSuccess, putModelFailure, PutRubriqueSuccess, PutVariableSuccess, PutVilleSuccess } from "./model.actions"
+import { DeleteAffectationSuccess, DeleteCentreCoutSuccess, DeleteContratSuccess, DeleteDirectionSuccess, DeleteEmployeSuccess, DeleteEntiteSuccess, DeleteFonctionSuccess, DeleteFormuleSuccess, DeleteRubriqueSuccess, DeleteVariableSuccess, DeleteVilleSuccess, getAffectationSuccess, getCentreCoutSuccess, getContratSuccess, getDirectionSuccess, getEmployeSuccess, getEntiteSuccess, getFonctionSuccess, getFormuleSuccess, getModelFailure, getRubriqueSuccess, getVariableSuccess, getVilleSuccess, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostAffectationSuccess, PostCentreCoutSuccess, PostContratSuccess, PostDirectionSuccess, PostEmployeSuccess, PostEntiteSuccess, PostFonctionSuccess, PostFormuleSuccess, postModelFailure, PostRubriqueSuccess, PostVariableSuccess, PostVilleSuccess, PutAffectationSuccess, PutCentreCoutSuccess, PutContratSuccess, PutDirectionSuccess, PutEmployeSuccess, PutEntiteSuccess, PutFonctionSuccess, PutFormuleSuccess, putModelFailure, PutRubriqueSuccess, PutVariableSuccess, PutVilleSuccess } from "./model.actions"
 import { initialState } from "./model.state"
 
 
@@ -33,6 +33,84 @@ const _modelReducer= createReducer(
         return {
             ...state,
             postError:action.postError,
+        }
+    }),
+    //-----------------DELETE-------------------
+    on(DeleteVilleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            ville:action.ville,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteVariableSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            variable:action.variable,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteFormuleSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            formule:action.formule,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteAffectationSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            affectation:action.affectation,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteCentreCoutSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            centreCout:action.centreCout,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteContratSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            contrat:action.contrat,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteDirectionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            direction:action.direction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteEntiteSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            entite:action.entite,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteFonctionSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            fonction:action.fonction,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteRubriqueSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            rubrique:action.rubrique,
+            isModelProgressBar:false,
+        }
+    }),
+    on(DeleteEmployeSuccess,(state:any,action:any)=>{
+        return {
+            ...state,
+            employe:action.employe,
+            isModelProgressBar:false,
         }
     }),
     //-----------------POST---------------------

@@ -33,5 +33,14 @@ export class EntiteService {
     return this.http.put<any>(`${this.entites_url}/${action.id}/`,body)
   }
   
+  postEntite(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.entite)
+    return this.http.post<any>(`${this.entites_url}/`,body)
+  }
+
+  deleteEntite(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.entites_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

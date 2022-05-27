@@ -31,6 +31,15 @@ export class FormuleService {
     return this.http.put<any>(`${this.formules_url}/${action.id}/`,body)
   }
 
+  postFormule(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.formule)
+    return this.http.post<any>(`${this.formules_url}/`,body)
+  }
+
+  deleteFormule(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.formules_url}/${action.id}`)
+  }
+
   putFormuleVariable(action:any):Observable<any>{
     const variableId:String=action.variableId
     const formuleId:String=action.formuleId

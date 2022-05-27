@@ -5,6 +5,8 @@ import { AppState } from 'src/app/store/app.state';
 import { modelPageTypeChange, putModelFailure } from '../../state/model.actions';
 import { isModelProgressBarSelector, modelPageSelector, modelPageTypeSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
+import {ActivatedRoute} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-model-template',
@@ -21,7 +23,8 @@ export class ModelTemplateComponent implements OnInit {
   @Input() buildModelFromTempObj!: (tempObj:any) => any;
   @Input() putModel!: (newModel:any) => any;
   @Input() postModel!: (newModel:any) => any;
-  
+  @Input() deleteModel!: (id:string) => any;
+
   ngOnInit(): void {
     this.modelPageType$=this.store.pipe(
       select(modelPageTypeSelector),
@@ -49,10 +52,18 @@ export class ModelTemplateComponent implements OnInit {
   }
   
   delete=()=>{
+    let id:any
+    this.route.paramMap.subscribe( paramMap => {
+      id = paramMap.get('id')
+    })
+    this.deleteModel(id)
+    this.router.navigate(['/gestion'])
   }
   
   constructor(
     private store:Store<AppState>,
+    private route:ActivatedRoute,
+    private router:Router,
     ) { }
 
 }

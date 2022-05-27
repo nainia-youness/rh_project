@@ -6,7 +6,7 @@ import { VariableBuilderService } from 'src/app/core/services/utils/builders/var
 import { VariableModel } from 'src/app/shared/models/variable.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getVariableStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostVariableStart, PutVariableStart } from '../../state/model.actions';
+import { DeleteVariableStart, getVariableStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostVariableStart, PutVariableStart } from '../../state/model.actions';
 import { getVariableSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -69,6 +69,11 @@ export class VariableComponent implements OnInit {
   postModel=(newModel:any)=>{
     this.store.dispatch(PostVariableStart({variable:newModel}))
   }
+
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteVariableStart({id:id}))
+  }
+
 
   constructor(
     private Layout:LayoutService,

@@ -40,11 +40,34 @@ export class HelperService {
     return [year, month, day].join('-');
 }
 
+  convertString(s:string){
+    const numbers='0123456789'
+    let is_number=true
+    for (let x = 0; x < s.length; x++)
+    {
+        let c = s.charAt(x);
+        if( numbers.indexOf(c) <= -1){//c not a number
+          is_number=false
+        }        
+    }
+    if(is_number){
+      return Number(s)
+    }
+    else{
+      return s
+    }
+  }
+
   removeUnderscores(model:any){
     let newObj:any={}
     Object.keys(model).map((key) => {
       const newKey = key.substring(1);
-      newObj[newKey]=model[key]
+      if(typeof model[key] === 'string' || model[key] instanceof String){
+        newObj[newKey]=this.convertString(model[key])
+      }
+      else{
+        newObj[newKey]=model[key]
+      }
     });
     return newObj
   }

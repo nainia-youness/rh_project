@@ -8,7 +8,7 @@ import { getSideNavItems } from 'src/app/shared/components/layout/state/layout.s
 import { VilleModel } from 'src/app/shared/models/ville.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getVilleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostVilleStart, PutVilleStart } from '../../state/model.actions';
+import { DeleteVilleStart, getVilleStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostVilleStart, PutVilleStart } from '../../state/model.actions';
 import { getVilleSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -39,7 +39,6 @@ export class VilleComponent implements OnInit {
   modelData$?:Observable<VilleModel | undefined>;
 
   ngOnInit(): void {
-
     let id:string | undefined=''
     this.store.dispatch(isModelProgressBarChange())
     this.actRoute.paramMap.subscribe(params => {
@@ -72,6 +71,10 @@ export class VilleComponent implements OnInit {
 
   postModel=(newModel:any)=>{
     this.store.dispatch(PostVilleStart({ville:newModel}))
+  }
+
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteVilleStart({id:id}))
   }
 
   constructor(

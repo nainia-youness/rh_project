@@ -37,6 +37,10 @@ export class VilleService {
     return this.http.post<any>(`${this.villes_url}/`,body)
   }
 
+  deleteVille(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.villes_url}/${action.id}`)
+  }
+
   constructor(
     private http:HttpClient,
     private helper:HelperService,

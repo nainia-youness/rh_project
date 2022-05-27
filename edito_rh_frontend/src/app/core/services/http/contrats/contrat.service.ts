@@ -32,5 +32,14 @@ export class ContratService {
     return this.http.put<any>(`${this.contrats_url}/${action.id}/`,body)
   }
 
+  postContrat(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.contrat)
+    return this.http.post<any>(`${this.contrats_url}/`,body)
+  }
+
+  deleteContrat(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.contrats_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

@@ -32,5 +32,14 @@ export class AffectationService {
     return this.http.put<any>(`${this.affectations_url}/${action.id}/`,body)
   }
 
+  postAffectation(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.affectation)
+    return this.http.post<any>(`${this.affectations_url}/`,body)
+  }
+
+  deleteAffectation(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.affectations_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

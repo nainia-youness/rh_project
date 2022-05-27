@@ -101,6 +101,29 @@ enum ActionTypes {
     POST_RUBRIQUE_SUCCESS = '[Rubrique Page] Post Rubrique Success',
     POST_EMPLOYE_START = '[Employe Page] Post Employe Start',
     POST_EMPLOYE_SUCCESS = '[Employe Page] Post Employe Success',
+
+    DELETE_VILLE_START = '[Ville Page] Delete Ville Start',
+    DELETE_VILLE_SUCCESS = '[Ville Page] Delete Ville Success',
+    DELETE_VARIABLE_START = '[Variable Page] Delete Variable Start',
+    DELETE_VARIABLE_SUCCESS = '[Variable Page] Delete Variable Success',
+    DELETE_FORMULE_START = '[Formule Page] Delete Formule Start',
+    DELETE_FORMULE_SUCCESS = '[Formule Page] Delete Formule Success',
+    DELETE_AFFECTATION_START = '[Affectation Page] Delete Affectation Start',
+    DELETE_AFFECTATION_SUCCESS = '[Affectation Page] Delete Affectation Success',
+    DELETE_CENTRE_COUT_START = '[Centre Cout Page] Delete Centre Cout Start',
+    DELETE_CENTRE_COUT_SUCCESS = '[Centre Cout Page] Delete Centre Cout Success',
+    DELETE_CONTRAT_START = '[Contrat Page] Delete Contrat Start',
+    DELETE_CONTRAT_SUCCESS = '[Contrat Page] Delete Contrat Success',
+    DELETE_DIRECTION_START = '[Direction Page] Delete Direction Start',
+    DELETE_DIRECTION_SUCCESS = '[Direction Page] Delete Direction Success',
+    DELETE_ENTITE_START = '[Entite Page] Delete Entite Start',
+    DELETE_ENTITE_SUCCESS = '[Entite Page] Delete Entite Success',
+    DELETE_FONCTION_START = '[Fonction Page] Delete Fonction Start',
+    DELETE_FONCTION_SUCCESS = '[Fonction Page] Delete Fonction Success',
+    DELETE_RUBRIQUE_START = '[Rubrique Page] Delete Rubrique Start',
+    DELETE_RUBRIQUE_SUCCESS = '[Rubrique Page] Delete Rubrique Success',
+    DELETE_EMPLOYE_START = '[Employe Page] Delete Employe Start',
+    DELETE_EMPLOYE_SUCCESS = '[Employe Page] Delete Employe Success',
 }
 
 
@@ -136,6 +159,30 @@ export const PostFonctionSuccess=createAction(ActionTypes.POST_FONCTION_SUCCESS,
 export const PostRubriqueSuccess=createAction(ActionTypes.POST_RUBRIQUE_SUCCESS,props<{rubrique:RubriqueModel | undefined}>())
 export const PostEmployeSuccess=createAction(ActionTypes.POST_EMPLOYE_SUCCESS,props<{employe:EmployeModel | undefined}>())
 
+//delete start
+export const DeleteVilleStart=createAction(ActionTypes.DELETE_VILLE_START,props<{id:string | undefined}>())
+export const DeleteVariableStart=createAction(ActionTypes.DELETE_VARIABLE_START,props<{id:string | undefined}>())
+export const DeleteFormuleStart=createAction(ActionTypes.DELETE_FORMULE_START,props<{id:string | undefined}>())
+export const DeleteAffectationStart=createAction(ActionTypes.DELETE_AFFECTATION_START,props<{id:string | undefined}>())
+export const DeleteCentreCoutStart=createAction(ActionTypes.DELETE_CENTRE_COUT_START,props<{id:string | undefined}>())
+export const DeleteContratStart=createAction(ActionTypes.DELETE_CONTRAT_START,props<{id:string | undefined}>())
+export const DeleteDirectionStart=createAction(ActionTypes.DELETE_DIRECTION_START,props<{id:string | undefined}>())
+export const DeleteEntiteStart=createAction(ActionTypes.DELETE_ENTITE_START,props<{id:string | undefined}>())
+export const DeleteFonctionStart=createAction(ActionTypes.DELETE_FONCTION_START,props<{id:string | undefined}>())
+export const DeleteRubriqueStart=createAction(ActionTypes.DELETE_RUBRIQUE_START,props<{id:string | undefined}>())
+export const DeleteEmployeStart=createAction(ActionTypes.DELETE_EMPLOYE_START,props<{id:string | undefined}>())
+//delete success
+export const DeleteVilleSuccess=createAction(ActionTypes.DELETE_VILLE_SUCCESS)
+export const DeleteVariableSuccess=createAction(ActionTypes.DELETE_VARIABLE_SUCCESS)
+export const DeleteFormuleSuccess=createAction(ActionTypes.DELETE_FORMULE_SUCCESS)
+export const DeleteAffectationSuccess=createAction(ActionTypes.DELETE_AFFECTATION_SUCCESS)
+export const DeleteCentreCoutSuccess=createAction(ActionTypes.DELETE_CENTRE_COUT_SUCCESS)
+export const DeleteContratSuccess=createAction(ActionTypes.DELETE_CONTRAT_SUCCESS)
+export const DeleteDirectionSuccess=createAction(ActionTypes.DELETE_DIRECTION_SUCCESS)
+export const DeleteEntiteSuccess=createAction(ActionTypes.DELETE_ENTITE_SUCCESS)
+export const DeleteFonctionSuccess=createAction(ActionTypes.DELETE_FONCTION_SUCCESS)
+export const DeleteRubriqueSuccess=createAction(ActionTypes.DELETE_RUBRIQUE_SUCCESS)
+export const DeleteEmployeSuccess=createAction(ActionTypes.DELETE_EMPLOYE_SUCCESS)
 
 
 // get start

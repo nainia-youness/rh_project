@@ -6,7 +6,7 @@ import { EmployeBuilderService } from 'src/app/core/services/utils/builders/empl
 import { EmployeModel } from 'src/app/shared/models/employe.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getEmployeStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostEmployeStart, PutDirectionStart, PutEmployeStart } from '../../state/model.actions';
+import { DeleteEmployeStart, getEmployeStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostEmployeStart, PutDirectionStart, PutEmployeStart } from '../../state/model.actions';
 import { getEmployeSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -67,6 +67,10 @@ export class EmployeComponent implements OnInit {
 
   postModel=(newModel:any)=>{
     this.store.dispatch(PostEmployeStart({employe:newModel}))
+  }
+
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteEmployeStart({id:id}))
   }
 
   constructor(

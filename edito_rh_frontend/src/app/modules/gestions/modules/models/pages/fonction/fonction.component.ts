@@ -6,7 +6,7 @@ import { FonctionBuilderService } from 'src/app/core/services/utils/builders/fon
 import { FonctionModel } from 'src/app/shared/models/fonction.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getFonctionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostFonctionStart, PutFonctionStart } from '../../state/model.actions';
+import { DeleteFonctionStart, getFonctionStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostFonctionStart, PutFonctionStart } from '../../state/model.actions';
 import { getFonctionSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -68,6 +68,10 @@ export class FonctionComponent implements OnInit {
 
   postModel=(newModel:any)=>{
     this.store.dispatch(PostFonctionStart({fonction:newModel}))
+  }
+
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteFonctionStart({id:id}))
   }
 
   constructor(

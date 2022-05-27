@@ -108,9 +108,8 @@ export class CreerModelComponent implements OnInit {
     })
     const newModel=this.buildModelFromTempObj(tempObj)
     this.postModel(newModel)
+    this.goToList()
   }
-
-
 
 
   initializeTempObj(metadata:any){

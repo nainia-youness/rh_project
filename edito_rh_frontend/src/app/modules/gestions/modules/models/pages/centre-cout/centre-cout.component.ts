@@ -6,7 +6,7 @@ import { CentreCoutBuilderService } from 'src/app/core/services/utils/builders/c
 import { CentreCoutModel } from 'src/app/shared/models/centre_cout.model';
 import { LayoutService } from 'src/app/shared/services/layout.service';
 import { AppState } from 'src/app/store/app.state';
-import { getCentreCoutStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostCentreCoutStart, PutCentreCoutStart } from '../../state/model.actions';
+import { DeleteCentreCoutStart, getCentreCoutStart, isModelProgressBarChange, modelPageChange, modelPageTypeChange, PostCentreCoutStart, PutCentreCoutStart } from '../../state/model.actions';
 import { getCentreCoutSuccessSelector } from '../../state/model.selectors';
 import { ModelPage, ModelPageType } from '../../state/model.state';
 
@@ -69,6 +69,10 @@ export class CentreCoutComponent implements OnInit {
     this.store.dispatch(PostCentreCoutStart({centreCout:newModel}))
   }
   
+  deleteModel=(id:string)=>{
+    this.store.dispatch(DeleteCentreCoutStart({id:id}))
+  }
+
   constructor(
     private Layout:LayoutService,
     private store:Store<AppState>,

@@ -34,6 +34,14 @@ export class RubriqueService {
     return this.http.put<any>(`${this.rubriques_url}/${action.id}/`,body)
   }
 
-  
+  postRubrique(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.rubrique)
+    return this.http.post<any>(`${this.rubriques_url}/`,body)
+  }
+
+  deleteRubrique(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.rubriques_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

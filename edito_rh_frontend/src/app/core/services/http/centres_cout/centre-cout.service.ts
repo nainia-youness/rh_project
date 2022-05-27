@@ -32,5 +32,15 @@ export class CentreCoutService {
     return this.http.put<any>(`${this.centres_cout_url}/${action.id}/`,body)
   }
 
+  postCentreCout(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.centreCout)
+    return this.http.post<any>(`${this.centres_cout_url}/`,body)
+  }
+
+  
+  deleteCentreCout(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.centres_cout_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

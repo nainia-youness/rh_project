@@ -33,5 +33,14 @@ export class DirectionService {
     return this.http.put<any>(`${this.directions_url}/${action.id}/`,body)
   }
 
+  postDirection(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.direction)
+    return this.http.post<any>(`${this.directions_url}/`,body)
+  }
+
+  deleteDirection(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.directions_url}/${action.id}`)
+  }
+
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }

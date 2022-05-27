@@ -32,6 +32,14 @@ export class VariableService {
     return this.http.put<any>(`${this.variables_url}/${action.id}/`,body)
   }
   
+  postVariable(action:any):Observable<any>{
+    const body=this.helper.removeUnderscores(action.variable)
+    return this.http.post<any>(`${this.variables_url}/`,body)
+  }
+
+  deleteVariable(action:any):Observable<any>{
+    return this.http.delete<any>(`${this.variables_url}/${action.id}`)
+  }
 
   constructor(private http:HttpClient,private helper:HelperService,private paramsService:ParamsService){}
 }
