@@ -41,6 +41,8 @@ def get_metadata(model, query,is_one=False):
         fields = formule_metadata(query,is_one)
     elif(model == 'variable'):
         fields = variable_metadata(query,is_one)
+    elif(model == 'traitement'):
+        fields = traitement_metadata(query,is_one)
     if(fields is not None):
         result['fields'] = fields
     return result
@@ -54,6 +56,22 @@ text='text'
 object='object'
 objects='objects'
 
+
+
+def traitement_metadata(query,is_one):
+    result=[]
+    if(is_one):
+        result.append({'type': number, 'label': 'id'})
+        result.append({'type': date, 'label': 'date_derniere_operation'})
+        result.append({'type': boolean, 'label': 'is_cloture'})
+    else:
+        result.append({'type': number, 'label': 'id'})
+        result.append({'type': date, 'label': 'date_derniere_operation'})
+        result.append({'type': boolean, 'label': 'is_cloture'})
+    
+    return result
+
+    
 def variable_metadata(query,is_one):
     result=[
         {'type': number, 'label': 'id'},

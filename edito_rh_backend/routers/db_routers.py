@@ -41,7 +41,7 @@ class AuthRouter:
 class MainRouter:
     route_app_labels = {'villes', 'fonctions', 'entites',
                         'directions', 'contrats', 'centres_cout', 'affectations','employes','rubriques',
-                        'variables','formules'
+                        'variables','formules','traitements'
                         }
 
     def db_for_read(self, model, **hints):

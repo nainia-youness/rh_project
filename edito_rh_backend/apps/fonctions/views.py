@@ -34,17 +34,19 @@ from ..entites.models import Entite
 from ..villes.models import Ville
 from ..formules.models import Formule
 from ..rubriques.models import Rubrique
+from ..traitements.models import Traitement
 from .models import Fonction
 
+
 def initialize():
-    # a = Affectation(designation='AGENCE MARRAKECH', description='AGENCE MARRAKECH',user_id=1)
-    # a.save()
-    # e = Entite(designation='SAPRESS', description='SAPRESS',user_id=1)
-    # e.save()
-    # v = Ville(nom='Marrakech',user_id=1)
-    # v.save()
-    # cc=CentreCout(designation='Logistique', description='Logistique',user_id=1)
-    # cc.save()
+    #a = Affectation(designation='AGENCE MARRAKECH', description='AGENCE MARRAKECH',user_id=1)
+    #a.save()
+    #e = Entite(designation='SAPRESS', description='SAPRESS',user_id=1)
+    #e.save()
+    #v = Ville(nom='Marrakech',user_id=1)
+    #v.save()
+    #cc=CentreCout(designation='Logistique', description='Logistique',user_id=1)
+    #cc.save()
     # c=Contrat(designation='CDI', description='Contrat a duree indeterminee',user_id=1)
     # c.save()
     # f=Fonction(designation='Achat', description='Achat',user_id=1)
@@ -63,8 +65,9 @@ def initialize():
     # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
     # adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802000, numero_compte= 5665, 
     # participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
-    # e.save()
-
+    #e.save()
+    # t=Traitement(entite_id=1,user_id=1)
+    # t.save()
     pass
 
 initialize()
