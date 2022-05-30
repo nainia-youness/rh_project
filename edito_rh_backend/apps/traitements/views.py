@@ -11,6 +11,15 @@ from common.filter_parser import get_queryset
 from rest_framework.views import APIView
 from common.response_handler import handle_error, handle_successful_response
 from ..users.models import User
+from ..formules.models import Formule
+from ..formules.serializer import FormuleSerializer
+from ..variables.models import Variable
+from ..employes.models import Employe,EmployesRubriques
+from ..rubriques.models import Rubrique
+from ..entites.models import Entite
+from ..variables.serializer import VariableSerializer
+from ..employes.serializer import EmployeSerializer,EmployesRubriquesSerializer
+from ..rubriques.serializer import RubriqueSerializer
 sys.path.insert(1, '../../common')
 
 
@@ -25,9 +34,15 @@ class TraitementsAPIView(APIView):
     def get(self, request):
         user_id = is_authenticated(request)
         traitements = Traitement.objects.all().order_by('-date_derniere_operation')
+        #return only traitements that are in the specified entity
+        entite=request.GET.get('entite')
+        traitements=filter_entite(traitements,entite)
+        
         metadata = get_metadata('traitement', traitements)
         traitements, max_pages, count = get_queryset(request, traitements)
         serializer = TraitementSerializer(traitements, many=True)
+
+        #i need only those in the entite
         # add maxPages
         if(max_pages is not None):
             metadata['max_pages'] = max_pages
@@ -58,6 +73,17 @@ class TraitementsAPIView(APIView):
         return handle_error(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
+
+def filter_entite(traitements,entite):
+    if(entite):
+            entites=list(Entite.objects.all().filter(designation=entite))
+            if(len(entites)!=0):
+                entite_id=entites[0].id
+                if(entite_id):
+                    traitements=traitements.filter(entite_id=entite_id)
+    return traitements
+
+
 class TraitementAPIView(APIView):
 
     def get_object(self, id):
@@ -66,18 +92,79 @@ class TraitementAPIView(APIView):
         except Traitement.DoesNotExist:
             raise Http404
 
+    def get_rubrique(self,id):
+        try:
+            return Rubrique.objects.get(id=id)
+        except Rubrique.DoesNotExist:
+            raise Http404
+    def get_variable(self,variable_id):
+        try:
+            return Variable.objects.get(id=variable_id)
+        except Variable.DoesNotExist:
+            raise Http404     
+
+    def get_employe_rubriques(self,employe_id, rubrique_id):
+        try:
+            employe=Employe.objects.get(id=employe_id)
+        except Employe.DoesNotExist:
+            raise Http404
+        try:
+            rubrique=Rubrique.objects.get(id=rubrique_id)
+        except Rubrique.DoesNotExist:
+            raise Http404
+        try:
+            return EmployesRubriques.objects.get(employe=employe,rubrique=rubrique)
+        except EmployesRubriques.DoesNotExist:
+            raise Http404
+
     def get(self, request, id):
         user_id = is_authenticated(request)
         traitement = self.get_object(id)
-        #do the formulas TODO
-        #if is_cloture==false
-        #get all formules
-        #get all parametres
-        #get l'entite
-        #for each employe de l'entite get his rubriques
-        #for each  employe de l'entite get his fields (salaire ect...)
-        #return this to frontend
+        is_cloture=traitement.is_cloture
+        entite=request.GET.get('entite')
         metadata = get_metadata('traitement', traitement,is_one=True)
+        if(is_cloture==False):
+            result={}
+            #TODO
+            #get all formules
+            formules=Formule.objects.all()
+            formules_serializer=FormuleSerializer(formules, many=True)
+            formules_data=formules_serializer.data
+            #add all variables
+            for formule_id in range(len(formules_data)):
+                variables=[]
+                for variable_id in formules_data[formule_id]['variables']:
+                    ser_data=VariableSerializer(self.get_variable(variable_id)).data     
+                    variables.append(ser_data)
+                formules_data[formule_id]['variables']=variables
+            #get all employes de l'entite
+            employes=Employe.objects.all()
+            employes=filter_entite(employes,entite)
+            employes_serializer = EmployeSerializer(employes, many=True)
+            employes_data=employes_serializer.data
+            #add all rubriques
+            for employe_id in range(len(employes_data)):
+                rubriques=[]
+                for rubrique_id in employes_data[employe_id]['rubriques']:
+                    ser_data=RubriqueSerializer(self.get_rubrique(rubrique_id)).data
+                    employeRubrique = self.get_employe_rubriques(employes_data[employe_id]['id'], rubrique_id)
+                    ser_data['montant']=employeRubrique.montant
+                    rubriques.append(ser_data)
+                employes_data[employe_id]['rubriques']=rubriques
+            #return this to frontend
+            result['formules']=formules_data
+            result['employes']=employes_data
+            key_values = [
+                {'key': 'data', 'value': result},
+                {'key': 'metadata', 'value': metadata},
+            ]
+            return handle_successful_response(key_values=key_values, status=status.HTTP_200_OK)    
+        else:
+            #look in history
+            print('trueeeeeeeeeeee')
+            pass
+
+            
         serializer = TraitementSerializer(traitement)
         key_values = [
             {'key': 'data', 'value': serializer.data},
