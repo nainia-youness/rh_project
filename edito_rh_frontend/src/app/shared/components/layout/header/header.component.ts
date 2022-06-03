@@ -54,11 +54,11 @@ export class HeaderComponent implements OnInit,AfterViewChecked{
   }
 
   goToTraitement=()=>{
-
+    this.router.navigate(['/traitement'])
   }
 
   goToAdministration=()=>{
-
+    
   }
 
   openDialog(): void {

@@ -1,7 +1,9 @@
--------------------questions---------------------
+-------------------questions Sofia ---------------------
 -
 combien de temp la creation du tableau de traitement te prend?
+pourquoi ca prend tout ce temps?
 compien de temp la creation du tableau finale te prend?
+pourquoi ca prend tout ce temps?
 -
 c quoi le relation entre Tab de traitement et le tab final?
 en quoi le tableau de traitement t'aide a arriver au tableau final?
@@ -14,8 +16,14 @@ c quoi le budget pour ce projet? (pour valoriser le projet)
 -
 -
 -
+-------------------questions prof ---------------------
 -
+utiliser diagramme de classe ou merise mld mcd?
 -
+integrer ce que je faisais en paralelle dans l'entreprise en relation 
+avec odoo?
+(les codes que j'ai developper, les demandes et problemes que j'ai resolu 
+avec mon equipe bien sur?)
 -
 -
 -

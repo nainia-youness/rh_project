@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Page404Component } from './core/components/page404/page404.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { TraitementsModule } from './modules/traitements/traitements.module';
 
 const routes: Routes = [
     {
@@ -14,6 +15,12 @@ const routes: Routes = [
       path:'gestion',
         loadChildren:()=>import('./modules/gestions/gestions.module')
           .then(mod=>mod.GestionsModule),
+      canActivate:[AuthGuard]
+    },
+    {
+      path:'traitement',
+        loadChildren:()=>import('./modules/traitements/traitements.module')
+          .then(mod=>mod.TraitementsModule),
       canActivate:[AuthGuard]
     },
     {

@@ -24,6 +24,7 @@ export enum GestionPage {
     RUBRIQUES = "Rubriques",
     FORMULES = "Formules",
     VARIABLES = "Variables",
+    TRAITEMENTS="Traitements"
 }
 
 export enum FieldType {

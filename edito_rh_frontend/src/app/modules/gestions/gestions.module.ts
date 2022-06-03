@@ -51,7 +51,8 @@ import { SubHeaderComponent } from './components/sub-header/sub-header.component
     FormsModule,
   ],
   exports:[
-    SubHeaderComponent
+    SubHeaderComponent,
+    GestionTemplateComponent,
   ]
 })
 export class GestionsModule { }
