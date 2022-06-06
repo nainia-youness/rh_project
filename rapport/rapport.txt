@@ -25,9 +25,13 @@ avec odoo?
 (les codes que j'ai developper, les demandes et problemes que j'ai resolu 
 avec mon equipe bien sur?)
 -
+methode agile individuel?
 -
 -
+-------------------bibliographie-------------------
 -
+architefchture 3 tier
+https://stph.scenari-community.org/bdd/lap2/co/webUC003archi.html
 -
 -
 -
