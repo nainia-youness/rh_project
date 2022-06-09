@@ -18,8 +18,6 @@ c quoi le budget pour ce projet? (pour valoriser le projet)
 -
 -------------------questions prof ---------------------
 -
-utiliser diagramme de classe ou merise mld mcd?
--
 integrer ce que je faisais en paralelle dans l'entreprise en relation 
 avec odoo?
 (les codes que j'ai developper, les demandes et problemes que j'ai resolu 
@@ -27,11 +25,23 @@ avec mon equipe bien sur?)
 -
 methode agile individuel?
 -
+diagramme de cas d'utilisation
 -
 -------------------bibliographie-------------------
 -
 architefchture 3 tier
 https://stph.scenari-community.org/bdd/lap2/co/webUC003archi.html
+-
+--------------------points a ne pas oublier-------------------
+-State management 
+-scss
+-file structure
+--------------------abreviations-------------------
+-SGBD
+-SQL, NOSQL,CLI
+-UI
+-
+-
 -
 -
 -

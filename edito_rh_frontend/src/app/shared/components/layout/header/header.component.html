@@ -38,7 +38,7 @@
               <button mat-button [matMenuTriggerFor]="belowMenu" *ngIf="user">{{user.email}}</button>
               <mat-menu mat-menu #belowMenu="matMenu" yPosition="below" style="background-color: red;">
                 <button mat-menu-item class="user_nav_but" (click)="onLogout()">Se déconnecter</button>
-                <button mat-menu-item class="user_nav_but" (click)="openDialog()">Changer de fonction</button>
+                <button mat-menu-item class="user_nav_but" (click)="openDialog()">Changer d'Entité</button>
               </mat-menu>
             </div>
             
