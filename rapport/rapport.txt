@@ -31,7 +31,11 @@ diagramme de cas d'utilisation
 -
 architefchture 3 tier
 https://stph.scenari-community.org/bdd/lap2/co/webUC003archi.html
--
+-ngrx life cycle
+https://medium.com/@knoldus/basics-of-ngrx-719f6360e2bf
+-db_comparaison 
+https://db-engines.com/en/ranking
+db-engines
 --------------------points a ne pas oublier-------------------
 -State management 
 -scss
@@ -39,8 +43,8 @@ https://stph.scenari-community.org/bdd/lap2/co/webUC003archi.html
 --------------------abreviations-------------------
 -SGBD
 -SQL, NOSQL,CLI
--UI
--
+-UI, prod, dev,api
+-SPA
 -
 -
 -
