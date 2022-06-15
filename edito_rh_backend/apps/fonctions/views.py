@@ -59,11 +59,13 @@ def initialize():
     # c1.save()
     # c2=Contrat(designation='CDD', description='Contrat a duree determinee',user_id=1)
     # c2.save()
-    # f=Fonction(designation='Achat', description='Achat',user_id=1)
-    # f.save()
+    # f1=Fonction(designation='Responsable de la caisse', description='Responsable de la caisse',user_id=1)
+    # f1.save()
+    # f2=Fonction(designation='Responsable de la facturation', description='Responsable de la facturation',user_id=1)
+    # f2.save()
     # d1=Direction(designation='DIRECTION LOGISTIQUE ET DEVELOPPEMENT', description='DIRECTION LOGISTIQUE ET DEVELOPPEMENT',user_id=1)
     # d1.save()
-    # d2=Direction(designation='DIRETION RESEAU ET PROXIMITE', description='DIRETION RESEAU ET PROXIMITE',user_id=1)
+    # d2=Direction(designation='DIRECTION RESEAU ET PROXIMITE', description='DIRETION RESEAU ET PROXIMITE',user_id=1)
     # d2.save()
     # r1=Rubrique(designation='Prime de Transport', description='Prime de Transport',user_id=1)
     # r1.save()
@@ -71,27 +73,30 @@ def initialize():
     # r2.save()
     # v1=Variable(designation='nombre_jour_année', valeur=365,user_id=1)
     # v1.save()
-    # v1=Variable(designation='nombre_jour_année', valeur=365,user_id=1)
-    # v1.save()
-    # f1=Formule(designation='Ancienneté', formule="(aujourdhui()-date_entree)/nombre_jour_année",user_id=1)
+    # f1=Formule(designation='Ancienneté', formule="(today()-date_entree)/nombre_jour_année",user_id=1)
     # f1.save()
-    # f2=Formule(designation='Ancienneté_arrondi', formule="arrondi(Ancienneté)",user_id=1)
+    # f2=Formule(designation='Ancienneté_arrondi', formule="round(Ancienneté)",user_id=1)
     # f2.save()
     # e1=Employe(matricule=484, nom='Hafid', prenom='Mohamed', date_naissance='1994-01-02', sexe='M', 
     # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
     # adresse='RES El mehdi IMM B N°13 Sidi Maarouf ', nationalite='MAR', cnss=8000, salaire=1907802, numero_compte= 56665, 
     # participation=4346,  date_sortie='2022-03-18', fonction_id=1, centre_cout_id=1, direction_id=1, ville_id=1, contrat_id=1, affectation_id=1, entite_id=1, delegue_id=1,user_id=1)
     # e1.save()
-    # e2=Employe(matricule=4848, nom='NAINIA', prenom='Youness', date_naissance='1994-01-01', sexe='M', 
-    # cin='BK179415', date_entree= '2017-03-01', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
-    # adresse='RES El safa IMM D N°13 Maarif', nationalite='MAR', cnss=80080, salaire=9000, numero_compte= 56657, 
-    # participation=43846,  date_sortie='2022-08-09', fonction_id=1, centre_cout_id=2, direction_id=2, ville_id=2, contrat_id=2, affectation_id=2, entite_id=2, delegue_id=1,user_id=1)
+    # e2=Employe(matricule=4848, nom='Nainia', prenom='Youness', date_naissance='1995-07-01', sexe='M', 
+    # cin='BK179418', date_entree= '2018-04-05', situation_familiale='Marié(e)', nombre_enfant=2, charge_familiale=2, 
+    # adresse='RES El safa IMM D N°13 Maarif', nationalite='MAR', cnss=80090, salaire=9000, numero_compte= 56657, 
+    # participation=43846,  date_sortie='2048-04-05', fonction_id=2, centre_cout_id=2, direction_id=2, ville_id=2, contrat_id=2, affectation_id=2, entite_id=2, delegue_id=1,user_id=1)
     # e2.save()
+    # e3=Employe(matricule=4849, nom='Salma', prenom ='Hafidi', date_naissance='1990-08-02', sexe='F', 
+    # cin='BK179420', date_entree= '2016-02-09', situation_familiale='Célibataire', nombre_enfant=0, charge_familiale=0, 
+    # adresse='RES El gadir IMM D N°18 Oasis', nationalite='MAR', cnss=80098, salaire=10000, numero_compte= 56687, 
+    # participation=2000,  date_sortie='2022-08-09', fonction_id=2, centre_cout_id=1, direction_id=2, ville_id=1, contrat_id=2, affectation_id=1, entite_id=2, delegue_id=2,user_id=1)
+    # e3.save()
     # t=Traitement(entite_id=1,user_id=1)
     # t.save()
     pass
 
-initialize()
+#initialize()
 
 class FonctionsAPIView(APIView):
 
