@@ -10,7 +10,7 @@ en quoi le tableau de traitement t'aide a arriver au tableau final?
 -
 c quoi la relation entre le journal de paie et le tableau de traitement?
 -
-c quoi le budget pour ce projet? (pour valoriser le projet)
+c quoi le budget pour ce projet? (pour valoriser le projet))
 -
 
 -
@@ -33,20 +33,66 @@ architefchture 3 tier
 https://stph.scenari-community.org/bdd/lap2/co/webUC003archi.html
 -ngrx life cycle
 https://medium.com/@knoldus/basics-of-ngrx-719f6360e2bf
--db_comparaison 
+-db_comparaison  
 https://db-engines.com/en/ranking
-db-engines
+db-engines 
+-filtre figure 
+https://developer.sas.com/reference/filtering/
+-tableau local storage 
+https://medium.com/@puneetahuja_23950/cookies-vs-localstorage-vs-sessionstorage-9cd77b864f
+-github ? 
+-extention vs code appele: VS Code Counter
 --------------------points a ne pas oublier-------------------
 -State management 
 -scss
 -file structure
+-metadata for frontend (1 page)
+-la barre en bas de la page dan frontend
 --------------------abreviations-------------------
--SGBD
--SQL, NOSQL,CLI
+-SGBD, RH ,JS,TS, Odoo
+-SQL, NOSQL,CLI 
 -UI, prod, dev,api
--SPA
+-SPA,JWT,ORM
+-SI,XML-RPC,RH,js,bdd
+-estimation du projet en dh
+1h 400 dh pour le prestataire present, nbr d'heure du developpemnt =>prix finale
+-------------------drawbacks of jwt----------------------
+
+Drawbacks of JWT tokens
+Appart from pros and cons already detailed above, the JWT standard has its own issues :
+
+If a user account needs to be blocked or deactivated, the application will have to wait for the token to expire in order for the lockout to be fully effective.
+If a user needs to change their password (for instance in case of account hijacking) and if an authentication has been performed beforehand, then a token generated with the previous password will still be valid until expiry.
+No “refresh” token is specified by the standard implementation. On expiry, the user will therefore have to re-authenticate.
+It is not possible to destroy a token without breaching the “stateless” aspect of JWT tokens : Even if the token is deleted from the browser, it is still valid until expiry, so no real logout is possible.
+To deal with these challenges, some JWT libraries add a layer above the standard specification and allow refresh token mechanisms as well as some features like forcing a user to re-authenticate, if need be.
+-----------------biblio------------------------
+-https://fr.acervolima.com/difference-entre-le-stockage-local-le-stockage-de-session-et-les-cookies/#:~:text=Les%20objets%20de%20stockage%20de,de%20la%20session%20de%20page.
+-def rh
+https://changethework.com/ressources-humaines-definition/
+-jwt
+https://jwt.io/
+-sapress
+https://maroc-diplomatique.net/le-groupe-edito-ventures-prend-le-controle-de-sochepress/
+-
+
+Rapport de stage PFE – Diplôme d’Ingénieur d’état en Génie Informatique – NAINIA
+-----------------------
+
+page 78 voir figure 50
+page 90 voir figure 14
+comment nombre de lignes a ete calclule
+
+-----------------------
+
+https://www.lucidchart.com/blog/scrum-for-one : scrum individuel
+-metadata
+https://johnfraney.ca/blog/typescript-synchronize-django-rest-framework-vue-js/ 
 -
 -
+cut off
+pot
+
 -
 -
 -

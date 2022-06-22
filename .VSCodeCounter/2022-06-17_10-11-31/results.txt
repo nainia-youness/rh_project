@@ -1,0 +1,32 @@
+Date : 2022-06-17 10:11:31
+Directory : c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk
+Total : 6 files,  93 codes, 59 comments, 49 blanks, all 201 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Python   |          6 |         93 |         59 |         49 |        201 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |          6 |         93 |         59 |         49 |        201 |
+| mysite                                                                                            |          6 |         93 |         59 |         49 |        201 |
+| mysite\mysite                                                                                     |          5 |         78 |         56 |         44 |        178 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                          | language | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\manage.py          | Python   |         15 |          3 |          5 |         23 |
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\mysite\__init__.py | Python   |          0 |          0 |          1 |          1 |
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\mysite\asgi.py     | Python   |          4 |          8 |          5 |         17 |
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\mysite\settings.py | Python   |         65 |         25 |         31 |        121 |
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\mysite\urls.py     | Python   |          5 |         15 |          2 |         22 |
+| c:\Users\YOUNESS\Desktop\projects\stages\group_edito\rh_project\TEST\bk\mysite\mysite\wsgi.py     | Python   |          4 |          8 |          5 |         17 |
+| Total                                                                                             |          |         93 |         59 |         49 |        201 |
++---------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
